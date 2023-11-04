@@ -1,0 +1,122 @@
+/* SignUpForm.css */
+
+/* Style the form container */
+form {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .h2{
+    font-size: 18px;
+  }
+  
+  /* Style form labels */
+  label {
+    display: flex;
+    margin-bottom: 5px;
+    font-size: 8px;
+  }
+  
+  /* Style form input fields */
+  input {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style the submit button */
+  button {
+    background-color: #6B8065;
+    color: white;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  /* Style the submit button on hover */
+  button:hover {
+    background-color: #0056b3;
+  }
+
+/* AuthenticationPage.css */
+
+.auth-background {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* Center the content vertically */
+  }
+  
+  /* Style the form container */
+  .auth-container {
+    background-color: #F2EEE3;
+    color: #000000;
+    padding: 25px;
+    border-radius: 5px;
+    padding-right: 40px;
+    text-align: center;
+    margin-top: px; /* Add margin to separate the switch from the forms */
+  }
+  
+  /* Style the switch container */
+  .switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the switch vertically */
+    margin-bottom: 5px;
+  }
+  
+  /* Style the switch */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    padding-bottom: -100px;
+  }
+  
+  .switch input {
+    display: none;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 30px;
+    transition: 0.4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 2px;
+    background-color: #e6dddd;
+    border-radius: 50%;
+    transition: 0.4s;
+  }
+  
+  .slider.round {
+    border-radius: 20px;
+  }
+  
+  .switch input:checked + .slider {
+    background-color: #6B8065;
+  }
+  
+  .switch input:checked + .slider:before {
+    transform: translateX(30px);
+  }
+  
+  
+  

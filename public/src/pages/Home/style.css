@@ -1,0 +1,24 @@
+.container{
+    align-items: center;
+}
+.container_wel{
+    margin-left: 60%;
+    background-color: black;
+}
+h2{
+    color: black;
+}
+p{
+    color: black;
+    margin-left: 100px;
+}
+.container_account{
+    color: black;
+    display: flex;
+    gap: 50%;
+    margin-left: 20%;
+}
+button{
+    padding: 5px 5px 5px;
+
+}
