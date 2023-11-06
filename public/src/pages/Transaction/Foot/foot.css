@@ -1,5 +1,5 @@
 /* CSS for the footer */
-.footer {
+.foot {
     left: 0;
     bottom: 0;
     width: 101%;
@@ -8,9 +8,10 @@
     align-items: center;
     margin-left: -8.3px;
     margin-bottom: -8px;
-    padding: 2px;
+    padding: 8px;
+    position: fixed;
   }
-.footer__content{
+.foot__content{
   display: flex;
   align-items: center;
   margin-top: 10px;
@@ -22,5 +23,7 @@
 .linnk{
   color: white;
   text-decoration: none;
+  margin-left: 30px;
+  gap: 577px;
 }
  

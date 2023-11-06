@@ -1,0 +1,53 @@
+/* Carousel.css */
+
+/* Style the container that holds the carousel */
+.carousel-container {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15%;
+    height: 200px; /* Set the height of the carousel container */
+  }
+  
+  /* Style the carousel itself */
+  .carousel {
+    display: flex;
+    gap: 10px;
+    width: 80%; /* Set the width of the carousel */
+  }
+  
+  /* Style the individual slides */
+  .carousel-slide {
+    flex: 0 0 33.33%; /* Display three slides in a row */
+    transition: transform 1s ease-in-out;
+    text-align: center;
+    
+  }
+  
+  .carousel-slide img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%; /* Make the images fill their containers */
+    height: 150px;
+    border-radius: 15px;
+  }
+  
+  /* Apply a transition effect to the active slide */
+  .carousel-slide.active {
+    transform: translateX(0);
+  }
+  
+  /* Hide inactive slides to the right */
+  .carousel-slide:not(.active) {
+    transform: translateX(100%);
+  }
+  .button{
+    margin-left: 70%;
+    margin-top: -10px;
+    background-color: transparent;
+    color: black;
+  }
+  .button:hover{
+    background-color: transparent;
+  }
+  

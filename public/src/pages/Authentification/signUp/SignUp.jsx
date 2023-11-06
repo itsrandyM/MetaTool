@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './style.css'
+import { useNavigate } from 'react-router-dom';
+import './styles.css'
+import WelcomePage from '../../Home/home';
 
 function SignUpForm() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,10 +26,10 @@ function SignUpForm() {
     // You can call the signUp function here and pass the formData as an argument
     signUp(formData);
   };
-
+ 
   return (
     <div>
-      <h2 className='h2'>Sign Up for Meta</h2>
+      <h2 className='H2'>Sign Up for Meta</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstname">First Name:</label>
@@ -81,7 +84,7 @@ function SignUpForm() {
           />
         </div>
 
-        <button type="submit">Sign Up</button>
+        <button onClick={() => navigate(Welcome)}>Sign Up</button>
       </form>
     </div>
   );

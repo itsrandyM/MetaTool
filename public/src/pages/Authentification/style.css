@@ -1,49 +1,7 @@
-/* SignUpForm.css */
-
-/* Style the form container */
-form {
-    max-width: 300px;
-    margin: 0 auto;
-  }
-  .h2{
-    font-size: 18px;
-  }
-  
-  /* Style form labels */
-  label {
-    display: flex;
-    margin-bottom: 5px;
-    font-size: 8px;
-  }
-  
-  /* Style form input fields */
-  input {
-    width: 100%;
-    padding: 4px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  /* Style the submit button */
-  button {
-    background-color: #6B8065;
-    color: white;
-    padding: 10px 40px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  /* Style the submit button on hover */
-  button:hover {
-    background-color: #0056b3;
-  }
-
 /* AuthenticationPage.css */
 
 .auth-background {
-    height: 80vh;
+    height: 77vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,8 +15,10 @@ form {
     padding: 25px;
     border-radius: 5px;
     padding-right: 40px;
+    justify-content: center;
     text-align: center;
-    margin-top: px; /* Add margin to separate the switch from the forms */
+    margin-left: 32px;
+    margin-top: 10%; /* Add margin to separate the switch from the forms */
   }
   
   /* Style the switch container */
@@ -66,7 +26,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center; /* Center the switch vertically */
-    margin-bottom: 5px;
+    margin-bottom: 0px;
   }
   
   /* Style the switch */
@@ -74,8 +34,9 @@ form {
     position: relative;
     display: inline-block;
     width: 60px;
-    height: 30px;
+    height: 27.2px;
     padding-bottom: -100px;
+    margin-left: 10px;
   }
   
   .switch input {
@@ -99,11 +60,11 @@ form {
     content: '';
     height: 26px;
     width: 26px;
-    left: 4px;
-    bottom: 2px;
+    left: 1px;
+    bottom: 0.5px;
     background-color: #e6dddd;
     border-radius: 50%;
-    transition: 0.4s;
+    transition: 0.0s;
   }
   
   .slider.round {
@@ -115,7 +76,7 @@ form {
   }
   
   .switch input:checked + .slider:before {
-    transform: translateX(30px);
+    transform: translateX(33px);
   }
   
   

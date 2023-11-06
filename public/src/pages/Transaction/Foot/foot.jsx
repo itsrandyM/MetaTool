@@ -1,15 +1,15 @@
 import React from 'react';
-import './Footer.css'; // Replace 'Footer.css' with your CSS file's path
+import './Foot.css'; // Replace 'Footer.css' with your CSS file's path
 
-function Footer() {
+function Foot() {
   return (
-    <div className="footer">
-      <div className='footer__content'>
-        <div className='link_container'>
+    <div className="foot">
+      <div className='foot__content'>
+        <div className='linkk_container'>
         <a href="" className='linnk'>User Agreement</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;
         <a href="" className='linnk'>FAQS</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;
         <a href="" className='linnk'>About Meta</a>
         </div>
       </div>
@@ -20,4 +20,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default Foot;

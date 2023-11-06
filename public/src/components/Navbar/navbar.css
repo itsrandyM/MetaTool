@@ -1,0 +1,30 @@
+/* Style the navbar */
+.navbar {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0; /* Sticky at the top of the viewport */
+    background-color: #395241;
+    padding: 5px;
+    margin-top: -8px;
+    margin-left: -8px;
+    margin-right: -8px;
+    display: flex;
+    color: black;
+    text-align: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+    /* You can add more styles as needed */
+  }
+  .link{
+    margin-left: 57%;
+  }
+  .a{
+    color: #F3EEE2;
+    text-decoration: none;
+    font-size: 20px;
+  }
+
+  .icon{
+    
+  }

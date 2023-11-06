@@ -1,0 +1,44 @@
+/* Add styling to the table */
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 1px;
+    margin-left: 10%;
+  }
+  .tittle{
+    display: flex;
+    align-items: center;
+  }
+  .navigate{
+    margin-left: 67%;
+  }
+  h6{
+    color: black;
+    margin-left: 10%;
+  }
+  
+  /* Style the table header */
+  th {
+    background-color: #395241;
+    color: black;
+    font-weight: 500;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Style alternating rows with different background colors
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  } */
+  
+  /* Style table cells */
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Highlight rows on hover */
+  tr:hover {
+    background-color: #cce6ff;
+  }
+  

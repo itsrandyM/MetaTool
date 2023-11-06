@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Table from '../../components/Table/table';
+import Navbar from '../../components/Navbar/navbar';
+import Footer from '../../components/Footer/footer';
+import Carousel from '../../components/carousel/carousel';
 import './style.css'
 
-function WelcomePage({ username, ammount }) {
+const WelcomePage = () => {
+  const [userName, setUserName] = useState('');
+  const [accountBalance, setAccountBalance] = useState(0);
+
+  // Simulate data retrieval from a server
+  useEffect(() => {
+    // You would replace these with actual API calls
+    setUserName('Raymond');
+    setAccountBalance(1000);
+  }, []);
+
   return (
-    <div className='container'>
-        <div className='containe_wel'>
-        <h2>Welcome to Meta Tool</h2>
-        <p><span>{username}Raymond</span></p>
-        </div>
-        <div className='container_account'>
-            <h5>Accont Balance: <br />{ ammount } 0.00$</h5>
-            <button>New Transaction</button>
-        </div>
-     
+    <div className='home-page'>
+      <Navbar/>
+      <div className='content'>
+      <h2>Welcome to Meta Tool</h2>
+      <p>{userName}</p>
+      <h3>Account Balance:</h3>
+      <p>${accountBalance}</p>
+      </div>
+      <div>
+        <Carousel/>
+      </div>
+      <div>
+      <Table/>
+      </div>
+     <Footer/>
     </div>
-    
   );
 }
 

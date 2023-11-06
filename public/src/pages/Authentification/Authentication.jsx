@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './style.css'; // Import the CSS file for styling
-import SignUpForm from './SignUp'; // Import the SignUpForm component
-import LoginForm from './logIn'; // Import the LoginForm component
+import SignUpForm from './signUp/SignUp'; // Import the SignUpForm component
+import LoginForm from './logIn/logIn'; // Import the LoginForm component
 
 function AuthenticationPage() {
   const [isSignUp, setIsSignUp] = useState(true); // Use state to toggle between sign-up and login forms

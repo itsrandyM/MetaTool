@@ -1,0 +1,44 @@
+/* SignUpForm.css */
+
+/* Style the form container */
+form {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .h2{
+    font-size: 18px;
+  }
+  
+  /* Style form labels */
+  label {
+    display: flex;
+    margin-bottom: 5px;
+    font-size: 8px;
+  }
+  
+  /* Style form input fields */
+  input {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Style the submit button */
+  button {
+    background-color: #6B8065;
+    color: white;
+    padding: 10px;
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  
+  /* Style the submit button on hover */
+  button:hover {
+    background-color: #0056b3;
+  }
