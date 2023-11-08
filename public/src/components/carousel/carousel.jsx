@@ -26,7 +26,6 @@ function Carousel() {
     return (
     <div className='main-containerr'>
       <div className='click'>
-      <button className='more'>see more</button>
       </div>
    
       <div className="carousel-container">
