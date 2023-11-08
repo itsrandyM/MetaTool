@@ -1,6 +1,3 @@
-/* SignUpForm.css */
-
-/* Style the form container */
 form {
     max-width: 300px;
     margin: 0 auto;
@@ -9,14 +6,12 @@ form {
     font-size: 18px;
   }
   
-  /* Style form labels */
   label {
     display: flex;
     margin-bottom: 5px;
     font-size: 8px;
   }
   
-  /* Style form input fields */
   input {
     width: 100%;
     padding: 4px;
@@ -25,8 +20,7 @@ form {
     border-radius: 4px;
   }
   
-  /* Style the submit button */
-  button {
+  .authentic {
     background-color: #6B8065;
     color: white;
     padding: 10px;
@@ -37,8 +31,6 @@ form {
     border-radius: 15px;
     cursor: pointer;
   }
-  
-  /* Style the submit button on hover */
   button:hover {
-    background-color: #0056b3;
+    background-color: transparent;
   }

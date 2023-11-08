@@ -1,12 +1,10 @@
 .home-page {
   display: block;
   flex-direction: column;
-  justify-content: flex-start; /* Center vertically */
-  align-items: center; /* Center horizontally */
-  height: 100vh; /* Ensure the container takes up the full viewport height */
+  justify-content: flex-start; 
+  align-items: center; 
+  height: 100vh; 
 }
-
-/* Optional: You can style the elements further as needed */
 h2 {
   color: black;
   font-size: 20px;

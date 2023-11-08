@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import './style.css'; // Import the CSS file for styling
-import SignUpForm from './signUp/SignUp'; // Import the SignUpForm component
-import LoginForm from './logIn/logIn'; // Import the LoginForm component
+import './style.css'; 
+import SignUpForm from './signUp/SignUp'; 
+import LoginForm from './logIn/logIn';
+import Nav from './Navbar/nav';
+import Foot from '../Transaction/Foot/foot';
 
 function AuthenticationPage() {
-  const [isSignUp, setIsSignUp] = useState(true); // Use state to toggle between sign-up and login forms
+  const [isSignUp, setIsSignUp] = useState(false); // Use state to toggle between sign-up and login forms
 
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
   };
 
   return (
+    <div>
+      <Nav/>
     <section className="auth-background">
       <div className="auth-container">
         <div className="switch-container">
@@ -22,6 +26,9 @@ function AuthenticationPage() {
         {isSignUp ? <SignUpForm /> : <LoginForm />}
       </div>
     </section>
+    <Foot/>
+    </div>
+
   );
 }
 

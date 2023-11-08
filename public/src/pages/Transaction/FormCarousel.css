@@ -1,42 +1,11 @@
-/* FormCarousel.css */
-
- /* Background styling */
  body {
-     /*Set your desired background color */
     padding: 0;
     justify-content: center;
     align-items: center;
-  }
-
-  /* Form carousel styling */
-/* FormCarousel.css */
-
-/* Form carousel styling */
-.form-carousel {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    color: black;
-    margin-left: 34%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 300px;
-    margin-top: 3%; /* Adjust the margin to separate the forms from the navbar */
-  }
-  
-  
+}
 label{
     margin-left: 45px;
 }
-  .form {
-    /* Form styles here */
-  }
-  
-  button {
-    /* Button styles here */
-  }
-  /* Form.css */
-
 .fixed-width {
-    width: 200px; /* Set the desired fixed width */
-  }
+    width: 200px;
+}

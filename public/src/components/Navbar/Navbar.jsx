@@ -6,16 +6,16 @@ import './navbar.css'
 const Navbar = () => {
   return (
     <div className="navbar">
-    <div>
-    <a href="/">
+    <div className='logo'>
+    <a href="home">
     <img src="./public/img/logoside.png" alt="Your Image"  width='190px' height='50px'/>
     </a>
     </div>
     <div className='link'>
-    <NavLink to='/' className='a'>Home</NavLink>
-    &nbsp; &nbsp; 
+    <NavLink to='/home' className='a'>Home</NavLink>
+    &nbsp;
     <NavLink to='/wallets' className='a'>Wallets</NavLink>
-    &nbsp; &nbsp; 
+    &nbsp;  
     <NavLink to='/support' className='a'>Support</NavLink>
     &nbsp; &nbsp; 
   

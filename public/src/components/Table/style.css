@@ -1,4 +1,3 @@
-/* Add styling to the table */
 table {
     width: 80%;
     border-collapse: collapse;
@@ -10,14 +9,13 @@ table {
     align-items: center;
   }
   .navigate{
-    margin-left: 67%;
+    margin-left: 60%;
   }
   h6{
     color: black;
     margin-left: 10%;
   }
   
-  /* Style the table header */
   th {
     background-color: #395241;
     color: black;
@@ -26,19 +24,34 @@ table {
     text-align: left;
   }
   
-  /* Style alternating rows with different background colors
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  } */
-  
-  /* Style table cells */
   td {
     padding: 8px;
     border: 1px solid #ddd;
   }
   
-  /* Highlight rows on hover */
   tr:hover {
     background-color: #cce6ff;
   }
+ .icon1{
+   width: 20px;
+   height: 20px;
+
+  }
+  .tran{
+    background-color: rgb(177, 175, 175);
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    gap: 3px;
+    border: 0;
+    color: black;
   
+  }
+  .title{
+    font-size: 10px;
+  }
+  .tran:hover{
+    background-color: transparent;
+}

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles.css'
-import WelcomePage from '../../Home/home';
 
 function SignUpForm() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,8 +22,17 @@ function SignUpForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // You can call the signUp function here and pass the formData as an argument
     signUp(formData);
+    // You can call the signUp function here and pass the formData as an argument
+      // Check if all required fields are filled
+  if (formData.firstName && formData.lastName && formData.email && formData.password) {
+    // All required fields have values, so you can proceed to the Welcome page
+    navigate('home')
+  } else {
+    // Some required fields are missing, show an error message or prevent submission
+    console.log('Please fill out all required fields.');
+  }
+    
   };
  
   return (
@@ -32,38 +40,38 @@ function SignUpForm() {
       <h2 className='H2'>Sign Up for Meta</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="firstname">First Name:</label>
+          <h5 htmlFor="firstname" className='head'>First Name:</h5>
           <input
             type="text"
             id="firstname"
-            name="firstname"
-            value={formData.username}
+            name="firstName"
+            value={formData.firstName}
             onChange={handleInputChange}
           />
         </div>
         <div>
-          <label htmlFor="lastname">Last Name:</label>
+          <h5 htmlFor="lastname" className='head'>Last Name:</h5>
           <input
             type="text"
             id="lastname"
-            name="lastname"
-            value={formData.username}
+            name="lastName"
+            value={formData.lastName}
             onChange={handleInputChange}
           />
         </div>
         <div>
-          <label htmlFor="Position">Position:</label>
+          <h5 htmlFor="Position" className='head'>Position:</h5>
           <input
             type="text"
             id="position"
             name="position"
-            value={formData.username}
+            value={formData.position}
             onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <label htmlFor="email">Email:</label>
+          <h5 htmlFor="email" className='head'>Email:</h5>
           <input
             type="email"
             id="email"
@@ -74,7 +82,7 @@ function SignUpForm() {
         </div>
 
         <div>
-          <label htmlFor="password">Password:</label>
+          <h5 htmlFor="password" className='head'>Password:</h5>
           <input
             type="password"
             id="password"
@@ -84,7 +92,7 @@ function SignUpForm() {
           />
         </div>
 
-        <button onClick={() => navigate(Welcome)}>Sign Up</button>
+        <button onClick={() => navigate(Welcome)} className='authentic'>Sign Up</button>
       </form>
     </div>
   );

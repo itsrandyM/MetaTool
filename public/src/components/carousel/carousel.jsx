@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Carousel.css'; // Import the CSS file
+import './carousel.css'; // Import the CSS file
 
 const images = [
     './public/img/Cardano.png',
@@ -7,7 +7,7 @@ const images = [
     './public/img/Usdc.jpg',
     './public/img/Bitcoin.jpg',
     './public/img/Gold.jpg'
-]; // Replace these with your image URLs
+]; 
 
 
 function Carousel() {
@@ -16,16 +16,20 @@ function Carousel() {
     useEffect(() => {
       const timer = setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, 3000); // Change image every 3 seconds (adjust as needed)
+      }, 3000); // Change image every 3 seconds 
   
       return () => {
         clearTimeout(timer);
       };
     }, [currentIndex]);
-  
+    
     return (
+    <div className='main-containerr'>
+      <div className='click'>
+      <button className='more'>see more</button>
+      </div>
+   
       <div className="carousel-container">
-        <a href=""><button className='button'>see more</button></a>
         <div className="carousel">
           {images.slice(currentIndex, currentIndex + 3).map((image, index) => (
             <div
@@ -37,6 +41,8 @@ function Carousel() {
           ))}
         </div>
       </div>
+    </div>
+
     );
   }
 

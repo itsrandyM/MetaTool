@@ -2,7 +2,7 @@
 
 /* Style the form container */
 form {
-    max-width: 300px;
+    max-width: 200px;
     margin: 0 auto;
     
   }
@@ -11,17 +11,20 @@ form {
   }
   
   /* Style form labels */
-  label {
+  h5 {
     display: flex;
     margin-bottom: 5px;
-    font-size: 8px;
+    font-weight: 400;
+    font-size: 6px;
+    margin-left: 2px;
+    
   }
   
   /* Style form input fields */
   input {
     width: 100%;
     padding: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
@@ -30,7 +33,7 @@ form {
  .bt {
     background-color: #6B8065;
     color: white;
-    padding: 10px;
+    padding: 5px;
     margin-left: 10px;
     padding-left: 40px;
     padding-right: 40px;

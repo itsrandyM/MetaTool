@@ -8,7 +8,6 @@ import './style.css'
 const WelcomePage = () => {
   const [userName, setUserName] = useState('');
   const [accountBalance, setAccountBalance] = useState(0);
-
   // Simulate data retrieval from a server
   useEffect(() => {
     // You would replace these with actual API calls

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import './style.css'
 
 function Table() {
+  const navigate = useNavigate()
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -30,7 +32,10 @@ function Table() {
       <div className='tittle'>
       <h6>Recent Transactions</h6>
       <div className='navigate'>
-      <a href=""><Icon icon="material-symbols-light:fiber-new-outline-rounded"  width='40px' height='40px'/></a>
+        <button className='tran' onClick={() => navigate('/form-display') }>
+          <tittle className='title'> New Transaction</tittle>
+        <Icon icon="icomoon-free:new-tab" className='icon1'/>
+        </button>
       </div>
       </div>
       <table>

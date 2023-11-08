@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './style.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom';
+import './style.css'; 
 
 function LoginForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     email:'',
@@ -18,8 +20,15 @@ function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // You can call the login function here and pass the formData as an argument
     login(formData);
+    // You can call the login function here and pass the formData as an argument
+    if(formData.username && formData.email && formData.password) {
+    navigate('home')
+    }else{
+      console.log('Please fill the fields');
+    }
+    
+    
   };
 
   return (
@@ -27,7 +36,7 @@ function LoginForm() {
       <h2 className='h2'>Login for Meta</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">User Name:</label>
+          <h5 htmlFor="username">User Name:</h5>
           <input
             type="text"
             id="username"
@@ -37,18 +46,18 @@ function LoginForm() {
           />
         </div>
         <div>
-          <label htmlFor="email">Email Address:</label>
+          <h5 htmlFor="email">Email Address:</h5>
           <input
             type="text"
             id="email"
             name="email"
-            value={formData.username}
+            value={formData.email}
             onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <label htmlFor="password">Password:</label>
+          <h5 htmlFor="password">Password:</h5>
           <input
             type="password"
             id="password"
@@ -58,7 +67,7 @@ function LoginForm() {
           />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" className='authentic'>Login</button>
       </form>
     </div>
   );

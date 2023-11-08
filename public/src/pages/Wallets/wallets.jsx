@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../../components/Navbar/navbar'
-import Footer from '../../components/Footer/footer'
 import './style.css'
+
 const Wallets = () => {
   return (
     <div className='wallets'>
@@ -9,8 +9,7 @@ const Wallets = () => {
         <div>
 
         </div>
-        {/* <Footer/> */}
-    </div>
+      </div>
   )
 }
 

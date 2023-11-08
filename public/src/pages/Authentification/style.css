@@ -1,14 +1,11 @@
-/* AuthenticationPage.css */
-
 .auth-background {
-    height: 77vh;
+    height: 75.5vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column; /* Center the content vertically */
+    flex-direction: column;
   }
   
-  /* Style the form container */
   .auth-container {
     background-color: #F2EEE3;
     color: #000000;
@@ -18,18 +15,15 @@
     justify-content: center;
     text-align: center;
     margin-left: 32px;
-    margin-top: 10%; /* Add margin to separate the switch from the forms */
+    margin-top: 0%;
   }
   
-  /* Style the switch container */
   .switch-container {
     display: flex;
     justify-content: center;
-    align-items: center; /* Center the switch vertically */
+    align-items: center; 
     margin-bottom: 0px;
   }
-  
-  /* Style the switch */
   .switch {
     position: relative;
     display: inline-block;
