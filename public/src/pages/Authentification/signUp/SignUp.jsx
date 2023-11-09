@@ -5,8 +5,7 @@ import './styles.css'
 function SignUpForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    userName: '',
     position:'',
     email: '',
     password: '',
@@ -25,7 +24,7 @@ function SignUpForm() {
     signUp(formData);
     // You can call the signUp function here and pass the formData as an argument
       // Check if all required fields are filled
-  if (formData.firstName && formData.lastName && formData.email && formData.password) {
+  if (formData.userName && formDataposition && formData.email && formData.password) {
     // All required fields have values, so you can proceed to the Welcome page
     navigate('home')
   } else {
@@ -40,22 +39,12 @@ function SignUpForm() {
       <h2 className='H2'>Sign Up for Meta</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <h5 htmlFor="firstname" className='head'>First Name:</h5>
+          <h5 htmlFor="userName" className='head'>User Name:</h5>
           <input
             type="text"
-            id="firstname"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <h5 htmlFor="lastname" className='head'>Last Name:</h5>
-          <input
-            type="text"
-            id="lastname"
-            name="lastName"
-            value={formData.lastName}
+            id="userName"
+            name="userName"
+            value={formData.userName}
             onChange={handleInputChange}
           />
         </div>

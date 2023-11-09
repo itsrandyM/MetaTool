@@ -7,12 +7,14 @@ import './style.css'
 
 const WelcomePage = () => {
   const [userName, setUserName] = useState('');
+  const [position, setPosition] = useState('');
   const [accountBalance, setAccountBalance] = useState(0);
   // Simulate data retrieval from a server
   useEffect(() => {
     // You would replace these with actual API calls
     setUserName('Raymond');
-    setAccountBalance(1000);
+    setPosition('CEO');
+    setAccountBalance(100000);
   }, []);
 
   return (
@@ -20,9 +22,9 @@ const WelcomePage = () => {
       <Navbar/>
       <div className='content'>
       <h2>Welcome to Meta Tool</h2>
-      <p>{userName}</p>
+      <p>{userName} : {position}</p>
       <h3>Account Balance:</h3>
-      <p>${accountBalance}</p>
+      <h6 className='h6'>${accountBalance}</h6>
       </div>
       <div>
         <Carousel/>
