@@ -31,5 +31,9 @@ const recipientDataSchema = new mongoose.Schema({
         default: false, 
       }
     
-})
+},
+{
+    timestamps: true
+}
+)
 module.exports = mongoose.model('RecipientData', recipientDataSchema)

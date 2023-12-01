@@ -3,20 +3,26 @@ const Description = require('../models/Description')
 const Classification = require('../models/Classification')
 const RecipientsData = require('../models/RecipientsData')
 //const User = require('../models/User')
+const Recipient = require('../models/Recipient')
 
 const NewTransactionController= {
     addRecipientTransaction: async (req, res) => {
         console.log('Controller received request:', req.body)
         try {
-            const {  tokenName,descriptionName, classificationName } = req.body
+            const {  tokenName,descriptionName, classificationName, name, email, walletAddress } = req.body
           //const user = req.user  
 
+          const recipient = await Recipient.create({ //User:User,
+            name, email, walletAddress });
+
+          
             const description = await Description.create({descriptionName})
             const token = await Token.create({tokenName})
             const classification = await Classification.create({classificationName})
                 
             const RecipientData = await RecipientsData.create({
                // User: User,
+                recipient,
                 token,
                 description,
                 classification

@@ -40,19 +40,27 @@ router.post(
            // const user = req.user  
           // Query the database to retrieve the verified data needed for the JSON file
     const verifiedData = await RecipientsData.find({ //User: user, 
-        verified: true }).populate('recipient token description classification');
+        verified: true })
+        //.sort({createdAt: +1})
+        .limit(1)
+        .populate('recipient token description classification')
+
+        if (verifiedData.length === 0) {
+            return res.status(404).json({ success: false, error: 'No verified data found' })
+        }
+
 
     // Generate JSON file content
-    const jsonContent = JSON.stringify(verifiedData, null, 2);
+    const jsonContent = JSON.stringify(verifiedData, null, 2)
 
-    res.set('Content-Type', 'application/json');
-    res.attachment('metadata.json');
-    res.send(jsonContent);
+    res.set('Content-Type', 'application/json')
+    res.attachment('metadata.json')
+    res.send(jsonContent)
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, error: 'Internal Server Error' });
+    console.error(error)
+    res.status(500).json({ success: false, error: 'Internal Server Error' })
   }
-});
+})
 
 
 module.exports = router
