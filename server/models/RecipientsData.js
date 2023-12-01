@@ -1,5 +1,5 @@
 const  mongoose = require ("mongoose")
-const Recipient = require("./Recipients")
+const Recipient = require("./Recipient")
 const Token = require("./Token")
 const Description = require("./Description")
 const Classification = require("./Classification")

@@ -8,25 +8,20 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const { default: mongoose } = require('mongoose')
-const PORT = process.env.PORT || 4000
-
-
-
+const AddRecipient = require('./routes/recipientadd')
+const TransactionRouter = require('./routes/NewT')
+const DataRouter = require('./routes/Transaction')
 
 
 app.use(logger)
-
 app.use(cors(corsOptions))
-
 app.use(express.json())
-
 app.use(cookieParser())
 
-app.use('/', express.static(path.join(__dirname, 'public')))
+//app.use('/', express.static(path.join(__dirname, 'public')))
+//app.use('/', require('./routes/root'))
 
-app.use('/', require('./routes/root'))
-
-app.all('*', (req, res) => {
+/*app.all('*', (req, res) => {
     res.status(404)
     if (req.accepts('html')) {
         res.sendFile(path.join(__dirname, 'views', '404.html'))
@@ -35,14 +30,28 @@ app.all('*', (req, res) => {
     } else {
         res.type('txt').send('404 Not Found')
     }
-})
+})*/
 
 app.use(errorHandler)
 
+//routes
+app.use('/api',TransactionRouter)
+app.use('/api',AddRecipient)
+app.use('/api',DataRouter)
+
+
+
+
+
+
+
+
+
+
 //db connection
 mongoose.connect(process.env.MONGO_URI,{
-  //  UseNewUrlParser: true,
-    //UseUnifiedTopology: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 })
 .then(() => {
     app.listen(process.env.PORT, () => {
