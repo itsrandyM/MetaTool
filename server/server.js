@@ -11,6 +11,7 @@ const { default: mongoose } = require('mongoose')
 const AddRecipient = require('./routes/recipientadd')
 const TransactionRouter = require('./routes/NewT')
 const DataRouter = require('./routes/Transaction')
+const UserRouter = require('./routes/userRoutes')
 
 
 app.use(logger)
@@ -38,6 +39,7 @@ app.use(errorHandler)
 app.use('/api',TransactionRouter)
 app.use('/api',AddRecipient)
 app.use('/api',DataRouter)
+app.use(UserRouter)
 
 
 
