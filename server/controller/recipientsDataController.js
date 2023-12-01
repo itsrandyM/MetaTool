@@ -19,23 +19,6 @@ const getAllRecipientData = asyncHandler(async (req, res) => {
 // @desc Create new recipient data
 // @route POST /recipient-data
 // @access Private
-const createNewRecipientData = asyncHandler(async (req, res) => {
-  const { recipient, name, token, description, classification, verified } = req.body;
-
-  if (!recipient || !name || !token || !description || !classification) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
-
-  const recipientDataObject = { recipient, name, token, description, classification, verified };
-
-  const recipientData = await RecipientData.create(recipientDataObject);
-
-  if (recipientData) {
-    res.status(201).json({ message: `New recipient data created` });
-  } else {
-    res.status(400).json({ message: 'Invalid recipient data received' });
-  }
-});
 
 // @desc Update recipient data
 // @route PATCH /recipient-data
@@ -86,7 +69,6 @@ const deleteRecipientData = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAllRecipientData,
-  createNewRecipientData,
   updateRecipientData,
   deleteRecipientData,
 };
