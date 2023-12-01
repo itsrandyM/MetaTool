@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const { default: mongoose } = require('mongoose')
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 
 
 
 
@@ -25,6 +25,7 @@ app.use(cookieParser())
 app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use('/', require('./routes/root'))
+app.use('/users', require('./routes/userRoutes'))
 
 app.all('*', (req, res) => {
     res.status(404)
@@ -54,7 +55,3 @@ mongoose.connect(process.env.MONGO_URI,{
     process.exit(1)
 })
 
-
-
-
-//app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
