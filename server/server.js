@@ -12,6 +12,7 @@ const AddRecipient = require('./routes/recipientadd')
 const TransactionRouter = require('./routes/NewT')
 const DataRouter = require('./routes/Transaction')
 const UserRouter = require('./routes/userRoutes')
+const AuthRouter = require('./routes/AuthRoutes')
 
 
 app.use(logger)
@@ -36,10 +37,12 @@ app.use(cookieParser())
 app.use(errorHandler)
 
 //routes
+app.use('/auth',AuthRouter)
 app.use('/api',TransactionRouter)
 app.use('/api',AddRecipient)
 app.use('/api',DataRouter)
 app.use(UserRouter)
+
 
 
 

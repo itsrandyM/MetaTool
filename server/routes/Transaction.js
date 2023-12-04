@@ -4,6 +4,7 @@ const Recipient = require('../models/Recipient')
 const RecipientsData = require("../models/RecipientsData")
 const Token = require('../models/Token')
 const Description = require('../models/Description')
+const authToken = require('../middleware/AuthMW')
 //const { route } = require('./root')
 
 
@@ -32,18 +33,18 @@ router.post('/verifyData', async (req, res, next) => {
 
 // Endpoint to generate JSON file
 router.post(
-  '/generateJson',
+  '/generateJson', authToken,
   async (req, res, next) => {
       try {  
-      // const user = req.user  
-         const verifiedData = await RecipientsData.find({ //User: user, 
+         const user = req.user  
+         const verifiedData = await RecipientsData.find({ User: user, 
           verified: true })
           //.sort({createdAt: +1})
           .limit(1)
           .populate('recipient token description classification')
   
           if (verifiedData.length === 0) {
-              return res.status(404).json({ success: false, error: 'No verified data found' })
+              return res.status(200).json({ success: true, error: 'No verified data found',data:[] })
           }
   
   // Generate JSON file content
