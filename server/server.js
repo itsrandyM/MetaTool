@@ -39,7 +39,7 @@ app.use(errorHandler)
 app.use('/api',TransactionRouter)
 app.use('/api',AddRecipient)
 app.use('/api',DataRouter)
-app.use(UserRouter)
+app.use('/users',UserRouter)
 
 
 
