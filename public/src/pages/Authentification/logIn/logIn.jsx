@@ -18,15 +18,38 @@ function LoginForm() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    login(formData);
-    // You can call the login function here and pass the formData as an argument
-    if(formData.username && formData.email && formData.password) {
-    navigate('home')
-    }else{
-      console.log('Please fill the fields');
+    try{
+
+      const response = await fetch('/Login',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password
+        })
+      })
+      const data = await response.json()
+      if(response.ok){
+        console.log('Successful login', data)
+
+        login(formData);
+        if(formData.username && formData.email && formData.password) {
+        navigate('home')
+        }else{
+          console.log('Please fill the fields');
+        }
+      }else{
+        console.log('Failed to Login', data.message);
+     }
+  }catch(error){
+console.error('Error during login:', error)
     }
+   
     
     
   };
@@ -67,7 +90,7 @@ function LoginForm() {
           />
         </div>
 
-        <button type="submit" className='authentic'>Login</button>
+        <button type="submit" onClick={handleSubmit} className='authentic'>Login</button>
       </form>
     </div>
   );
