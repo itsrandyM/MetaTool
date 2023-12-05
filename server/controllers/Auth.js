@@ -45,20 +45,27 @@ const RegisterNewUser = asyncHandler(async (req, res) => {
 //Login
 
 const LoginUser = asyncHandler(async (req, res) => {
-    const { username, email ,password } = req.body
+   
     try{
-    
+        const { username, email ,password } = req.body
+        const user = await User.findOne({ email }).exec()
     // Confirm data
     if (!username || !email || !password) {
         return res.status(400).json({ message: 'All fields are required' })
     }
+
+     if (!user) {
+        return res.status(401).json({ status: 401, message: 'Invalid email' });
+    } else if (!user.username || !(await bcrypt.compare(password, user.password))) {
+        return res.status(401).json({ status: 401, message: 'Invalid password' });
+    }
+    //(user && (await bcrypt.compare(password, user.password)))
     
-    const user = await User.findOne({ username }).exec()
+    
+    
+    
 
-if(!user){
-    return res.status(401).json({success:false, message:'Invalid username'})
 
-}
 const token = jwt.sign({
     _id: user._id,
     username: user.username,
@@ -71,7 +78,7 @@ res.json({
     token
 })
 }catch(error){
-    console.error(error)
+    console.error("Error logging in:",error.message)
     res.status(500).json({success:false,error:'Internal Server Error'})
 }
 })

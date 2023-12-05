@@ -20,9 +20,8 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try{
-
-      const response = await fetch('/Login',{
+    try {
+      const response = await fetch('http://localhost:4000/auth/Login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -32,26 +31,24 @@ function LoginForm() {
           email: formData.email,
           password: formData.password
         })
-      })
-      const data = await response.json()
-      if(response.ok){
-        console.log('Successful login', data)
-
-        login(formData);
-        if(formData.username && formData.email && formData.password) {
-        navigate('home')
-        }else{
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Successful login', data);
+        // Assuming you have a login function to handle the login logic
+        // login(formData);
+  
+        if (formData.username && formData.email && formData.password) {
+          navigate('home');
+        } else {
           console.log('Please fill the fields');
         }
-      }else{
+      } else {
         console.log('Failed to Login', data.message);
-     }
-  }catch(error){
-console.error('Error during login:', error)
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
     }
-   
-    
-    
   };
 
   return (
@@ -70,6 +67,7 @@ console.error('Error during login:', error)
         </div>
         <div>
           <h5 htmlFor="email">Email Address:</h5>
+
           <input
             type="text"
             id="email"
@@ -99,7 +97,7 @@ console.error('Error during login:', error)
 // Define the login function separately
 function login(formData) {
   // You can implement the login logic here, e.g., sending the data to a server
-  console.log('Logging in with data:', formData);
-}
+  console.log('Logging in with data:', formData)};
+
 
 export default LoginForm;
