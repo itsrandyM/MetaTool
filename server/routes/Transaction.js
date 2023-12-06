@@ -50,12 +50,13 @@ router.post(
   // Generate JSON file content
   const jsonContent = JSON.stringify(verifiedData, null, 2)
 
-  res.set('Content-Type', 'application/json')
-  res.attachment('metadata.json')
-  res.send(jsonContent)
-} catch (error) {
-  console.error(error)
-  res.status(500).json({ success: false, error: 'Internal Server Error' })
-}
-})
+    res.set('Content-Type', 'application/json');
+    res.attachment('metadata.json');
+    res.send(jsonContent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
 module.exports = router;
