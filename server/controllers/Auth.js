@@ -56,10 +56,12 @@ const LoginUser = asyncHandler(async (req, res) => {
 
      if (!user) {
         return res.status(401).json({ status: 401, message: 'Invalid email' });
-    } else if (!user.username || !(await bcrypt.compare(password, user.password))) {
+    } else if (!user.username) {
+        return res.status(401).json({ status: 401, message: 'Invalid username' });
+}else if(!(await bcrypt.compare(password, user.password))) {
         return res.status(401).json({ status: 401, message: 'Invalid password' });
     }
-    //(user && (await bcrypt.compare(password, user.password)))
+    
     
     
     
