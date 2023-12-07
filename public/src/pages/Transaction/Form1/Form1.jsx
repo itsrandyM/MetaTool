@@ -6,8 +6,12 @@ const Form1 = ({ onNextForm }) => {
   const [description, setDescription] = useState('');
 
   const handleNext = () => {
-    // Logic
-    onNextForm(2);
+    if (name && description) {
+      onNextForm(2);
+    } else {
+      alert('Please fill in all fields.');
+      setError('Please fill the fields')
+    }
   };
 
   return (

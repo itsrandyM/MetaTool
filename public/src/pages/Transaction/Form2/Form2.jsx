@@ -9,11 +9,13 @@ const Form2 = ({ onNextForm }) => {
   const handleNext = () => {
     // Validate fields before moving to the next form
     if (name && email && wallet) {
-      onNextForm(3);
+      onNextForm(3,{name, email, wallet});
     } else {
       alert('Please fill in all fields.');
     }
   };
+
+  //onUpdateData()
 
   return (
     <div className="form2_container">
@@ -43,7 +45,7 @@ const Form2 = ({ onNextForm }) => {
           <div className="form-group">
             <label htmlFor="wallet">Wallet Address:</label>
             <input
-              type="address"
+              type="text"
               id="address"
               name="address"
               value={wallet}

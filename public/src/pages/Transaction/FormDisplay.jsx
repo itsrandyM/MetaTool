@@ -14,16 +14,17 @@ const FormDisplay = () => {
   const handleForm2Submit = (data) => {
     setForm2Data(data);
     // Move to the next form
-    handleNextForm(2);
+    handleNextForm(2,data);
   };
 
   const handleForm3Submit = (data) => {
     setForm3Data(data);
     // Move to the next form
-    handleNextForm(3);
+    handleNextForm(3,data);
   };
 
-  const handleNextForm = (nextForm) => {
+  const handleNextForm = (nextForm, formData) => {
+    console.log(formData)
     setCurrentForm(nextForm);
   };
 

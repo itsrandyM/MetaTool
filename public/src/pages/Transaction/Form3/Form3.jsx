@@ -9,11 +9,12 @@ const Form3 = ({ onNextForm }) => {
   const handleNext = () => {
     // Validate fields before moving to the next form
     if (token && classification && description) {
-      onNextForm(4);
+      onNextForm(4,{ token, classification, description });
     } else {
       alert('Please fill in all fields.');
     }
   };
+
 
   return (
     <div className="form3_container">
@@ -23,7 +24,7 @@ const Form3 = ({ onNextForm }) => {
           <div className="form-group">
             <label htmlFor="token">Token:</label>
             <input
-              type="token"
+              type="text"
               id="token"
               name="token"
               value={token}
