@@ -9,8 +9,12 @@ const NewTransactionController= {
     addRecipientTransaction: async (req, res) => {
         console.log('Controller received request:', req.body)
         try {
-            const {  tokenName,descriptionName, classificationName, name, email, walletAddress } = req.body
+            const { transactionName,transactionDescription ,tokenName,descriptionName, classificationName, name, email, walletAddress } = req.body
           //const user = req.user  
+             
+             const TName = await RecipientsData.create({transactionName,})
+             const TDescription = await RecipientsData.create({transactionDescription,})
+
 
           const recipient = await Recipient.create({ //User:User,
             name, email, walletAddress });
@@ -21,7 +25,9 @@ const NewTransactionController= {
             const classification = await Classification.create({classificationName})
                 
             const RecipientData = await RecipientsData.create({
-               // User: User,
+                //User: user,
+                TName,
+                TDescription,
                 recipient,
                 token,
                 description,

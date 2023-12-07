@@ -7,6 +7,13 @@ const Classification = require("./Classification")
 
 
 const recipientDataSchema = new mongoose.Schema({
+    transactionName: {
+        type:String
+    },
+     transactionDescription: {
+        type:String
+    },
+
     recipient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: Recipient

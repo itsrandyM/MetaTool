@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import{FaEye, FaEyeSlash} from 'react-icons/fa'
-import './style.css';
+import './style.css'
 
 function LoginForm() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
-  });
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  })
+  const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState('')
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
+    })
+  }
 
   const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       const response = await fetch('http://localhost:4000/auth/Login', {
         method: 'POST',
@@ -38,28 +38,27 @@ function LoginForm() {
           email: formData.email,
           password: formData.password,
         }),
-      });
-      const data = await response.json();
+      })
+      const data = await response.json()
       if (response.ok) {
-        console.log('Successful login', data);
-        // Assuming you have a login function to handle the login logic
-        // login(formData);
+        console.log('Successful login', data)
+        // login(formData)
 
         if (formData.username && formData.email && formData.password) {
-          navigate('home');
+          navigate('home')
         } else {
-          console.log('Please fill the fields');
-          setError('Please fill the fields');
+          console.log('Please fill the fields')
+          setError('Please fill the fields')
         }
       } else {
-        console.log('Failed to Login', data.message);
-        setError(data.message);
+        console.log('Failed to Login', data.message)
+        setError(data.message)
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      setError('Internal Server');
+      console.error('Error during login:', error)
+      setError('Internal Server')
     }
-  };
+  }
 
   return (
     <div>
@@ -133,13 +132,13 @@ function LoginForm() {
         </button>
       </form>
     </div>
-  );
+  )
 }
 
 // Define the login function separately
 function login(formData) {
   // You can implement the login logic here, e.g., sending the data to a server
-  console.log('Logging in with data:', formData);
+  console.log('Logging in with data:', formData)
 }
 
-export default LoginForm;
+export default LoginForm
