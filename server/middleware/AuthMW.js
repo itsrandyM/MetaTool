@@ -7,7 +7,7 @@ const authToken = (req, res, next) => {
     const token = req.header('Authorization')
     if(!token) return res.status(401).json({success: false, message:'Access denied. Token not provided.'})
 
-    jwt.verify(token, secretKey, (err, user) => {
+    jwt.verify(token.split(' ')[1], secretKey, (err, user) => {
         if(err) return res.status(401).json({success: false, message:'Access denied. Invalid token.'})
         req.user = user
         if (!user.isAdmin){

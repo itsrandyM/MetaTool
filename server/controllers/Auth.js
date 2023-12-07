@@ -2,6 +2,7 @@ const User = require('../models/User')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const TokenBlacklist = require('../models/TokenBlacklist')
 
 // @desc Get all users
 // @route GET /users
@@ -62,12 +63,6 @@ const LoginUser = asyncHandler(async (req, res) => {
         return res.status(401).json({ status: 401, message: 'Invalid password' });
     }
     
-    
-    
-    
-    
-
-
 const token = jwt.sign({
     _id: user._id,
     username: user.username,
@@ -85,9 +80,32 @@ res.json({
 }
 })
 
+//Logout
+const LogoutUser = asyncHandler(async (req, res) => {
+    const {token} = req.body
+    if(!token){
+        return res.status(400).json({ success:false, error:'Token required for logout'})
+    }
+    try{
+        const isTokenBlaclisted = await TokenBlacklist.exists({token})
+        if(isTokenBlaclisted){
+            return res.status(400).json({success:false,error:'Token is already invalid'})
+        }
+        await TokenBlacklist.create({token})
+
+        res.status(200).json({success:true, message:'Logout successful'})
+
+    }
+    catch(error){
+        console.error("Error logging out:",error.message)
+        res.status(500).json({success:false, error:'Internal Server Error'})
+    }
+});
+
 
 
 module.exports =exports = {
     RegisterNewUser,
-    LoginUser
+    LoginUser,
+    LogoutUser
 }
