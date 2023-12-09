@@ -7,7 +7,6 @@ const Wallets = () => {
     <div className='wallets'>
         <Navbar/>
         <div>
-
         </div>
       </div>
   )

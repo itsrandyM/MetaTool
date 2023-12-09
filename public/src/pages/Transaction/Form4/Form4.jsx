@@ -9,6 +9,8 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
     recipientDetails: { name: '', email: '', wallet: '' },
     transactionDetails: { token: '', classification: '', description: '' },
   });
+  const [successData, setSuccessData] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const token = localStorage.getItem('token')
 
@@ -42,6 +44,7 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
       })
       .catch((error) => {
         console.error('Error sending data to the server:', error);
+        setIsSuccess(false);
       });
   };
 
@@ -50,9 +53,9 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
       <form className="summarized">
         <h2 className="sum_h">Recipient Details</h2>
         <div className="rec_d">
-        <p className="data">Name: {form2Data.recipientDetails?.name || ''}</p>
-  <p className="data">Email: {form2Data.recipientDetails?.email || ''}</p>
-  <p className="data">Wallet: {form2Data.recipientDetails?.wallet || ''}</p>
+          <p className="data">Name: {form2Data.recipientDetails?.name || ''}</p>
+          <p className="data">Email: {form2Data.recipientDetails?.email || ''}</p>
+          <p className="data">Wallet: {form2Data.recipientDetails?.wallet || ''}</p>
         </div>
         <br />
         <div className="rec_d2">
@@ -65,6 +68,8 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
       <button onClick={handleSendData} className="authentic">
         Save and submit
       </button>
+
+      {isSuccess && <SuccessPage successData={successData} />}
     </div>
   );
 };
