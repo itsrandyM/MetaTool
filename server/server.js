@@ -12,6 +12,7 @@ const AddRecipient = require('./routes/recipientadd')
 const TransactionRouter = require('./routes/NewT')
 const DataRouter = require('./routes/Transaction')
 const UserRouter = require('./routes/userRoutes')
+const TableRouter =   require('./routes/transact')
 const AuthRouter = require('./routes/AuthRoutes')
 
 
@@ -42,6 +43,7 @@ app.use('/api',TransactionRouter)
 app.use('/api',AddRecipient)
 app.use('/api',DataRouter)
 app.use('/users',UserRouter)
+app.use('/api', TableRouter);
 
 
 

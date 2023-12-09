@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import './style.css'
+import './style.css';
 
 function Table() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function Table() {
     const fetchData = async () => {
       try {
         // Replace this with the actual data retrieval logic
-        const response = await fetch('/getTransactions');
+        const response = await fetch('http://localhost:4000/api/addTransactions');
         if (response.ok) {
           const data = await response.json();
           setTransactions(data);
@@ -30,34 +30,35 @@ function Table() {
   return (
     <div>
       <div className='tittle'>
-      <h6>Recent Transactions</h6>
-      <div className='navigate'>
-        <button className='tran' onClick={() => navigate('/form-display') }>
-          <tittle className='title'> New Transaction</tittle>
-        <Icon icon="icomoon-free:new-tab" className='icon1'/>
-        </button>
-      </div>
+        <h6>Recent Transactions</h6>
+        <div className='navigate'>
+          <button className='tran' onClick={() => navigate('/form-display')}>
+            <tittle className='title'> New Transaction</tittle>
+            <Icon icon="icomoon-free:new-tab" className='icon1' />
+          </button>
+        </div>
       </div>
       <table>
         <thead>
           <tr>
-            <th>Admin User ID</th>
-            <th>Recipient ID</th>
-            <th>Token ID</th>
-            <th>Classification ID</th>
-            <th>Description ID</th>
-            <th>Exchange Rate ID</th>
+            <th>Transaction Name</th>
+            <th>Recipient</th>
+            <th>Token</th>
+            <th>Classification</th>
+            <th>Description</th>
+            <th>Time</th>
           </tr>
         </thead>
         <tbody>
           {transactions.map((transaction, index) => (
             <tr key={index}>
-              <td>{transaction.adminUserID}</td>
-              <td>{transaction.recipientID}</td>
-              <td>{transaction.tokenID}</td>
-              <td>{transaction.classificationID}</td>
-              <td>{transaction.descriptionID}</td>
-              <td>{transaction.exchangeRateID}</td>
+              {/* Adjust these fields based on your actual transaction data */}
+              <td>{transaction.transactionName}</td>
+              <td>{transaction.recipientName}</td>
+              <td>{transaction.token}</td>
+              <td>{transaction.classification}</td>
+              <td>{transaction.description}</td>
+              <td>{transaction.timestamp}</td>
             </tr>
           ))}
         </tbody>
