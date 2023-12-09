@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAppContext } from '../../../components/Context/AppProvider.jsx';
 import './Form4.css';
 
 const Form4 = ({ form2Data = {}, form3Data = {} }) => {
+  const {updateTransactions} = useAppContext()
   const [formData, setFormData] = useState({
     recipientDetails: { name: '', email: '', wallet: '' },
     transactionDetails: { token: '', classification: '', description: '' },
   });
+
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
     setFormData({
@@ -26,7 +30,7 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
       headers: {
         'Content-Type': 'application/json',
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTcxNzYwZmJjYTQ5YjI2OGIzMDkxZWEiLCJ1c2VybmFtZSI6IkRqVGFrZSIsImlzQWRtaW4iOnRydWUsInJvbGVzIjpbIkVtcGxveWVlIl0sImlhdCI6MTcwMTkzNzIyN30._3LNyFSBdM-mDK4T66qkB4sxXoyb6mFQbZL30YtVd3Y',
+          `Bearer ${token}`,
       },
     };
 
@@ -34,6 +38,7 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
       .post(serverUrl, requestData, axiosConfig)
       .then((response) => {
         console.log('Server response:', response.data);
+      updateTransactions(response.data.recipientData)
       })
       .catch((error) => {
         console.error('Error sending data to the server:', error);

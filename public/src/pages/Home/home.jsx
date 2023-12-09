@@ -27,9 +27,6 @@ const WelcomePage = () => {
       <h6 className='h6'>${accountBalance}</h6>
       </div>
       <div>
-        <Carousel/>
-      </div>
-      <div>
       <Table/>
       </div>
      <Footer/>

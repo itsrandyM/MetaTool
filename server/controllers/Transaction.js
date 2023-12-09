@@ -2,7 +2,7 @@ const Token = require(`../models/Token`)
 const Description = require('../models/Description')
 const Classification = require('../models/Classification')
 const RecipientsData = require('../models/RecipientsData')
-//const User = require('../models/User')
+const User = require('../models/User')
 const Recipient = require('../models/Recipient')
 
 const NewTransactionController= {
@@ -24,8 +24,10 @@ const NewTransactionController= {
             const token = await Token.create({tokenName})
             const classification = await Classification.create({classificationName})
                 
+                const loggedInUser = req.user;
+
             const RecipientData = await RecipientsData.create({
-                //User: user,
+                User: loggedInUser,
                 TName,
                 TDescription,
                 recipient,
@@ -40,7 +42,23 @@ const NewTransactionController= {
     console.error(error)
     res.status(500).json({success: false, error:"Internal Server Error"})
 }
-}
+},
+ getRecipientData:  async (req, res) => {
+    try {
+     console.log('Logged-in User:', req.user)
+      const loggedInUser = req.user;
+  
+      // Fetch recipient data associated with the logged-in user from the database
+      const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id });
+  
+      // Return the data as a JSON response
+      res.status(200).json({ success: true, transactions: userRecipientData });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+  }
+
 }
 
 module.exports = NewTransactionController

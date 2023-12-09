@@ -12,6 +12,7 @@ function LoginForm() {
   })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target
@@ -42,7 +43,11 @@ function LoginForm() {
       const data = await response.json()
       if (response.ok) {
         console.log('Successful login', data)
-        // login(formData)
+        
+        const {token} = data
+        localStorage.setItem('token', token)
+
+navigate('/')
 
         if (formData.username && formData.email && formData.password) {
           navigate('home')

@@ -1,21 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import './style.css'
+import { useAppContext } from '../Context/AppProvider';
+import './style.css';
 
 function Table() {
-  const navigate = useNavigate()
-  const [transactions, setTransactions] = useState([]);
+  const navigate = useNavigate();
+  const { transactions, updateTransactions } = useAppContext();
+  const [dataLoaded, setDataLoaded] = useState(false)
 
   useEffect(() => {
-    // Simulate fetching data from the server
     const fetchData = async () => {
       try {
-        // Replace this with the actual data retrieval logic
-        const response = await fetch('/getTransactions');
+        const token = localStorage.getItem('token')
+        const response = await fetch('http://localhost:4000/api/getRecipientTransactions',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
         if (response.ok) {
-          const data = await response.json();
-          setTransactions(data);
+          const transactionD = await response.json();
+          console.log('Transactions from API:', transactionD)
+            const transactions = transactionD.transactions
+          updateTransactions(transactions);
+          setDataLoaded(true)
         } else {
           console.error('Failed to fetch data');
         }
@@ -25,20 +35,23 @@ function Table() {
     };
 
     fetchData();
-  }, []); // The empty dependency array ensures this effect runs once on component mount
+  }, [updateTransactions]);
+
+  console.log('Transactions:', transactions)
 
   return (
     <div>
       <div className='tittle'>
-      <h6>Recent Transactions</h6>
-      <div className='navigate'>
-        <button className='tran' onClick={() => navigate('/form-display') }>
-          <tittle className='title'> New Transaction</tittle>
-        <Icon icon="icomoon-free:new-tab" className='icon1'/>
-        </button>
+        <h6>Recent Transactions</h6>
+        <div className='navigate'>
+          <button className='tran' onClick={() => navigate('/form-display')}>
+            <title className='title'> New Transaction</title>
+            <Icon icon="icomoon-free:new-tab" className='icon1' />
+          </button>
+        </div>
       </div>
-      </div>
-      <table>
+      {dataLoaded && (
+       <table>
         <thead>
           <tr>
             <th>Admin User ID</th>
@@ -50,7 +63,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((transaction, index) => (
+          {transactions?.map((transaction, index) => (
             <tr key={index}>
               <td>{transaction.adminUserID}</td>
               <td>{transaction.recipientID}</td>
@@ -61,7 +74,7 @@ function Table() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> )}
     </div>
   );
 }

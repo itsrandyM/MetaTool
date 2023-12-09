@@ -53,6 +53,7 @@ router.post(
     res.set('Content-Type', 'application/json');
     res.attachment('metadata.json');
     res.send(jsonContent);
+    res.json(verifiedData)
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });
