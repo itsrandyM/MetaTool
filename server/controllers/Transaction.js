@@ -12,8 +12,8 @@ const NewTransactionController= {
             const { transactionName,transactionDescription ,tokenName,descriptionName, classificationName, name, email, walletAddress } = req.body
           //const user = req.user  
              
-             const TName = await RecipientsData.create({transactionName,})
-             const TDescription = await RecipientsData.create({transactionDescription,})
+             //const TName = await RecipientsData.create({transactionName,})
+            // const TDescription = await RecipientsData.create({transactionDescription,})
 
 
           const recipient = await Recipient.create({ //User:User,
@@ -28,8 +28,8 @@ const NewTransactionController= {
 
             const RecipientData = await RecipientsData.create({
                 User: loggedInUser,
-                TName,
-                TDescription,
+                transactionName:transactionName,
+                transactionDescription:transactionDescription,
                 recipient,
                 token,
                 description,

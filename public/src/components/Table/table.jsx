@@ -71,7 +71,7 @@ function Table() {
               <td>{transaction.token}</td>
               <td>{transaction.classification}</td>
               <td>{transaction.description}</td>
-              <td>{transaction.timestamp}</td>
+              <td>{new Date(transaction.createdAt).toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
