@@ -26,6 +26,8 @@ function SignUpForm() {
       // Check if all required fields are filled
   if (formData.userName && formDataposition && formData.email && formData.password) {
     // All required fields have values, so you can proceed to the Welcome page
+    localStorage.setItem('userName', formData.userName);
+    localStorage.setItem('position', formData.position)
     navigate('home')
   } else {
     // Some required fields are missing, show an error message or prevent submission

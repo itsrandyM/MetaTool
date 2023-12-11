@@ -12,8 +12,12 @@ const WelcomePage = () => {
   // Simulate data retrieval from a server
   useEffect(() => {
     // You would replace these with actual API calls
-    setUserName('Raymond');
-    setPosition('CEO');
+    
+    const storedUserName = localStorage.getItem('userName');
+    const storedPosition = localStorage.getItem('position')
+
+    setUserName(storedUserName || 'Default username');
+    setPosition(storedPosition || 'default position');
     setAccountBalance(100000);
   }, []);
 
