@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import{FaEye, FaEyeSlash} from 'react-icons/fa'
 import './style.css'
 
@@ -12,6 +14,13 @@ function LoginForm() {
   })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
   
 
   const handleInputChange = (event) => {
@@ -52,16 +61,16 @@ navigate('/')
         if (formData.username && formData.email && formData.password) {
           navigate('home')
         } else {
-          console.log('Please fill the fields')
-          setError('Please fill the fields')
+          toast.error('Please fill the fields', toastOptions)
+          toast.error('Please fill the fields', toastOptions)
         }
       } else {
-        console.log('Failed to Login', data.message)
-        setError(data.message)
+        // toast.error('Failed to Login', data.message)
+        toast.error(data.message , toastOptions)
       }
     } catch (error) {
       console.error('Error during login:', error)
-      setError('Internal Server')
+      toast.error('Internal Server', toastOptions)
     }
   }
 
@@ -136,6 +145,7 @@ navigate('/')
           Login
         </button>
       </form>
+      <ToastContainer/>
     </div>
   )
 }

@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Form1.css';
 
 const Form1 = ({ onNextForm }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
 
   const handleNext = () => {
+
+    if (!name || !description) {
+      toast.error('All fields are required.', toastOptions);
+      return;
+    }
+
+    const nameRegex = /^[a-zA-Z]{1,10}$/;
+
+    if (!name || !name.match(nameRegex)) {
+      toast.error('Invalid Name.', toastOptions);
+      return;
+    }
     if (name && description) {
       onNextForm(2);
     } else {
-      alert('Please fill in all fields.');
+      toast.error('Please fill in all fields.', toastOptions);
       setError('Please fill the fields')
     }
   };
@@ -45,6 +66,7 @@ const Form1 = ({ onNextForm }) => {
       </form>
       <button onClick={handleNext} className='authentic'>Start Transaction</button>
     </div>
+    <ToastContainer/>
     </div>
 
   );

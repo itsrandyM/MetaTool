@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Form3.css';
 
 const Form3 = ({ onNextForm }) => {
   const [token, setToken] = useState('');
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
 
   const handleNext = () => {
     // Validate fields before moving to the next form
     if (token && classification && description) {
       onNextForm(4,{ token, classification, description });
     } else {
-      alert('Please fill in all fields.');
+      toast.error('Please fill in all fields.', toastOptions);
     }
   };
 

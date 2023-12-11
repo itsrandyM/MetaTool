@@ -10,6 +10,7 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
     transactionDetails: { token: '', classification: '', description: '' },
   });
   const [successData, setSuccessData] = useState(null);
+  
   const [isSuccess, setIsSuccess] = useState(false);
 
   const token = localStorage.getItem('token')
@@ -61,8 +62,8 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
         <div className="rec_d2">
           <h2 className="sum_h2">Transaction Details</h2>
           <p className="data">Token: {form3Data.transactionDetails?.token || ''}</p>
-          <p className="data">Classification: {form3Data.transactionDetails?.classification || ''}</p>
-          <p className="data">Description: {form3Data.transactionDetails?.description || ''}</p>
+          <p className="data2">Classification: {form3Data.transactionDetails?.classification || ''}</p>
+          <p className="data3">Description: {form3Data.transactionDetails?.description || ''}</p>
         </div>
       </form>
       <button onClick={handleSendData} className="authentic">

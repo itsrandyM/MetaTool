@@ -1,17 +1,45 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Form2.css';
 
 const Form2 = ({ onNextForm }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [wallet, setWallet] = useState('');
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
+
+  const isNameValid = /^[a-zA-Z]{1,10}$/;;
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isWalletValid = /^addr1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]+$/.test(wallet);
+
+
 
   const handleNext = () => {
+
+    if (!name || !email || !wallet) {
+      toast.error('All fields are required.', toastOptions);
+      return;
+    }
     // Validate fields before moving to the next form
-    if (name && email && wallet) {
-      onNextForm(3,{name, email, wallet});
+    if (isNameValid && isEmailValid && isWalletValid) {
+      onNextForm(3, { name, email, wallet });
     } else {
-      alert('Please fill in all fields.');
+      if (!isNameValid) {
+        toast.error('Invalid Name.', toastOptions);
+      }
+      if (!isEmailValid) {
+        toast.error('Invalid email address.', toastOptions);
+      }
+      if (!isWalletValid) {
+        toast.error('Invalid wallet address.', toastOptions);
+      }
     }
   };
 
@@ -58,6 +86,7 @@ const Form2 = ({ onNextForm }) => {
           Continue
         </button>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

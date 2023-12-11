@@ -23,17 +23,6 @@ app.use(cookieParser())
 app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/root'))
 
-/*app.all('*', (req, res) => {
-    res.status(404)
-    if (req.accepts('html')) {
-        res.sendFile(path.join(__dirname, 'views', '404.html'))
-    } else if (req.accepts('json')) {
-        res.json({ message: '404 Not Found' })
-    } else {
-        res.type('txt').send('404 Not Found')
-    }
-})*/
-
 app.use(errorHandler)
 
 //routes
@@ -44,15 +33,6 @@ app.use('/api',DataRouter)
 app.use('/users',UserRouter)
 
 
-
-
-
-
-
-
-
-
-
 //db connection
 mongoose.connect(process.env.MONGO_URI,{
     useNewUrlParser: true,
@@ -60,6 +40,7 @@ mongoose.connect(process.env.MONGO_URI,{
 })
 .then(() => {
     app.listen(process.env.PORT, () => {
+        console.log('Connected to MongoDB')
         console.log('Server listening to port', process.env.PORT)
     })
 })
