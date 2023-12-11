@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar/navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import Foot from './Foot/foot';
 import Form1 from './Form1/Form1';
 import Form2 from './Form2/Form2';
