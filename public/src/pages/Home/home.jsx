@@ -16,8 +16,8 @@ const WelcomePage = () => {
     const storedUserName = localStorage.getItem('userName');
     const storedPosition = localStorage.getItem('position')
 
-    setUserName(storedUserName || 'Default username');
-    setPosition(storedPosition || 'default position');
+    setUserName(storedUserName || 'User');
+    setPosition(storedPosition || 'CEO');
     setAccountBalance(100000);
   }, []);
 
