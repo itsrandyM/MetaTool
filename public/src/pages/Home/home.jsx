@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../../components/Table/table';
-import Navbar from '../../components/Navbar/navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/footer';
 import Carousel from '../../components/carousel/carousel';
 import './style.css'
