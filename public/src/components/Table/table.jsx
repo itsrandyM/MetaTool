@@ -35,7 +35,7 @@ function Table() {
     };
 
     fetchData();
-  }, [updateTransactions]);
+  }, []);
 
   console.log('Transactions:', transactions)
 

@@ -12,8 +12,28 @@ const WelcomePage = () => {
   // Simulate data retrieval from a server
   useEffect(() => {
     // You would replace these with actual API calls
-    setUserName('Raymond');
-    setPosition('CEO');
+    /* const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/users/${id}')
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to fetch user data')}
+
+          const user = data.user 
+    
+    setUserName(user.username);
+    setPosition(user.roles[0]);
+    setAccountBalance(100000);} 
+    catch(error){
+      console.error('Error fetching data',error.message)
+    } */
+    
+    const storedUserName = localStorage.getItem('userName');
+    const storedPosition = localStorage.getItem('position')
+
+    setUserName(storedUserName || 'User');
+    setPosition(storedPosition || 'CEO');
     setAccountBalance(100000);
   }, []);
 

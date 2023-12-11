@@ -83,9 +83,24 @@ const deleteUser = asyncHandler(async (req, res) => {
 
     res.json(reply)
 })
+const getUserById = asyncHandler(async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
 
+        if (!user) {
+            return res.status(404).json({ status: 404, message: "User does not exist" });
+        }
+
+        res.status(200).json({user});
+    } catch (error) {
+        console.error("Could not retrieve user", error.message);
+        res.status(500).json({ status: 500, message: "Internal server error" });
+    }}
+) 
 module.exports = {
     getAllUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserById
 }
