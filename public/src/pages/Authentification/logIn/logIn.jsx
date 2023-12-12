@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { SERVER_URL } from '../../../../constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import{FaEye, FaEyeSlash} from 'react-icons/fa'
@@ -38,7 +39,7 @@ function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await fetch('http://localhost:4000/auth/Login', {
+      const response = await fetch(`${SERVER_URL}/auth/Login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

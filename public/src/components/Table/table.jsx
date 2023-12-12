@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { useAppContext } from '../Context/AppProvider';
 import './style.css';
+import { SERVER_URL } from '../../../constants';
 
 function Table() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Table() {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token')
-        const response = await fetch('http://localhost:4000/api/getRecipientTransactions',
+        const response = await fetch(`${SERVER_URL}/api/getRecipientTransactions`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

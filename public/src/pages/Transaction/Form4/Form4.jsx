@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { SERVER_URL } from '../../../../constants/index.js';
 import { useAppContext } from '../../../components/Context/AppProvider.jsx';
 import './Form4.css';
 
@@ -23,7 +24,7 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
   }, [form2Data, form3Data]);
 
   const handleSendData = () => {
-    const serverUrl = 'http://localhost:4000/api/addRecipientTransaction';
+    const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
     const requestData = {
       recipientDetails: form2Data,
       transactionDetails: form3Data,
