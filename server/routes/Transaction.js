@@ -44,7 +44,7 @@ router.post(
           .populate('recipient token description classification')
   
           if (verifiedData.length === 0) {
-              return res.status(200).json({ success: true, error: 'No verified data found',data:[] })
+              return res.status(404).json({ success: true, error: 'No verified data found',data:[] })
           }
   
   // Generate JSON file content
@@ -53,7 +53,7 @@ router.post(
     res.set('Content-Type', 'application/json');
     res.attachment('metadata.json');
     res.send(jsonContent);
-    res.json(verifiedData)
+    //res.json(verifiedData)
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });

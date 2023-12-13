@@ -1,9 +1,13 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom'
 import './Success.css';
 
 const SuccessPage = () => {
+  const navigate = useNavigate()
+
   const handleDoneClick = () => {
-    window.location.href = 'home';
+    navigate('/generate')
+    //window.location.href = 'home';
   };
 
   return (

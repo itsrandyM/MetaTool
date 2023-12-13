@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { SERVER_URL } from '../../../../constants/index.js';
 import { useAppContext } from '../../../components/Context/AppProvider.jsx';
+import SuccessPage from '../Success/Success.jsx';
 import './Form4.css';
 
 const Form4 = ({ form2Data = {}, form3Data = {} }) => {
@@ -43,6 +44,7 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
       .then((response) => {
         console.log('Server response:', response.data);
       updateTransactions(response.data.recipientData)
+      setIsSuccess(true)
       })
       .catch((error) => {
         console.error('Error sending data to the server:', error);

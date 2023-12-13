@@ -1,0 +1,60 @@
+transaction-details-container {
+    background-color: #F2EEE3;
+    padding: 20px;
+    border-radius: 10px;
+    color: black;
+    margin: 5% auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 800px; /* Adjust the max-width as needed */
+    width: 80%; /* Adjust the width as needed */
+    box-sizing: border-box;
+  }
+
+  .transaction-details {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .transaction-item {
+    margin-bottom: 20px;
+    color: black;
+  }
+
+  .download-button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  /* Additional Styles for Transaction Details */
+  .sum_h {
+    font-size: medium;
+  }
+
+  .sum_h2 {
+    margin-left: 36%;
+    font-size: medium;
+  }
+
+  .data {
+    font-size: small;
+  }
+
+  .rec_d {
+    margin-left: -60%;
+    gap: 5px;
+  }
+
+  .rec_d2 {
+    margin-top: -8%;
+    margin-left: -60%;
+    gap: 5px;
+  }
