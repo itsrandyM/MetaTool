@@ -25,33 +25,33 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
   }, [form2Data, form3Data]);
 
   const handleSendData = () => {
+    console.log('Sending data to the server...');
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
     const requestData = {
       recipientDetails: form2Data,
       transactionDetails: form3Data,
     };
-
+  
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization:
-          `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
-
+  
     axios
       .post(serverUrl, requestData, axiosConfig)
       .then((response) => {
         console.log('Server response:', response.data);
-      updateTransactions(response.data.recipientData)
-      setIsSuccess(true)
+        updateTransactions(response.data.recipientData);
+        setIsSuccess(true);
       })
       .catch((error) => {
         console.error('Error sending data to the server:', error);
         setIsSuccess(false);
       });
   };
-
+  
   return (
     <div className="form_container">
       <form className="summarized">

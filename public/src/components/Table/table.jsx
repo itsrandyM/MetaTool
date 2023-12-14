@@ -8,25 +8,26 @@ import { SERVER_URL } from '../../../constants';
 function Table() {
   const navigate = useNavigate();
   const { transactions, updateTransactions } = useAppContext();
-  const [dataLoaded, setDataLoaded] = useState(false)
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token')
-        const response = await fetch(`${SERVER_URL}/api/getRecipientTransactions`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${SERVER_URL}/api/getRecipientTransactions`, {
+          method: 'GET', // Specify the HTTP method
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          }),
         });
-        
+
         if (response.ok) {
           const transactionD = await response.json();
-          console.log('Transactions from API:', transactionD)
-            const transactions = transactionD.transactions
+          console.log('Transactions from API:', transactionD);
+          const transactions = transactionD.transactions;
           updateTransactions(transactions);
-          setDataLoaded(true)
+          setDataLoaded(true);
         } else {
           console.error('Failed to fetch data');
         }
@@ -38,19 +39,16 @@ function Table() {
     fetchData();
   }, []);
 
-  console.log('Transactions:', transactions)
+  console.log('Transactions:', transactions);
+
+  // ... rest of your componen
 
   return (
     <div>
-      <div className='tittle'>
-        <h6>Recent Transactions</h6>
-        <div className='navigate'>
-          <button className='tran' onClick={() => navigate('/form-display')}>
+        <button className='tran' onClick={() => navigate('/form-display')}>
             <title className='title'> New Transaction</title>
             <Icon icon="icomoon-free:new-tab" className='icon1' />
           </button>
-        </div>
-      </div>
       {dataLoaded && (
        <table>
         <thead>

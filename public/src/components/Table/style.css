@@ -8,9 +8,7 @@ table {
     display: flex;
     align-items: center;
   }
-  .navigate{
-    margin-left: 60%;
-  }
+
   h6{
     color: black;
     margin-left: 10%;
@@ -27,6 +25,7 @@ table {
   td {
     color: black;
     padding: 8px;
+    font-size: small;
     border: 1px solid #ddd;
   }
   
@@ -48,6 +47,7 @@ table {
     gap: 3px;
     border: 0;
     color: black;
+    margin-left: 80%;
   
   }
   .title{
