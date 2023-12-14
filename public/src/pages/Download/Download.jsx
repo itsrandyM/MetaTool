@@ -1,29 +1,42 @@
 import React, { useState, useEffect } from 'react';
+//import { SERVER_URL } from '../../../constants';
 import axios from 'axios';
 import './Download.css'
 
 const TransactionDetailsPage = () => {
   const [transactionDetails, setTransactionDetails] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchTransactionDetails()
-    .then((data) => setTransactionDetails(data)); setLoading(false)
-      .catch((error) => console.error('Error fetching transaction details:', error));
+    const fetchData = async () => {
+      try {
+        const data = await fetchTransactionDetails();
+        setTransactionDetails(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching transaction details:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const fetchTransactionDetails = async () => {
-    try {
-        if (!transactionDetails || transactionDetails.length === 0) {
-            throw new Error('No transaction details available for download');
-          }
-
-      const response = await axios.get(`${SERVER_URL}/api/generateJson`); // Replace with your API endpoint
-      return response.data;
-    } catch (error) {
-      throw new Error('Failed to fetch transaction details');
-    }
-  };
+ const fetchTransactionDetails = async () => {
+  try {
+    const token = localStorage.getItem('token');
+    const response = await axios.post(
+      'http://localhost:4000/api/generateJson', // Pass any request data if needed
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch transaction details');
+  }
+}
 
   const handleDownload = () => {
     const jsonData = JSON.stringify(transactionDetails, null, 2);
