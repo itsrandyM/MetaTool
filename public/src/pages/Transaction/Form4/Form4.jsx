@@ -6,16 +6,18 @@ import SuccessPage from '../Success/Success.jsx';
 import './Form4.css';
 
 const Form4 = ({ form2Data = {}, form3Data = {} }) => {
-  const {updateTransactions} = useAppContext()
+  console.log('Received form2Data:', form2Data);
+  console.log('Received form3Data:', form3Data);
+
+  const { updateTransactions } = useAppContext();
   const [formData, setFormData] = useState({
     recipientDetails: { name: '', email: '', wallet: '' },
     transactionDetails: { token: '', classification: '', description: '' },
   });
   const [successData, setSuccessData] = useState(null);
-  
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     setFormData({
@@ -26,19 +28,21 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
 
   const handleSendData = () => {
     console.log('Sending data to the server...');
+    console.log('FormData to be sent:', formData); // Log formData before sending
+
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
     const requestData = {
-      recipientDetails: form2Data,
-      transactionDetails: form3Data,
+      recipientDetails: formData.recipientDetails,
+      transactionDetails: formData.transactionDetails,
     };
-  
+
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     };
-  
+
     axios
       .post(serverUrl, requestData, axiosConfig)
       .then((response) => {
@@ -51,7 +55,7 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
         setIsSuccess(false);
       });
   };
-  
+
   return (
     <div className="form_container">
       <form className="summarized">
@@ -73,7 +77,6 @@ const Form4 = ({ form2Data = {}, form3Data = {} }) => {
         Save and submit
       </button>
       {isSuccess && <SuccessPage successData={successData} />}
-      
     </div>
   );
 };
