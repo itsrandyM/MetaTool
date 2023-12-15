@@ -1,11 +1,17 @@
+// TransactionDetailsPage.js
 import React, { useState, useEffect } from 'react';
 import { SERVER_URL } from '../../../constants';
 import axios from 'axios';
-import './Download.css'
+import './Download.css';
+import Navbar from '../../components/Navbar/Navbar';
+import Foot from '../Transaction/Foot/foot';
+
+
 
 const TransactionDetailsPage = () => {
   const [transactionDetails, setTransactionDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [jsonPreview, setJsonPreview] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,26 +27,28 @@ const TransactionDetailsPage = () => {
     fetchData();
   }, []);
 
- const fetchTransactionDetails = async () => {
-  try {
-    const token = localStorage.getItem('token');
-    const response = await axios.post(
-      'http://localhost:4000/api/generateJson', 
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch transaction details');
-  }
-}
+  const fetchTransactionDetails = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        'http://localhost:4000/api/generateJson',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error('Failed to fetch transaction details');
+    }
+  };
 
   const handleDownload = () => {
     const jsonData = JSON.stringify(transactionDetails, null, 2);
+    setJsonPreview(jsonData);
+
     const blob = new Blob([jsonData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
@@ -53,8 +61,17 @@ const TransactionDetailsPage = () => {
     URL.revokeObjectURL(url);
   };
 
+  const renderProperty = (property) => {
+    if (typeof property === 'object') {
+      return JSON.stringify(property);
+    }
+    return property;
+  };
+
   return (
-    <div className="transaction-details-container">
+    <div>
+      <Navbar/>
+    <div className="Download_container">
       <h2>Transaction Details</h2>
 
       {loading ? (
@@ -63,24 +80,26 @@ const TransactionDetailsPage = () => {
         <p>No transaction details found.</p>
       ) : (
         <>
-
-      {/*<div className="transaction-details">
-        {transactionDetails.map((transaction, index) => (
-          <div key={index} className="transaction-item">
-            <p>Transaction Name: {transaction.transactionName}</p>
-            <p>Recipient Id: {transaction.recipientId}</p>
-            <p>Description: {transaction.description}</p>
-            <p>Token: {transaction.token}</p>
-            <p>Classification: {transaction.classification}</p>
-            <hr />
+          <div className="fixed">
+            {/* Display your transaction details as you were doing */}
+            {transactionDetails.map((transaction, index) => (
+              <div key={index} className="transaction-item">
+                <p className='item1'>Transaction Name: {transaction.transactionName}</p>
+                <p className='item2'>Recipient Id: {renderProperty(transaction.recipientId)}</p>
+                <p className='item'>Description: {renderProperty(transaction.description)}</p>
+                <p className='item'>Token: {renderProperty(transaction.token)}</p>
+                <p className='item'>Classification: {renderProperty(transaction.classification)}</p>
+                <hr />
+              </div>
+            ))}
           </div>
-        ))}
-        </div>*/}
-      <button onClick={handleDownload} className="download-button">
-        Download JSON
-      </button>
-      </>
+          <button onClick={handleDownload} className="download-button">
+            Download JSON
+          </button>
+        </>
       )}
+    </div>
+    <Foot/>
     </div>
   );
 };

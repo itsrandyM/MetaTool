@@ -1,60 +1,67 @@
-transaction-details-container {
-    background-color: #F2EEE3;
-    padding: 20px;
-    border-radius: 10px;
-    color: black;
-    margin: 5% auto;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 800px; /* Adjust the max-width as needed */
-    width: 80%; /* Adjust the width as needed */
-    box-sizing: border-box;
-  }
+/* Download.css */
 
-  .transaction-details {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-top: 10px;
-    width: 100%;
-    box-sizing: border-box;
-  }
+.Download_container {
+  background-color: #F2EEE3;
+  padding: 20px;
+  border-radius: 10px;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+  margin-top: 7%;
+}
 
-  .transaction-item {
-    margin-bottom: 20px;
-    color: black;
-  }
+.fixed{
+  width: 100%; /* Allow the container to take the full width */
+}
 
-  .download-button {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
+.transaction-details-container {
+  text-align: center;
+  margin-top: 50px; /* Adjust as needed */
+}
 
-  /* Additional Styles for Transaction Details */
-  .sum_h {
-    font-size: medium;
-  }
+.transaction-details {
+  margin-top: 20px;
+  text-align: left; /* Align text to the left */
+}
 
-  .sum_h2 {
-    margin-left: 36%;
-    font-size: medium;
-  }
+.transaction-item {
+  margin-bottom: -10px;
+  margin-left: -5%;
+  margin-top: 10px;
+}
 
-  .data {
-    font-size: small;
-  }
+.item{
+  margin-left: 2%;
+}
+.item1{
+  margin-left: -58%;
+}
+.item2{
+  margin-left: -70%;
+}
 
-  .rec_d {
-    margin-left: -60%;
-    gap: 5px;
-  }
+/* Updated styles to make text fit without overflowing */
+.transaction-item p {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  .rec_d2 {
-    margin-top: -8%;
-    margin-left: -60%;
-    gap: 5px;
-  }
+.download-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.download-button:hover {
+  background-color: #45a049;
+}
