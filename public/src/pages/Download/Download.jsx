@@ -25,7 +25,8 @@ const TransactionDetailsPage = () => {
   try {
     const token = localStorage.getItem('token');
     const response = await axios.post(
-      'http://localhost:4000/api/generateJson', // Pass any request data if needed
+      'http://localhost:4000/api/generateJson', 
+      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -63,7 +64,7 @@ const TransactionDetailsPage = () => {
       ) : (
         <>
 
-      <div className="transaction-details">
+      {/*<div className="transaction-details">
         {transactionDetails.map((transaction, index) => (
           <div key={index} className="transaction-item">
             <p>Transaction Name: {transaction.transactionName}</p>
@@ -74,7 +75,7 @@ const TransactionDetailsPage = () => {
             <hr />
           </div>
         ))}
-      </div> 
+        </div>*/}
       <button onClick={handleDownload} className="download-button">
         Download JSON
       </button>

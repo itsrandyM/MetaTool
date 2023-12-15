@@ -33,7 +33,8 @@ const NewTransactionController= {
                 recipient,
                 token,
                 description,
-                classification
+                classification,
+                verified: true,
             })
     
      res.status(201).json({success:true, RecipientData })       
