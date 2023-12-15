@@ -22,14 +22,20 @@ const Form2 = ({ onNextForm }) => {
 
 
   const handleNext = () => {
-
+    
     if (!name || !email || !wallet) {
       toast.error('All fields are required.', toastOptions);
       return;
     }
     // Validate fields before moving to the next form
     if (isNameValid && isEmailValid && isWalletValid) {
-      onNextForm(3, { name, email, wallet });
+      const formData = {
+        name,
+        email,
+        wallet
+      }
+      console.log('Form2 Data:',formData )
+       onNextForm(3,formData);
     } else {
       if (!isNameValid) {
         toast.error('Invalid Name.', toastOptions);

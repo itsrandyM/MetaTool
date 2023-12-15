@@ -18,7 +18,12 @@ const Form3 = ({ onNextForm }) => {
   const handleNext = () => {
     // Validate fields before moving to the next form
     if (token && classification && description) {
-      onNextForm(4,{ token, classification, description });
+      const formData = {
+        token,
+        classification,
+        description,
+      };
+      onNextForm(4,formData);
     } else {
       toast.error('Please fill in all fields.', toastOptions);
     }
