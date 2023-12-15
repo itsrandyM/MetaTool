@@ -28,7 +28,7 @@ const Form1 = ({ onNextForm }) => {
       return;
     }
     if (name && description) {
-      onNextForm(2);
+      onNextForm(2,{name,description});
     } else {
       toast.error('Please fill in all fields.', toastOptions);
       setError('Please fill the fields')

@@ -5,7 +5,8 @@ import { useAppContext } from '../../../components/Context/AppProvider.jsx';
 import SuccessPage from '../Success/Success.jsx';
 import './Form4.css';
 
-const Form4 = ({ form2Data = {}, form3Data = {} }) => {
+const Form4 = ({ form1Data = {}, form2Data = {}, form3Data = {} }) => {
+  console.log('Received form1Data:', form1Data);
   console.log('Received form2Data:', form2Data);
   console.log('Received form3Data:', form3Data);
 

@@ -8,6 +8,7 @@ import Form4 from './Form4/Form4'; // Assuming you have the new form component
 
 const FormDisplay = () => {
   const [currentForm, setCurrentForm] = useState(1);
+  //const [form1Data, setForm1Data] = useState({});
   const [form2Data, setForm2Data] = useState({});
   const [form3Data, setForm3Data] = useState({});
 
