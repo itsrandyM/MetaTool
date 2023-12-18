@@ -60,7 +60,7 @@ const Form4 = ({formData}) => {
         </div>
         <br />
         <div className="rec_d2">
-          <h2 className="sum_h2">Transaction Details</h2>
+          <h2 className="sum_h">Transaction Details</h2>
           <p className="data">Token: {formData.form4Data.token}</p>
           <p className="data2">Classification: {formData.form4Data.classification}</p>
           <p className="data3">Description: {formData.form4Data.description}</p>

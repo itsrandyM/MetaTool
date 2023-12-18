@@ -32,6 +32,7 @@ const Form1 = ({ onNextForm }) => {
         name,
         description,
       };
+
       console.log('Form1 Data:', formData)
       onNextForm(2,formData);
     } else {
