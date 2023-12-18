@@ -12,10 +12,7 @@ const Form4 = ({formData}) => {
   const { updateTransactions } = useAppContext();
   const [successData, setSuccessData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
-   /*const [formData, setFormData] = useState({
-    recipientDetails: { name: '', email: '', wallet: '' },
-    transactionDetails: { token: '', classification: '', description: '' },
-  });*/
+  
 
   const token = localStorage.getItem('token');
 
@@ -27,7 +24,16 @@ const Form4 = ({formData}) => {
     console.log('FormData to be sent:', formData); // Log formData before sending
 
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
-    const requestData = {...formData };
+    const requestData = {
+      transactionName:formData.form2Data.name,
+      transactionDescription:formData.form2Data.description,
+      name: formData.form3Data.name,
+      email: formData.form3Data.email,
+      walletAddress: formData.form3Data.wallet,
+      tokenName: formData.form4Data.token,
+      classificationName: formData.form4Data.classification,
+      descriptionName: formData.form4Data.description,
+      };
 
     const axiosConfig = {
       headers: {
