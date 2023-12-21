@@ -13,7 +13,7 @@
   margin-top: 7%;
 }
 
-.fixed{
+.fixed {
   width: 100%; /* Allow the container to take the full width */
 }
 
@@ -27,20 +27,21 @@
   text-align: left; /* Align text to the left */
 }
 
+/* Download.css */
+
+/* ... (Previous styles) ... */
+
 .transaction-item {
-  margin-bottom: -10px;
-  margin-left: -5%;
+  margin-bottom: 10px; /* Adjust as needed */
+  margin-left: 5%;
+  margin-right: 5%;
   margin-top: 10px;
 }
 
-.item{
-  margin-left: 2%;
-}
-.item1{
-  margin-left: -58%;
-}
-.item2{
-  margin-left: -70%;
+.item,
+.item1,
+.item2 {
+  margin-left: 2%; /* Adjust to have the same left margin */
 }
 
 /* Updated styles to make text fit without overflowing */
@@ -50,6 +51,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* ... (Remaining styles) ... */
+
 
 .download-button {
   background-color: #4CAF50;
