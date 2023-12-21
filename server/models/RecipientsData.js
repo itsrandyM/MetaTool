@@ -37,6 +37,9 @@ const recipientDataSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: Classification
     },
+    exchangeRates:{
+         type: String
+    },
     verified: {
         type: Boolean,
         default: false, 
