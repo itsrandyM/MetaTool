@@ -7,6 +7,7 @@ const Form3 = ({ onNextForm }) => {
   const [token, setToken] = useState('');
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
+  const [amount, setAmount] = useState(''); // New state for the amount field
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -17,18 +18,18 @@ const Form3 = ({ onNextForm }) => {
 
   const handleNext = () => {
     // Validate fields before moving to the next form
-    if (token && classification && description) {
+    if (token && classification && description && amount) {
       const formData = {
         token,
         classification,
         description,
+        amount,
       };
-      onNextForm(5,formData);
+      onNextForm(5, formData);
     } else {
       toast.error('Please fill in all fields.', toastOptions);
     }
   };
-
 
   return (
     <div className="form3_container">
@@ -43,6 +44,17 @@ const Form3 = ({ onNextForm }) => {
               name="token"
               value={token}
               onChange={(e) => setToken(e.target.value)}
+              className="fixed-width "
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="amount">Amount:</label>
+            <input
+              type="text"
+              id="amount"
+              name="amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
               className="fixed-width "
             />
           </div>

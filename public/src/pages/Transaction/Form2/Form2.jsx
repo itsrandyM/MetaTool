@@ -7,6 +7,7 @@ const Form2 = ({ onNextForm }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [wallet, setWallet] = useState('');
+  const [comment, setComment] = useState('');
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -15,27 +16,27 @@ const Form2 = ({ onNextForm }) => {
     theme: "light",
   };
 
-  const isNameValid = /^[a-zA-Z]{1,10}$/;;
+  const isNameValid = /^[a-zA-Z]{1,10}$/;
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isWalletValid = /^addr1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]+$/.test(wallet);
 
-
-
   const handleNext = () => {
-    
     if (!name || !email || !wallet) {
       toast.error('All fields are required.', toastOptions);
       return;
     }
+
     // Validate fields before moving to the next form
     if (isNameValid && isEmailValid && isWalletValid) {
       const formData = {
         name,
         email,
-        wallet
-      }
-      console.log('Form2 Data:',formData )
-       onNextForm(3,formData);
+        wallet,
+        comment, // Include the comment in the formData
+      };
+
+      console.log('Form2 Data:', formData);
+      onNextForm(3, formData);
     } else {
       if (!isNameValid) {
         toast.error('Invalid Name.', toastOptions);
@@ -48,8 +49,6 @@ const Form2 = ({ onNextForm }) => {
       }
     }
   };
-
-  //onUpdateData()
 
   return (
     <div className="form2_container">
@@ -87,12 +86,24 @@ const Form2 = ({ onNextForm }) => {
               className="fixed-width "
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="comment">Comment:</label>
+            <textarea
+              id="comment"
+              name="comment"
+              rows="4"
+              cols="50"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className="fixed-width"
+            />
+          </div>
         </form>
         <button onClick={handleNext} className="authentic">
           Continue
         </button>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };
