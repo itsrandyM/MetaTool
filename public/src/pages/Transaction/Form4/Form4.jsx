@@ -30,9 +30,10 @@ const Form4 = ({formData}) => {
       name: formData.form3Data.name,
       email: formData.form3Data.email,
       walletAddress: formData.form3Data.wallet,
-      tokenName: formData.form4Data.token,
-      classificationName: formData.form4Data.classification,
-      descriptionName: formData.form4Data.description,
+      tokenName: formData.form5Data.token,
+      classificationName: formData.form5Data.classification,
+      descriptionName: formData.form5Data.description,
+      exchangeRates:formData.form4Data.exchangeRate,
       };
 
     const axiosConfig = {
@@ -67,9 +68,9 @@ const Form4 = ({formData}) => {
         <br />
         <div className="rec_d2">
           <h2 className="sum_h">Transaction Details</h2>
-          <p className="data">Token: {formData.form4Data.token}</p>
-          <p className="data2">Classification: {formData.form4Data.classification}</p>
-          <p className="data3">Description: {formData.form4Data.description}</p>
+          <p className="data">Token: {formData.form5Data.token}</p>
+          <p className="data2">Classification: {formData.form5Data.classification}</p>
+          <p className="data3">Description: {formData.form5Data.description}</p>
         </div>
       </form>
       <button onClick={handleSendData} className="authentic">
