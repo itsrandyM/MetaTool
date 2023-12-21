@@ -32,7 +32,7 @@ const Form2 = ({ onNextForm }) => {
         name,
         email,
         wallet,
-        comment, // Include the comment in the formData
+        comment, 
       };
 
       console.log('Form2 Data:', formData);
