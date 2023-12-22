@@ -16,6 +16,7 @@ const App = () => {
       <Route path='home' element={<WelcomePage/>}></Route>
       <Route path='form-display' element={<FormDisplay/>}></Route>
       <Route path='generate' element={<TransactionDetailsPage/>}></Route>
+      <Route path='download/:index' element={<TransactionDetailsPage />} />
       <Route path='wallets' element={<Wallets/>}></Route>
       <Route path='support' element={<Support/>}></Route>
     </Routes>

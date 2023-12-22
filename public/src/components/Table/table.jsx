@@ -39,42 +39,46 @@ function Table() {
     fetchData();
   }, []);
 
-  console.log('Transactions:', transactions);
-
-  // ... rest of your componen
+  const handleRowClick = (index) => {
+    // Implement the download action using the index or other transaction data
+    console.log('Download action for index:', index);
+    // Example: navigate to a download page with the specific data
+    navigate(`/download/${index}`);
+  };
 
   return (
     <div>
-        <button className='tran' onClick={() => navigate('/form-display')}>
-            <title className='title'> New Transaction</title>
-            <Icon icon="icomoon-free:new-tab" className='icon1' />
-          </button>
+      <button className='tran' onClick={() => navigate('/form-display')}>
+        <title className='title'> New Transaction</title>
+        <Icon icon="icomoon-free:new-tab" className='icon1' />
+      </button>
       {dataLoaded && (
-       <table>
-        <thead>
-          <tr>
-            <th>Transaction Name</th>
-            <th>Recipient</th>
-            <th>Token</th>
-            <th>Classification</th>
-            <th>Description</th>
-            <th>Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions?.map((transaction, index) => (
-            <tr key={index}>
-              {/* Adjust these fields based on your actual transaction data */}
-              <td>{transaction.transactionName}</td>
-              <td>{transaction.recipientName}</td>
-              <td>{transaction.token}</td>
-              <td>{transaction.classification}</td>
-              <td>{transaction.description}</td>
-              <td>{new Date(transaction.createdAt).toLocaleString()}</td>
+        <table>
+          <thead>
+            <tr>
+              <th>Transaction Name</th>
+              <th>Recipient</th>
+              <th>Token</th>
+              <th>Classification</th>
+              <th>Description</th>
+              <th>Time</th>
             </tr>
-          ))}
-        </tbody>
-      </table> )}
+          </thead>
+          <tbody>
+            {transactions?.map((transaction, index) => (
+              <tr key={index} onClick={() => handleRowClick(index)} className="clickable-row">
+                {/* Adjust these fields based on your actual transaction data */}
+                <td>{transaction.transactionName}</td>
+                <td>{transaction.recipientName}</td>
+                <td>{transaction.token}</td>
+                <td>{transaction.classification}</td>
+                <td>{transaction.description}</td>
+                <td>{new Date(transaction.createdAt).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
