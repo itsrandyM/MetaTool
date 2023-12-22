@@ -5,6 +5,11 @@ const RecipientsData = require('../models/RecipientsData')
 const User = require('../models/User')
 const Recipient = require('../models/Recipient')
 
+const fs = require('fs');
+const path = require('path');
+const util = require('util');
+const writeFile = util.promisify(fs.writeFile)
+
 const NewTransactionController= {
     addRecipientTransaction: async (req, res) => {
         console.log('Controller received request:', req.body)
@@ -54,12 +59,43 @@ const NewTransactionController= {
       const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id });
   
       // Return the data as a JSON response
-      res.status(200).json({ success: true, transactions: userRecipientData });
+      res.status(200).json({ success: true, transactions: userRecipientData, downloadLink:'/downloadRecipientData'  });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+  },
+  downloadRData: async (req, res) => {
+    try {
+     
+      const loggedInUser = req.user;
+      const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id });
+  
+      const jsonData = JSON.stringify({ success: true, transactions: userRecipientData });
+  
+      // Create a unique filename for the downloaded file
+      const filename = `recipient_data_${loggedInUser._id}_${Date.now()}.json`;
+  
+      const filePath = path.join(__dirname, 'downloads', filename);
+  
+    
+      await writeFile(filePath, jsonData, 'utf8');
+  
+      // Send the file as a response for download
+      res.download(filePath, filename, (err) => {
+        // Delete the file after it has been sent
+        fs.unlinkSync(filePath);
+        if (err) {
+          console.error(err);
+          res.status(500).json({ success: false, error: 'Internal Server Error' });
+        }
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
   }
+  
 
 }
 
