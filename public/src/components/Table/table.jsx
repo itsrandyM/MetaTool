@@ -9,6 +9,7 @@ function Table() {
   const navigate = useNavigate();
   const { transactions, updateTransactions } = useAppContext();
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,9 +41,9 @@ function Table() {
   }, []);
 
   const handleRowClick = (index) => {
-    // Implement the download action using the index or other transaction data
+    const selected = transactions[index];
+    setSelectedTransaction(selected);
     console.log('Download action for index:', index);
-    // Example: navigate to a download page with the specific data
     navigate(`/download/${index}`);
   };
 
