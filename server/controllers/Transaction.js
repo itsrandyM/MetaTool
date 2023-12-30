@@ -72,17 +72,19 @@ const NewTransactionController= {
       const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id });
   
       const jsonData = JSON.stringify({ success: true, transactions: userRecipientData });
-  
+      console.log(jsonData)  
+
       // Create a unique filename for the downloaded file
       const filename = `recipient_data_${loggedInUser._id}_${Date.now()}.json`;
   
       const filePath = path.join(__dirname, 'downloads', filename);
-  
+       console.log(filePath)
+       //fs.mkdirSync(path.join(__dirname, 'downloads'))
     
       await writeFile(filePath, jsonData, 'utf8');
   
       // Send the file as a response for download
-      res.download(filePath, filename, (err) => {
+      res.sendFile(filePath, filename, (err) => {
         // Delete the file after it has been sent
         fs.unlinkSync(filePath);
         if (err) {
