@@ -26,7 +26,7 @@ function DownloadPage() {
           const data = await response.json();
           console.log('data:', data);
 
-          const transaction = data.transactions[index];
+          const transaction = data.transactions[index]._id;
           console.log('selectedTransaction:', transaction)
 
         const newDownloadLink = data.downloadLink;

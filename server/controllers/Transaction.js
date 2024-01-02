@@ -72,10 +72,7 @@ const NewTransactionController= {
       const selectedTransctionId = req.params.selectedTransactionId
       console.log('Id :',selectedTransctionId)
 
-      const userRecipientData = await RecipientsData.find({ 
-        'User': loggedInUser._id,
-        '_id' : selectedTransctionId
-    });
+      const userRecipientData = await RecipientsData.findById(selectedTransctionId);
     console.log(userRecipientData)
 
       const jsonData = JSON.stringify({ success: true, transactions: userRecipientData });
