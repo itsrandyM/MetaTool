@@ -79,7 +79,7 @@ const NewTransactionController= {
   
       const filePath = path.join(__dirname, 'downloads', filename);
        console.log(filePath)
-       //fs.mkdirSync(path.join(__dirname, 'downloads'))
+       fs.mkdirSync(path.join(__dirname, 'downloads'))
     
       await writeFile(filePath, jsonData, 'utf8');
   
