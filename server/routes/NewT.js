@@ -5,6 +5,6 @@ const NewTransactionController = require('../controllers/Transaction')
 
 router.post('/addRecipientTransaction',authToken,NewTransactionController.addRecipientTransaction)
 router.get('/getRecipientTransactions',authToken,NewTransactionController.getRecipientData)
-router.get('/downloadRecipientData',authToken,NewTransactionController.downloadRData)
+router.get('/downloadRecipientData/:selectedTransctionId',authToken,NewTransactionController.downloadRData)
 
 module.exports = router

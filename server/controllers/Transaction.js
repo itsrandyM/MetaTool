@@ -69,8 +69,15 @@ const NewTransactionController= {
     try {
      
       const loggedInUser = req.user;
-      const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id });
-  
+      const selectedTransctionId = req.params.selectedTransactionId
+      console.log('Id :',selectedTransctionId)
+
+      const userRecipientData = await RecipientsData.find({ 
+        'User': loggedInUser._id,
+        '_id' : selectedTransctionId
+    });
+    console.log(userRecipientData)
+
       const jsonData = JSON.stringify({ success: true, transactions: userRecipientData });
       console.log(jsonData)  
 
@@ -79,11 +86,15 @@ const NewTransactionController= {
   
       const filePath = path.join(__dirname, 'downloads', filename);
        console.log(filePath)
-       fs.mkdirSync(path.join(__dirname, 'downloads'))
+       if (!fs.existsSync(path.join(__dirname, 'downloads'))) {
+        fs.mkdirSync(path.join(__dirname, 'downloads'));
+    }
     
       await writeFile(filePath, jsonData, 'utf8');
   
       // Send the file as a response for download
+      res.setHeader('Cache-Control', 'no-cache');
+
       res.sendFile(filePath, filename, (err) => {
         // Delete the file after it has been sent
         fs.unlinkSync(filePath);

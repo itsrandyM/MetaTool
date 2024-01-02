@@ -8,6 +8,7 @@ function DownloadPage() {
   const { index } = useParams();
   console.log('index:', index)
   const [downloadLink, setDownloadLink] = useState(null);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   useEffect(() => {
     const fetchDownloadLink = async () => {
@@ -25,13 +26,15 @@ function DownloadPage() {
           const data = await response.json();
           console.log('data:', data);
 
-          const selectedTransaction = data.transactions[index];
-          console.log('selectedTransaction:', selectedTransaction)
+          const transaction = data.transactions[index];
+          console.log('selectedTransaction:', transaction)
 
         const newDownloadLink = data.downloadLink;
         console.log('newDownloadLink:', newDownloadLink);
 
           setDownloadLink(newDownloadLink);
+          setSelectedTransaction(transaction)
+
 
         } else {
           console.error('Failed to fetch download link');
@@ -52,9 +55,12 @@ function DownloadPage() {
         console.error('Download link is null');
         return;
       }
+
+      const selectedTransactionId = selectedTransaction._id
+      console.log('selectedTransactionId:', selectedTransactionId);
   
       // Fetch the download link with the Authorization header
-      const response = await fetch(`${SERVER_URL}/api${downloadLink}`, {
+      const response = await fetch(`${SERVER_URL}/api${downloadLink}/${selectedTransactionId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
