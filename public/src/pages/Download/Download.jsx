@@ -31,7 +31,7 @@ const TransactionDetailsPage = () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:4000/api/generateJson',
+        `${SERVER_URL}/api/generateJson`,
         {},
         {
           headers: {
