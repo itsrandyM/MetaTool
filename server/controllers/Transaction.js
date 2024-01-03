@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Token = require(`../models/Token`)
 const Description = require('../models/Description')
 const Classification = require('../models/Classification')
@@ -59,17 +60,40 @@ const NewTransactionController= {
       const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id });
   
       // Return the data as a JSON response
-      res.status(200).json({ success: true, transactions: userRecipientData, downloadLink:'/downloadRecipientData'  });
+      res.status(200).json({ success: true, transactions: userRecipientData, downloadLink: `/downloadRecipientData`});
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
   },
+
+  getDataById: async (req, res) =>  {
+    try {
+      const loggedInUser = req.user;
+      const transactionId = req.params.id;
+  
+      // Check if the transactionId is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(transactionId)) {
+        return res.status(400).json({ error: "Invalid transaction ID" });
+      }
+      const transaction = await RecipientsData.findById(transactionId);
+       if (!transaction) {
+        return res.status(404).json({ error: "Transaction not found" });
+      }
+      res.json({ transactions: transaction, downloadLink: `/downloadRecipientData/${transactionId}` });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+
+
   downloadRData: async (req, res) => {
     try {
+      console.log('Request Params:', req.params);
      
       const loggedInUser = req.user;
-      const selectedTransctionId = req.params.selectedTransactionId
+      const selectedTransctionId = req.params.selectedTransctionId
       console.log('Id :',selectedTransctionId)
 
       const userRecipientData = await RecipientsData.findById(selectedTransctionId);
@@ -106,6 +130,50 @@ const NewTransactionController= {
     }
   }
   
+  /*downloadRData: async (req, res) => {
+    try {
+      console.log('req:',req.body)
+      const loggedInUser = req.user;
+      const selectedTransactionId = req.params.id; // Use the same parameter name as in getDataById
+      console.log('id:',selectedTransactionId)
+
+      // Check if the selectedTransactionId is a valid ObjectId
+      if (!mongoose.Types.ObjectId.isValid(selectedTransactionId)) {
+        return res.status(400).json({ error: "Invalid transaction ID" });
+      }
+  
+      const userRecipientData = await RecipientsData.findById(selectedTransactionId);
+  
+      if (!userRecipientData) {
+        return res.status(404).json({ error: "Recipient data not found" });
+      }
+  
+      const jsonData = JSON.stringify({ success: true, transactions: userRecipientData });
+      console.log('JD:',jsonData)
+      const filename = `recipient_data_${loggedInUser._id}_${Date.now()}.json`;
+  
+      const filePath = path.join(__dirname, 'downloads', filename);
+  
+      if (!fs.existsSync(path.join(__dirname, 'downloads'))) {
+        fs.mkdirSync(path.join(__dirname, 'downloads'));
+      }
+  
+      await writeFile(filePath, jsonData, 'utf8');
+  
+      res.setHeader('Cache-Control', 'no-cache');
+  
+      res.sendFile(filePath, filename, (err) => {
+        fs.unlinkSync(filePath);
+        if (err) {
+          console.error(err);
+          res.status(500).json({ success: false, error: 'Internal Server Error' });
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+  }*/
 
 }
 
