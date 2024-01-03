@@ -100,7 +100,7 @@ function DownloadPage() {
   
 
   return (
-    <div className="Download_container">
+    <div className="Download_container2">
       <h1>Transaction JSON Download</h1>
       {downloadLink && (
         <button className="download-button" onClick={handleDownload}>

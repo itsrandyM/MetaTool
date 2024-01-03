@@ -5,7 +5,7 @@ const Nav = () => {
   return (
     <div className="nav">
     <div className='logo'>
-    <img src="./public/img/logoside.png" alt="Your Image"  width='190px' height='50px'/>
+    <img src="./logoside.png" alt="Your Image"  width='190px' height='50px'/>
     </div>
     <div className='meta'>
     <h4>META TOOL</h4>
