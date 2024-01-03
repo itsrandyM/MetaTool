@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
+import './DownP.css';
 
 function DownloadPage() {
   const navigate = useNavigate();
@@ -99,15 +100,14 @@ function DownloadPage() {
   
 
   return (
-    <div>
-      <h1>Download Page</h1>
+    <div className="Download_container">
+      <h1>Transaction JSON Download</h1>
       {downloadLink && (
-        <button onClick={handleDownload}>
+        <button className="download-button" onClick={handleDownload}>
           Download File
         </button>
       )}
     </div>
   );
 }
-
 export default DownloadPage;
