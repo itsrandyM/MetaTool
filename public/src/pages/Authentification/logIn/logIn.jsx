@@ -39,7 +39,7 @@ function LoginForm() {
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const response = await fetch(`${SERVER_URL}/auth/Login`, {
+      const response = await fetch(`${SERVER_URL}/auth/Login`,{} {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,6 +49,7 @@ function LoginForm() {
           email: formData.email,
           password: formData.password,
         }),
+          mode: 'no-cors'
       })
       const data = await response.json()
       if (response.ok) {
