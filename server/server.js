@@ -14,7 +14,7 @@ const DataRouter = require('./routes/Transaction')
 const UserRouter = require('./routes/userRoutes')
 const AuthRouter = require('./routes/AuthRoutes')
 
-
+//app routes
 app.use(logger)
 app.use(cors())
 app.use(express.json())

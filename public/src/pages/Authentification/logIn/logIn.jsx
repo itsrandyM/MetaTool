@@ -67,7 +67,7 @@ navigate('/')
           toast.error('Please fill the fields', toastOptions)
         }
       } else {
-        // toast.error('Failed to Login', data.message)
+
         toast.error(data.message , toastOptions)
       }
     } catch (error) {
