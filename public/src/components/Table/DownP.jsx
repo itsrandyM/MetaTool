@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
+import Navbar from '../../../src/components/Navbar/Navbar'
+import Foot from '../../../src/pages/Transaction/Foot/foot'
 import './DownP.css';
 
 function DownloadPage() {
@@ -100,13 +102,22 @@ function DownloadPage() {
   
 
   return (
+    <div>
+      <Navbar/>
     <div className="Download_container2">
-      <h1>Transaction JSON Download</h1>
+     <h1 className='DownT'>
+      Your File is 
+      <br />
+      Ready For Download
+     </h1>
       {downloadLink && (
-        <button className="download-button" onClick={handleDownload}>
-          Download File
+        <button className="btn" onClick={handleDownload}>
+          Download 
+          
         </button>
       )}
+    </div>
+    <Foot/>
     </div>
   );
 }
