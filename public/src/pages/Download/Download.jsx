@@ -60,7 +60,7 @@ const TransactionDetailsPage = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    window.location.href = '/';
+    window.location.href = '/home';
 
   };
 
