@@ -7,9 +7,6 @@ const Wallets = () => {
   return (
     <div className='wallets'>
         <Navbar/>
-        <div>
-          <Table/>
-        </div>
       </div>
   )
 }
