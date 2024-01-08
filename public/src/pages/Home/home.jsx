@@ -33,8 +33,8 @@ const WelcomePage = () => {
     const storedUserName = localStorage.getItem('userName');
     const storedPosition = localStorage.getItem('position')
 
-    setUserName(storedUserName );
-    setPosition(storedPosition );
+    setUserName(storedUserName || "User" );
+    setPosition(storedPosition || "Employee");
     setAccountBalance(null);
   }, []);
 
