@@ -1,5 +1,6 @@
 // TransactionDetailsPage.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { SERVER_URL } from '../../../constants';
 import axios from 'axios';
 import './Download.css';
@@ -9,6 +10,7 @@ import Foot from '../Transaction/Foot/foot';
 
 
 const TransactionDetailsPage = () => {
+  const navigate = useNavigate()
   const [transactionDetails, setTransactionDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [jsonPreview, setJsonPreview] = useState('');
@@ -60,8 +62,8 @@ const TransactionDetailsPage = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    window.location.href = 'home';
-
+   // window.location.href = 'home';
+    navigate('/home')
   };
 
   const renderProperty = (property) => {
