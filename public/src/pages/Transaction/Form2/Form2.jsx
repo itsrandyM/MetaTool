@@ -3,11 +3,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Form2.css';
 
+// ... (other imports)
+
 const Form2 = ({ onNextForm }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [wallet, setWallet] = useState('');
-  const [comment, setComment] = useState('');
+  const [recipients, setRecipients] = useState([
+    { name: '', email: '', wallet: '', comment: '' },
+  ]);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -15,28 +16,33 @@ const Form2 = ({ onNextForm }) => {
     draggable: true,
     theme: "light",
   };
-
   const isNameValid = /^[a-zA-Z]{1,10}$/;
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const isWalletValid = /^addr1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]+$/.test(wallet);
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipients[0].email);
+  const isWalletValid = /^addr1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]+$/.test(
+    recipients[0].wallet
+  );
 
   const handleNext = () => {
-    if (!name || !email || !wallet) {
-      toast.error('All fields are required.', toastOptions);
+    if (
+      recipients.some(
+        (recipient) => !recipient.name || !recipient.email || !recipient.wallet
+      )
+    ) {
+      toast.error('All fields are required for each recipient.', toastOptions);
       return;
     }
 
     // Validate fields before moving to the next form
-    if (isNameValid && isEmailValid && isWalletValid) {
-      const formData = {
-        name,
-        email,
-        wallet,
-        comment, 
-      };
-
-      console.log('Form2 Data:', formData);
-      onNextForm(3, formData);
+    if (
+      recipients.every(
+        (recipient) =>
+          isNameValid &&
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient.email) &&
+          /^addr1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]+$/.test(recipient.wallet)
+      )
+    ) {
+      console.log('Form2 Data:', recipients);
+      onNextForm(3, recipients);
     } else {
       if (!isNameValid) {
         toast.error('Invalid Name.', toastOptions);
@@ -50,55 +56,70 @@ const Form2 = ({ onNextForm }) => {
     }
   };
 
+  const handleRecipientChange = (index, field, value) => {
+    const updatedRecipients = [...recipients];
+    updatedRecipients[index][field] = value;
+    setRecipients(updatedRecipients);
+  };
+
+  const addRecipient = () => {
+    setRecipients([...recipients, { name: '', email: '', wallet: '', comment: '' }]);
+  };
+
   return (
     <div className="form2_container">
       <div className="form2">
         <h2>Recipient Details</h2>
-        <form>
-          <div className="form-group">
-            <label htmlFor="name">Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="fixed-width"
-            />
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="fixed-width "
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="wallet">Wallet Address:</label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              value={wallet}
-              onChange={(e) => setWallet(e.target.value)}
-              className="fixed-width "
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="comment">Comment:</label>
-            <textarea
-              id="comment"
-              name="comment"
-              rows="4"
-              cols="50"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className="fixed-width"
-            />
-          </div>
-        </form>
+        {recipients.map((recipient, index) => (
+          <form key={index}>
+            <div className="form-group">
+              <label htmlFor={`name-${index}`}>Name:</label>
+              <input
+                type="text"
+                id={`name-${index}`}
+                name={`name-${index}`}
+                value={recipient.name}
+                onChange={(e) => handleRecipientChange(index, 'name', e.target.value)}
+                className="fixed-width"
+              />
+              <label htmlFor={`email-${index}`}>Email:</label>
+              <input
+                type="email"
+                id={`email-${index}`}
+                name={`email-${index}`}
+                value={recipient.email}
+                onChange={(e) => handleRecipientChange(index, 'email', e.target.value)}
+                className="fixed-width"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor={`wallet-${index}`}>Wallet Address:</label>
+              <input
+                type="text"
+                id={`wallet-${index}`}
+                name={`wallet-${index}`}
+                value={recipient.wallet}
+                onChange={(e) => handleRecipientChange(index, 'wallet', e.target.value)}
+                className="fixed-width"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor={`comment-${index}`}>Comment:</label>
+              <textarea
+                id={`comment-${index}`}
+                name={`comment-${index}`}
+                rows="4"
+                cols="50"
+                value={recipient.comment}
+                onChange={(e) => handleRecipientChange(index, 'comment', e.target.value)}
+                className="fixed-width"
+              />
+            </div>
+          </form>
+        ))}
+        <button onClick={addRecipient} className="authentic">
+          Add Recipient
+        </button>
         <button onClick={handleNext} className="authentic">
           Continue
         </button>
