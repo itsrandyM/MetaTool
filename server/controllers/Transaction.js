@@ -15,16 +15,25 @@ const NewTransactionController= {
     addRecipientTransaction: async (req, res) => {
         console.log('Controller received request:', req.body)
         try {
-            const { transactionName,transactionDescription ,tokenName,amount,descriptionName, classificationName, name, email, walletAddress,comment,exchangeRates } = req.body
+
+            const { transactionName,transactionDescription ,//tokenName,amount,
+              descriptionName,
+               classificationName,
+               recipients: [...recipientData], 
+               exchangeRates } = req.body
           //const user = req.user  
-             
-             //const TName = await RecipientsData.create({transactionName,})
-            // const TDescription = await RecipientsData.create({transactionDescription,})
+          //const TName = await RecipientsData.create({transactionName,})
+           // const TDescription = await RecipientsData.create({transactionDescription,})
+ 
+           const recipients = await Promise.all(
+            recipientData.map(async (recipient) => {
+              return await Recipient.create(recipient);
+            })
+          );
 
-
-          const recipient = await Recipient.create({ //User:User,
-            name, email, walletAddress, comment });
-
+          /*const recipient = await Recipient.create({ //User:User,
+            name,  org, comment, token1, amount1, token2,amount2 });
+*/
           
             const description = await Description.create({descriptionName})
             const token = await Token.create({tokenName, amount})
@@ -36,7 +45,7 @@ const NewTransactionController= {
                 User: loggedInUser,
                 transactionName:transactionName,
                 transactionDescription:transactionDescription,
-                recipient,
+                recipients,
                 token,
                 description,
                 classification,
@@ -76,7 +85,7 @@ const NewTransactionController= {
       if (!mongoose.Types.ObjectId.isValid(transactionId)) {
         return res.status(400).json({ error: "Invalid transaction ID" });
       }
-      const transaction = await RecipientsData.findById(transactionId);
+      const transaction = await RecipientsData.findById(transactionId).populate('recipients');
        if (!transaction) {
         return res.status(404).json({ error: "Transaction not found" });
       }

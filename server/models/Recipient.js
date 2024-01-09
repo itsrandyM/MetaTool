@@ -9,14 +9,23 @@ const recipientSchema = new mongoose.Schema({
     name: {
         type:String
     },
-    email:{
+    org:{
         type:String
-    },
-    walletAddress:{
-        type: String
     },
     comment:{
         type:String
+    },
+    token1:{
+        type: String
+    },
+    amount1:{
+        type: String
+    },
+    token2:{
+        type: String
+    },
+    amount2:{
+        type: String
     },
     
 },

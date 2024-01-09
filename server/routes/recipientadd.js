@@ -7,9 +7,9 @@ const NewTransactionController = require('../controllers/Transaction');
 //Add recipient route
 router.post('/addRecipient', async (req, res, next) => {
     try {
-        const { name, email, walletAddress } = req.body;
+        const { name, org, comment, token1, amount1, token2,amount2 } = req.body;
         const recipient = await Recipient.create({ //User:User,
-             name, email, walletAddress });
+             name,  org, comment, token1, amount1, token2,amount2 });
 
     // const recipientId = recipient._id
     // req.body.recipientId = recipientId

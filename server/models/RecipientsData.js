@@ -18,10 +18,10 @@ const recipientDataSchema = new mongoose.Schema({
         type:String
     },
 
-    recipient: {
+    recipients: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: Recipient
-    },
+    }],
     name: {
         type:String
     },
