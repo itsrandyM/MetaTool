@@ -16,7 +16,7 @@ const NewTransactionController= {
         console.log('Controller received request:', req.body)
         try {
 
-            const { transactionName,transactionDescription ,//tokenName,amount,
+            const { transactionName,transactionDescription ,tokenName,amount,
               descriptionName,
                classificationName,
                recipients: [...recipientData], 
