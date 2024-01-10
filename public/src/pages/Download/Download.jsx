@@ -90,7 +90,7 @@ const TransactionDetailsPage = () => {
             {transactionDetails.map((transaction, index) => (
               <div key={index} className="transaction-item">
                 <p className='item1'>Transaction Name: {transaction.transactionName}</p>
-                <p className='item2'>Recipient Name: {renderProperty(transaction.recipient.name)}</p>
+               { /*<p className='item2'>Recipient Name: {renderProperty(transaction.recipient.name)}</p>*/ }
                 <p className='item'>Description: {renderProperty(transaction.description)}</p>
                 <p className='item'>Token: {renderProperty(transaction.token)}</p>
                 <p className='item'>Classification: {renderProperty(transaction.classification)}</p>

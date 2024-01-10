@@ -58,7 +58,7 @@ const FormDisplay = () => {
         {currentForm === 5 && <Form5 onNextForm={handleNextForm} />}
         {currentForm === 4 && <Form4 formData={formData} />}
       </div>
-      {/* <Foot /> */}
+     
     </div>
   );
 };

@@ -24,13 +24,19 @@ const Form4 = ({formData}) => {
     console.log('FormData to be sent:', formData); // Log formData before sending
 
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
+
+    const recipientsData = formData.form3Data.map((recipient, index) => ({
+      name: recipient.name,
+      email: recipient.email,
+      walletAddress: recipient.wallet,
+      comment: recipient.comment,
+      // Add other properties as needed
+    }));
+
     const requestData = {
       transactionName:formData.form2Data.name,
       transactionDescription:formData.form2Data.description,
-      name: formData.form3Data.name,
-      email: formData.form3Data.email,
-      walletAddress: formData.form3Data.wallet,
-      comment:formData.form3Data.comment,
+      recipients: recipientsData,
       tokenName: formData.form5Data.token,
       amount: formData.form5Data.amount,
       classificationName: formData.form5Data.classification,
