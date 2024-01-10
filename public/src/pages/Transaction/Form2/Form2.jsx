@@ -52,10 +52,6 @@ const Form2 = ({ onNextForm }) => {
 
     // Validate the current recipient before adding a new one
     if (currentRecipient.name && currentRecipient.organization && isNameValid.test(currentRecipient.name)) {
-      // Store the current recipient data in the state
-      setRecipients((prevRecipients) => [...prevRecipients]);
-      // Clear the form fields for the next recipient
-      clearCurrentForm()
       // Add a new recipient with the same data structure
       setRecipients((prevRecipients) => [...prevRecipients, { name: '', organization: '', comment: '' }]);
     } else {
@@ -65,21 +61,10 @@ const Form2 = ({ onNextForm }) => {
 
   const clearFormFields = () => {
     // Clear the form fields for the last recipient
-  /*const clearFormFields = () => {
     setRecipients((prevRecipients) => [
       ...prevRecipients.slice(0, prevRecipients.length - 1),
       { name: '', organization: '', comment: '' },
     ]);
-  };
-
-  const clearCurrentForm = () => {
-    setRecipients((prevRecipients) =>
-      prevRecipients.map((recipient, index) =>
-        index === prevRecipients.length - 1
-          ? { ...recipient, name: '', organization: '', comment: '' }
-          : recipient
-      )
-    );
   };
 
   return (
