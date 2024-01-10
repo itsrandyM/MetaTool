@@ -1,58 +1,41 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaUserPlus } from 'react-icons/fa'; // Import the FaUserPlus icon
 import './Form2.css';
-
-// ... (other imports)
 
 const Form2 = ({ onNextForm }) => {
   const [recipients, setRecipients] = useState([
-    { name: '', email: '', wallet: '', comment: '' },
+    { name: '', organization: '', comment: '' },
   ]);
+
   const toastOptions = {
-    position: "bottom-right",
+    position: 'bottom-right',
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "light",
+    theme: 'light',
   };
+
   const isNameValid = /^[a-zA-Z]{1,10}$/;
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipients[0].email);
-  const isWalletValid = /^addr1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]+$/.test(
-    recipients[0].wallet
-  );
 
   const handleNext = () => {
-    if (
-      recipients.some(
-        (recipient) => !recipient.name || !recipient.email || !recipient.wallet
-      )
-    ) {
+    if (recipients.some((recipient) => !recipient.name || !recipient.organization)) {
       toast.error('All fields are required for each recipient.', toastOptions);
       return;
     }
 
     // Validate fields before moving to the next form
-    if (
-      recipients.every(
-        (recipient) =>
-          isNameValid &&
-          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient.email) &&
-          /^addr1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]+$/.test(recipient.wallet)
-      )
-    ) {
+    if (recipients.every((recipient) => isNameValid.test(recipient.name))) {
       console.log('Form2 Data:', recipients);
       onNextForm(3, recipients);
+      // Clear the form fields for the next recipient
+      clearCurrentForm();
     } else {
-      if (!isNameValid) {
+      if (!isNameValid.test(recipients[0].name)) {
         toast.error('Invalid Name.', toastOptions);
       }
-      if (!isEmailValid) {
-        toast.error('Invalid email address.', toastOptions);
-      }
-      if (!isWalletValid) {
-        toast.error('Invalid wallet address.', toastOptions);
-      }
+      // Additional validation error handling...
     }
   };
 
@@ -63,13 +46,42 @@ const Form2 = ({ onNextForm }) => {
   };
 
   const addRecipient = () => {
-    setRecipients([...recipients, { name: '', email: '', wallet: '', comment: '' }]);
+    const currentRecipient = recipients[recipients.length - 1];
+
+    // Validate the current recipient before storing the data and clearing the form fields
+    if (currentRecipient.name && currentRecipient.organization && isNameValid.test(currentRecipient.name)) {
+      // Store the current recipient data in the state
+      setRecipients((prevRecipients) => [...prevRecipients]);
+      // Clear the form fields for the next recipient
+      clearFormFields();
+    } else {
+      toast.error('Fill in the current recipient details correctly before adding a new one.', toastOptions);
+    }
+  };
+
+  const clearFormFields = () => {
+    setRecipients((prevRecipients) => [
+      ...prevRecipients.slice(0, prevRecipients.length - 1),
+      { name: '', organization: '', comment: '' },
+    ]);
+  };
+
+  const clearCurrentForm = () => {
+    setRecipients((prevRecipients) =>
+      prevRecipients.map((recipient, index) =>
+        index === prevRecipients.length - 1
+          ? { ...recipient, name: '', organization: '', comment: '' }
+          : recipient
+      )
+    );
   };
 
   return (
     <div className="form2_container">
       <div className="form2">
-        <h2>Recipient Details</h2>
+        <h2>
+          Recipient <FaUserPlus style={{ marginLeft: '5px' }} onClick={addRecipient} /> {/* Add the FaUserPlus icon */}
+        </h2>
         {recipients.map((recipient, index) => (
           <form key={index}>
             <div className="form-group">
@@ -82,24 +94,15 @@ const Form2 = ({ onNextForm }) => {
                 onChange={(e) => handleRecipientChange(index, 'name', e.target.value)}
                 className="fixed-width"
               />
-              <label htmlFor={`email-${index}`}>Email:</label>
-              <input
-                type="email"
-                id={`email-${index}`}
-                name={`email-${index}`}
-                value={recipient.email}
-                onChange={(e) => handleRecipientChange(index, 'email', e.target.value)}
-                className="fixed-width"
-              />
             </div>
             <div className="form-group">
-              <label htmlFor={`wallet-${index}`}>Wallet Address:</label>
+              <label htmlFor={`organization-${index}`}>Organization:</label>
               <input
                 type="text"
-                id={`wallet-${index}`}
-                name={`wallet-${index}`}
-                value={recipient.wallet}
-                onChange={(e) => handleRecipientChange(index, 'wallet', e.target.value)}
+                id={`organization-${index}`}
+                name={`organization-${index}`}
+                value={recipient.organization}
+                onChange={(e) => handleRecipientChange(index, 'organization', e.target.value)}
                 className="fixed-width"
               />
             </div>
@@ -117,9 +120,7 @@ const Form2 = ({ onNextForm }) => {
             </div>
           </form>
         ))}
-        <button onClick={addRecipient} className="authentic">
-          Add Recipient
-        </button>
+
         <button onClick={handleNext} className="authentic">
           Continue
         </button>
