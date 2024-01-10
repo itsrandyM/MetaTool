@@ -53,18 +53,18 @@ const Form2 = ({ onNextForm }) => {
       // Store the current recipient data in the state
       setRecipients((prevRecipients) => [...prevRecipients]);
       // Clear the form fields for the next recipient
-      clearFormFields();
+      clearCurrentForm()
     } else {
       toast.error('Fill in the current recipient details correctly before adding a new one.', toastOptions);
     }
   };
 
-  const clearFormFields = () => {
+  /*const clearFormFields = () => {
     setRecipients((prevRecipients) => [
       ...prevRecipients.slice(0, prevRecipients.length - 1),
       { name: '', organization: '', comment: '' },
     ]);
-  };
+  };*/
 
   const clearCurrentForm = () => {
     setRecipients((prevRecipients) =>

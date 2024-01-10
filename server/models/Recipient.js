@@ -29,8 +29,6 @@ const recipientSchema = new mongoose.Schema({
     },
     
 },
-{
-    timestamps: true
- }
+
  )
 module.exports = mongoose.model('Recipient', recipientSchema)
