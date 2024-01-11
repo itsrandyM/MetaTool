@@ -20,7 +20,7 @@ const Form3 = ({ onNextForm }) => {
     // Validate fields before moving to the next form
     if (token && classification && description && amount) {
       const formData = {
-        token,
+        token: [{ name: token, amount: parseInt(amount) }],
         classification,
         description,
         amount,

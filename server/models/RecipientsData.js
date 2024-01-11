@@ -25,10 +25,10 @@ const recipientDataSchema = new mongoose.Schema({
     name: {
         type:String
     },
-    token:{
+    token:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: Token
-    },
+    }],
     description:{
         type: mongoose.Schema.Types.ObjectId,
         ref: Description

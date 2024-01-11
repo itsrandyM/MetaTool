@@ -6,12 +6,12 @@ const tokenSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: User
     },
-    tokenName:[{
-        type: String
-    }],
-    amount:[{
-        type:Number
-    }],
+    tokenName: [
+        {
+          name: { type: String, required: true },
+          amount: { type: Number, required: true }
+        }
+      ]
 
 })
 module.exports = mongoose.model('Token', tokenSchema)
