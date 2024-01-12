@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './addToken.css';
 
-const AddTokenPage = ({ onDone }) => {
+const AddTokenPage = ({ onDone, updateToken }) => {
   const navigate = useNavigate();
   const [token, setToken] = useState('');
   const [amount, setAmount] = useState('');
@@ -11,7 +11,7 @@ const AddTokenPage = ({ onDone }) => {
   const handleAddToken = () => {
     console.log('Token:', token);
     console.log('Token Amount:', amount);
-    // Add your logic for handling the token and amount if needed
+ updateToken(token, amount)
   };
 
   const handleDone = () => {

@@ -19,10 +19,19 @@ const Form3 = ({ onNextForm }) => {
   };
 
   const navigate = useNavigate();
+  const addToken = (newToken) => {
+    setToken((prevToken) => [...prevToken, newToken])
+  }
 
-  const handleAddToken = () => {
+  const updateToken = (newToken, newAmount) => {
+    const updatedToken = {name:newToken, amount:parseInt(newAmount)}
+  addToken(updatedToken)
+  }
+
+  const handleAddToken = (e) => {
+    e.preventDefault();
     // Navigate to 'addToken' form
-    onNextForm('addToken');
+    onNextForm('addToken', {updateToken});
   };
 
   const handleNext = () => {
