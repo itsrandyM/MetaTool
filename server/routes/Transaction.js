@@ -5,6 +5,7 @@ const RecipientsData = require("../models/RecipientsData")
 const Token = require('../models/Token')
 const Description = require('../models/Description')
 const authToken = require('../middleware/AuthMW')
+const { sanitizeFilter } = require('mongoose')
 //const { route } = require('./root')
 
 
@@ -44,19 +45,52 @@ router.post('/generateJson', authToken, async (req, res, next) => {
       return res.status(404).json({ success: true, error: 'No verified data found', data: [] });
     }
 
-    // Remove "_id" fields from the response
-    const sanitizedData = verifiedData.map((item) => {
-      const sanitizedItem = { ...item._doc }; // Create a copy of the object
-      delete sanitizedItem._id;
-      delete sanitizedItem.__v;
+    // Function to recursively remove "_id" and "__v" fields from an object
+    const removeIdFields = (obj) => {
+      if (obj && typeof obj.toObject === 'function') {
+        obj = obj.toObject(); // Convert Mongoose document to plain object
+      }
+    
+      const sanitizedObj = { ...obj };
+      delete sanitizedObj._id;
+      delete sanitizedObj.__v;
 
-      // You can also remove "_id" from nested objects if needed
-      sanitizedItem.recipients = sanitizedItem.recipients.map((recipient) => {
-        const sanitizedRecipient = { ...recipient._doc };
-        delete sanitizedRecipient._id;
-        delete sanitizedRecipient.__v;
-        return sanitizedRecipient;
+      if (sanitizedObj.createdAt instanceof Date) {
+        sanitizedObj.createdAt = sanitizedObj.createdAt.toISOString();
+      }
+    
+      if (sanitizedObj.updatedAt instanceof Date) {
+        sanitizedObj.updatedAt = sanitizedObj.updatedAt.toISOString();
+      }
+    
+      // Recursively remove "_id" and "__v" fields from nested objects
+      Object.keys(sanitizedObj).forEach((key) => {
+        if (sanitizedObj[key] && typeof sanitizedObj[key] === 'object') {
+          sanitizedObj[key] = removeIdFields(sanitizedObj[key]);
+        }
       });
+
+      return sanitizedObj;
+    };
+
+    // Remove "_id" and "__v" fields from the entire structure
+    const sanitizedData = verifiedData.map((item) => {
+      const sanitizedItem = removeIdFields(item);
+
+      // Additional removal for nested "recipients," "token," "description," and "classification"
+      if (Array.isArray(sanitizedItem.recipients)) {
+        sanitizedItem.recipients = sanitizedItem.recipients.map((recipient) => {
+          return removeIdFields(recipient);
+        });
+      }
+   
+      if (Array.isArray(sanitizedItem.token)) {
+        sanitizedItem.token = sanitizedItem.token.map((token) => {
+          return removeIdFields(token);
+        });
+      }
+      sanitizedItem.description = removeIdFields(sanitizedItem.description);
+      sanitizedItem.classification = removeIdFields(sanitizedItem.classification);
 
       return sanitizedItem;
     });
@@ -72,5 +106,6 @@ router.post('/generateJson', authToken, async (req, res, next) => {
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
+
 
 module.exports = router;
