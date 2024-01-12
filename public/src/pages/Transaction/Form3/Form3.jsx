@@ -1,3 +1,4 @@
+// Form3.jsx
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,14 +14,21 @@ const Form3 = ({ onNextForm }) => {
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "light",
+    theme: 'light',
+  };
+
+  const navigate = useNavigate();
+
+  const handleAddToken = () => {
+    // Navigate to 'addToken' form
+    onNextForm('addToken');
   };
 
   const handleNext = () => {
     // Validate fields before moving to the next form
     if (token && classification && description && amount) {
       const formData = {
-       token: [{ name: token, amount: parseInt(amount) }],
+        token: [{ name: token, amount: parseInt(amount) }],
         classification,
         description,
         amount,
