@@ -1,3 +1,4 @@
+// Form3.jsx
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,14 +21,14 @@ const Form3 = ({ onNextForm }) => {
   const navigate = useNavigate();
 
   const handleAddToken = () => {
-    // Use the navigate function to redirect to the "add-token" page
-    navigate('/add-token');
+    // Navigate to 'addToken' form
+    onNextForm('addToken');
   };
 
   const handleNext = () => {
     if (token && classification && description && amount) {
       const formData = {
-        token,
+        token: [{ name: token, amount: parseInt(amount) }],
         classification,
         description,
         amount,
