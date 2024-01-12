@@ -15,7 +15,8 @@ const FormDisplay = () => {
     form1data: {},
     form2data: {},
     form3data: {},
-    form5data: {}
+    form5data: {},
+    addTokenData: {}, // Add a new property for AddTokenPage data
   });
 
   const handleNextForm = (nextForm, data) => {
@@ -24,7 +25,7 @@ const FormDisplay = () => {
       ...prevData,
       [`form${nextForm}Data`]: data,
     }));
-    setCurrentForm(nextForm);  // Update currentForm
+    setCurrentForm(nextForm);
   };
 
   return (
@@ -39,7 +40,13 @@ const FormDisplay = () => {
 
         {/* AddTokenPage should be rendered conditionally */}
         {currentForm === 'addToken' && (
-          <AddTokenPage onDone={() => setCurrentForm(3)} />
+          <AddTokenPage onDone={(data) => {
+            setFormData((prevData) => ({
+              ...prevData,
+              addTokenData: data,
+            }));
+            setCurrentForm(3);
+          }} />
         )}
       </div>
     </div>

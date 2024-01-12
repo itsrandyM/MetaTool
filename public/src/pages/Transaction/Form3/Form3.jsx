@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import './Form3.css';
 
 const Form3 = ({ onNextForm }) => {
-  const [token, setToken] = useState('');
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
+  const [tokens, setTokens] = useState([]); // Changed from string to array
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 8000,
@@ -19,25 +19,21 @@ const Form3 = ({ onNextForm }) => {
   };
 
   const navigate = useNavigate();
-  const addToken = (newToken) => {
-    setToken((prevToken) => [...prevToken, newToken])
-  }
 
-  const updateToken = (newToken, newAmount) => {
-    const updatedToken = {name:newToken, amount:parseInt(newAmount)}
-  addToken(updatedToken)
-  }
+  const updateToken = (newToken) => {
+    setTokens((prevTokens) => [...prevTokens, newToken]);
+  };
 
   const handleAddToken = (e) => {
     e.preventDefault();
     // Navigate to 'addToken' form
-    onNextForm('addToken', {updateToken});
+    onNextForm('addToken', { updateToken });
   };
 
   const handleNext = () => {
-    if (token && classification && description && amount) {
+    if (tokens.length > 0 && classification && description && amount) {
       const formData = {
-        token: [{ name: token, amount: parseInt(amount) }],
+        token: [{ name: tokens, amount: parseInt(amount) }],
         classification,
         description,
         amount,
@@ -53,6 +49,7 @@ const Form3 = ({ onNextForm }) => {
       <div className="form3">
         <h2>Transaction Details</h2>
         <form>
+          {/* Your form inputs */}
           <div className="form-group">
             <label htmlFor="classification">Classification:</label>
             <input
@@ -72,12 +69,10 @@ const Form3 = ({ onNextForm }) => {
               type="text"
               id="token"
               name="token"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
+              onChange={(e) => setTokens(e.target.value)}
               className="form-input1"
             />
           </div>
-{/* REEZY */}
           {/* Amount Input and Add Token Button */}
           <div className="form-group">
             <div className="amount-input-group1">
@@ -107,10 +102,10 @@ const Form3 = ({ onNextForm }) => {
               className="fixed-width"
             />
           </div>
+          <button onClick={handleNext} className="authentic">
+            Continue
+          </button>
         </form>
-        <button onClick={handleNext} className="authentic">
-          Continue
-        </button>
       </div>
     </div>
   );

@@ -9,13 +9,15 @@ const AddTokenPage = ({ onDone, updateToken }) => {
   const [amount, setAmount] = useState('');
 
   const handleAddToken = () => {
-    console.log('Token:', token);
-    console.log('Token Amount:', amount);
- updateToken(token, amount)
+    // Check if both token and amount are provided before updating
+    if (token && amount) {
+      updateToken({ name: token, amount: parseInt(amount) });
+      setToken(''); // Clear the input fields after updating
+      setAmount('');
+    }
   };
 
   const handleDone = () => {
-    console.log('Leaving Add Token Page');
     onDone(); // Callback to navigate back to Form3
   };
 
