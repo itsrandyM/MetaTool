@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 import './Form3.css';
 
 const Form3 = ({ onNextForm }) => {
   const [token, setToken] = useState('');
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState(''); // New state for the amount field
+  const [amount, setAmount] = useState('');
   const toastOptions = {
-    position: "bottom-right",
+    position: 'bottom-right',
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "light",
+    theme: 'light',
+  };
+
+  const navigate = useNavigate();
+
+  const handleAddToken = () => {
+    // Use the navigate function to redirect to the "add-token" page
+    navigate('/add-token');
   };
 
   const handleNext = () => {
-    // Validate fields before moving to the next form
     if (token && classification && description && amount) {
       const formData = {
-        token: [{ name: token, amount: parseInt(amount) }],
+        token,
         classification,
         description,
         amount,
@@ -37,28 +44,6 @@ const Form3 = ({ onNextForm }) => {
         <h2>Transaction Details</h2>
         <form>
           <div className="form-group">
-            <label htmlFor="token">Token:</label>
-            <input
-              type="text"
-              id="token"
-              name="token"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              className="fixed-width "
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="amount">Amount:</label>
-            <input
-              type="text"
-              id="amount"
-              name="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="fixed-width "
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="classification">Classification:</label>
             <input
               type="tel"
@@ -66,8 +51,39 @@ const Form3 = ({ onNextForm }) => {
               name="classification"
               value={classification}
               onChange={(e) => setClassification(e.target.value)}
-              className="fixed-width "
+              className="fixed-width"
             />
+          </div>
+          <div className="form-group1">
+            <label htmlFor="token" className="form-label2">
+              Token:
+            </label>
+            <input
+              type="text"
+              id="token"
+              name="token"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              className="form-input1"
+            />
+          </div>
+
+          {/* Amount Input and Add Token Button */}
+          <div className="form-group">
+            <div className="amount-input-group1">
+              <input
+                type="text"
+                id="amount"
+                name="amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="0.00"
+                className="form-input2 amount-input1"
+              />
+              <button className="addicon1" onClick={handleAddToken}>
+                Add Token
+              </button>
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="description">Description:</label>
