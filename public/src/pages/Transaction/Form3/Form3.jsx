@@ -2,15 +2,16 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 import './Form3.css';
 
 const Form3 = ({ onNextForm }) => {
   const [token, setToken] = useState('');
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState(''); // New state for the amount field
+  const [amount, setAmount] = useState('');
   const toastOptions = {
-    position: "bottom-right",
+    position: 'bottom-right',
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
@@ -25,7 +26,6 @@ const Form3 = ({ onNextForm }) => {
   };
 
   const handleNext = () => {
-    // Validate fields before moving to the next form
     if (token && classification && description && amount) {
       const formData = {
         token: [{ name: token, amount: parseInt(amount) }],
@@ -45,28 +45,6 @@ const Form3 = ({ onNextForm }) => {
         <h2>Transaction Details</h2>
         <form>
           <div className="form-group">
-            <label htmlFor="token">Token:</label>
-            <input
-              type="text"
-              id="token"
-              name="token"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              className="fixed-width "
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="amount">Amount:</label>
-            <input
-              type="text"
-              id="amount"
-              name="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="fixed-width "
-            />
-          </div>
-          <div className="form-group">
             <label htmlFor="classification">Classification:</label>
             <input
               type="tel"
@@ -74,7 +52,7 @@ const Form3 = ({ onNextForm }) => {
               name="classification"
               value={classification}
               onChange={(e) => setClassification(e.target.value)}
-              className="fixed-width "
+              className="fixed-width"
             />
           </div>
           <div className="form-group1">
