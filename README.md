@@ -57,6 +57,19 @@ F.Authenticated users can download verified recipient data in JSON format for ex
   Add generate .CVS file functionality to the app to generate wallet transaction data.
   Incorprate an exchange rate API for the exchange rates during time of transaction.
 
+  Technologies Used
+    Frontend:
+
+React.js for building the user interface.
+React Router for handling navigation.
+React Toastify for displaying notifications.
+
+Backend:
+
+Node.js and Express.js for server-side development.
+MongoDB database for storing recipient and transaction data.
+Mongoose as the ODM (Object Data Modeling) library for MongoDB.
+
   Contributors
 [Raymond Ezra]
 [Randy Mungai]
