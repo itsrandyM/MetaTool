@@ -14,6 +14,7 @@ const Form3 = ({ onNextForm }) => {
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
+  const [tokens, setTokens] = useState([]); // Changed from string to array
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 8000,
@@ -55,6 +56,7 @@ const Form3 = ({ onNextForm }) => {
       <div className="form3">
         <h2>Transaction Details</h2>
         <form>
+          {/* Your form inputs */}
           <div className="form-group">
             <label htmlFor="classification">Classification:</label>
             <input
@@ -79,7 +81,6 @@ const Form3 = ({ onNextForm }) => {
               className="form-input1"
             />
           </div>
-{/* REEZY */}
           {/* Amount Input and Add Token Button */}
           <div className="form-group">
             <div className="amount-input-group1">
@@ -109,10 +110,10 @@ const Form3 = ({ onNextForm }) => {
               className="fixed-width"
             />
           </div>
+          <button onClick={handleNext} className="authentic">
+            Continue
+          </button>
         </form>
-        <button onClick={handleNext} className="authentic">
-          Continue
-        </button>
       </div>
     </div>
   );

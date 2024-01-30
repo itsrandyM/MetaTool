@@ -26,7 +26,7 @@ const FormDisplay = () => {
       ...prevData,
       [`form${nextForm}Data`]: data,
     }));
-    setCurrentForm(nextForm);  // Update currentForm
+    setCurrentForm(nextForm);
   };
 
   return (
