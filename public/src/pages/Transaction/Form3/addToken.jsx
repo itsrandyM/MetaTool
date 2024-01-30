@@ -8,9 +8,9 @@ const AddTokenPage = ({ onDone, updateToken }) => {
   const navigate = useNavigate();
   const {setTokens} = useTokenContext()
 
-  const handleAddToken = () => {
-    console.log('Token:', token);
-    console.log('Token Amount:', amount);
+  const handleAddToken = (e) => {
+    // console.log('Token:', token);
+    // console.log('Token Amount:', amount);
     e.preventdefault()
  updateToken(token, amount)
   e.target.closest('form').submit()

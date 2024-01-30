@@ -14,7 +14,6 @@ const Form3 = ({ onNextForm }) => {
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [tokens, setTokens] = useState([]); // Changed from string to array
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 8000,
@@ -26,7 +25,7 @@ const Form3 = ({ onNextForm }) => {
   const navigate = useNavigate();
   //allcode goes here
   const handleAddToken = () => {
-    setTokens([...tokens, { name: '', amount: 0 }]); // Add a new empty token object
+    setTokens([...tokens, { name: '', amount: parseInt('') }]); // Add a new empty token object
   };
 
   const handleTokenChange = (index, name, amount) => {
@@ -68,19 +67,21 @@ const Form3 = ({ onNextForm }) => {
               className="fixed-width"
             />
           </div>
-          <div className="form-group1">
-            <label htmlFor="token" className="form-label2">
-              Token:
-            </label>
-            <input
-              type="text"
-              id="token"
-              name="token"
-              value={tokens.name}
-              onChange={(e) => setTokens(e.target.value)}
-              className="form-input1"
-            />
-          </div>
+          {tokens.map((token, index) => (
+  <div key={index} className="form-group1">
+    <label htmlFor={`token-${index}`} className="form-label2">
+      Token {index + 1}:
+    </label>
+    <input
+      type="text"
+      id={`token-${index}`}
+      name={`token-${index}`}
+      value={token.name}
+      onChange={(e) => handleTokenChange(index, e.target.value, token.amount)}
+      className="form-input1"
+    />
+  </div>
+))}
           {/* Amount Input and Add Token Button */}
           <div className="form-group">
             <div className="amount-input-group1">
@@ -88,7 +89,7 @@ const Form3 = ({ onNextForm }) => {
                 type="text"
                 id="amount"
                 name="amount"
-                value={tokens.amount}
+                value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
                 className="form-input2 amount-input1"
