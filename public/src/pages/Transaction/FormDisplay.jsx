@@ -49,6 +49,7 @@ const FormDisplay = () => {
           }} />
         )}
       </div>
+      <Foot/>
     </div>
   );
 };
