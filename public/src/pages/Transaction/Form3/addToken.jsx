@@ -1,24 +1,26 @@
 // AddTokenPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTokenContext } from '../../../../constants/TokenContext';
 import './addToken.css';
 
 const AddTokenPage = ({ onDone, updateToken }) => {
   const navigate = useNavigate();
-  const [token, setToken] = useState('');
-  const [amount, setAmount] = useState('');
+  const {setTokens} = useTokenContext()
 
-  const handleAddToken = () => {
-    // Check if both token and amount are provided before updating
-    if (token && amount) {
-      updateToken({ name: token, amount: parseInt(amount) });
-      setToken(''); // Clear the input fields after updating
-      setAmount('');
-    }
+  const handleAddToken = (e) => {
+    // console.log('Token:', token);
+    // console.log('Token Amount:', amount);
+    e.preventdefault()
+ updateToken(token, amount)
+  e.target.closest('form').submit()
+  setTokens((prevToken) => [...prevToken, {name:token, amount: parseInt(amount)}])
+
   };
 
   const handleDone = () => {
-    onDone(); // Callback to navigate back to Form3
+    console.log('Leaving Add Token Page');
+    onDone(token, amount); // Callback to navigate back to Form3
   };
 
   return (

@@ -38,7 +38,7 @@ const Form4 = ({formData}) => {
       transactionName:formData.form2Data.name,
       transactionDescription:formData.form2Data.description,
       recipients: recipientsData,
-      tokenName: formData.form5Data.token.map((token) => ({
+      tokenName: formData.form5Data.tokens.map((token) => ({
         name: token.name,
         amount: token.amount,
       })),
@@ -80,11 +80,11 @@ const Form4 = ({formData}) => {
         <br />
         <div className="rec_d2">
           <h2 className="sum_h">Transaction Details</h2>
-          {formData.form5Data.token.map((token, index) => (
+          {/* {formData.form3Data.tokens.map((token, index) => (
             <p key={index} className="data">
              Token: {token.name}
            </p>
-         ))}
+         ))} */}
           <p className="data2">Classification: {formData.form5Data.classification}</p>
           <p className="data3">Description: {formData.form5Data.description}</p>
         </div>

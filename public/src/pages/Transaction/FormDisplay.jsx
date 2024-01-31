@@ -14,9 +14,10 @@ const FormDisplay = () => {
   const [formData, setFormData] = useState({
     form1data: {},
     form2data: {},
-    form3data: {},
-    form5data: {},
-    addTokenData: {}, // Add a new property for AddTokenPage data
+    form3data: {
+      token:[]
+    },
+    form5data: {}
   });
 
   const handleNextForm = (nextForm, data) => {
@@ -40,14 +41,20 @@ const FormDisplay = () => {
 
         {/* AddTokenPage should be rendered conditionally */}
         {currentForm === 'addToken' && (
-          <AddTokenPage onDone={(data) => {
-            setFormData((prevData) => ({
-              ...prevData,
-              addTokenData: data,
-            }));
-            setCurrentForm(3);
-          }} />
-        )}
+  <AddTokenPage
+    onDone={(token, amount) => {
+      // Store the token and amount in Form3's state
+      setFormData((prevData) => ({
+        ...prevData,
+        form3Data: {
+          ...prevData.form3data,
+          tokens: [...prevData.form3data.token, { token, amount }], // Append new token to the list
+        },
+      }));
+      setCurrentForm(3);
+    }}
+  />
+)}
       </div>
     </div>
   );

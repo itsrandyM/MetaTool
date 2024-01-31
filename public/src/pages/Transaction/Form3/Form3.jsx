@@ -1,15 +1,19 @@
 // Form3.jsx
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useTokenContext } from '../../../../constants/TokenContext';
 import './Form3.css';
 
+export const tokenContext = createContext()
+
 const Form3 = ({ onNextForm }) => {
+  //const [tokens, setTokens] = useState([{ name: '', amount: 0 }])
+  const {tokens, setTokens} = useTokenContext()
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
-  const [tokens, setTokens] = useState([]); // Changed from string to array
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 8000,
@@ -19,21 +23,23 @@ const Form3 = ({ onNextForm }) => {
   };
 
   const navigate = useNavigate();
-
-  const updateToken = (newToken) => {
-    setTokens((prevTokens) => [...prevTokens, newToken]);
+  //allcode goes here
+  const handleAddToken = () => {
+    setTokens([...tokens, { name: '', amount: parseInt('') }]); // Add a new empty token object
   };
 
-  const handleAddToken = (e) => {
-    e.preventDefault();
-    // Navigate to 'addToken' form
-    onNextForm('addToken', { updateToken });
+  const handleTokenChange = (index, name, amount) => {
+    setTokens((prevTokens) =>
+      prevTokens.map((token, i) => (i === index ? { name, amount } : token))
+    );
+    setAmount((prevTotal) => prevTotal + parseInt(amount));
   };
+
 
   const handleNext = () => {
-    if (tokens.length > 0 && classification && description && amount) {
+    if (tokens && classification && description && amount) {
       const formData = {
-        token: [{ name: tokens, amount: parseInt(amount) }],
+        tokens,
         classification,
         description,
         amount,
@@ -61,18 +67,21 @@ const Form3 = ({ onNextForm }) => {
               className="fixed-width"
             />
           </div>
-          <div className="form-group1">
-            <label htmlFor="token" className="form-label2">
-              Token:
-            </label>
-            <input
-              type="text"
-              id="token"
-              name="token"
-              onChange={(e) => setTokens(e.target.value)}
-              className="form-input1"
-            />
-          </div>
+          {tokens.map((token, index) => (
+  <div key={index} className="form-group1">
+    <label htmlFor={`token-${index}`} className="form-label2">
+      Token {index + 1}:
+    </label>
+    <input
+      type="text"
+      id={`token-${index}`}
+      name={`token-${index}`}
+      value={token.name}
+      onChange={(e) => handleTokenChange(index, e.target.value, token.amount)}
+      className="form-input1"
+    />
+  </div>
+))}
           {/* Amount Input and Add Token Button */}
           <div className="form-group">
             <div className="amount-input-group1">
@@ -85,7 +94,7 @@ const Form3 = ({ onNextForm }) => {
                 placeholder="0.00"
                 className="form-input2 amount-input1"
               />
-              <button className="addicon1" onClick={handleAddToken}>
+              <button className="addicon1" >
                 Add Token
               </button>
             </div>
