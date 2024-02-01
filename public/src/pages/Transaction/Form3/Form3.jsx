@@ -43,12 +43,12 @@ const Form3 = ({ onNextForm }) => {
 
   const handleNext = (e) => {
     e.preventDefault();
-    if (tokens.length > 0 && classification && description && amount) {
+    if (tokens.length > 0 && classification && description) {
       const formData = {
         tokens,
         classification,
         description,
-        amount,
+        // amount,
       };
       onNextForm(5, formData);
     } else {
@@ -93,14 +93,21 @@ const Form3 = ({ onNextForm }) => {
               />
             </div>
           ))}
-          <div className="form-group">
+          {tokens.map((token, index) => (
+          <div  key={index} className="form-group">
             <div className="amount-input-group1">
               <input
-                type="text"
-                id="amount"
-                name="amount"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                type='number'
+                id={`token-${index}`}
+                name={`token-${index}`}
+                value={token.amount}
+                onChange={(e) =>
+                  setTokens((prevTokens) =>
+                    prevTokens.map((prevToken, i) =>
+                      i === index ? { ...prevToken, amount: e.target.value } : prevToken
+                    )
+                  )
+                }
                 placeholder="0.00"
                 className="form-input2 amount-input1"
               />
@@ -108,7 +115,7 @@ const Form3 = ({ onNextForm }) => {
                 Add Token
               </button>
             </div>
-          </div>
+          </div>))}
           <div className="form-group">
             <label htmlFor="description">Description:</label>
             <textarea

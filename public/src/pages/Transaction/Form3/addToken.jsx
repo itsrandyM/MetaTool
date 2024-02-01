@@ -1,19 +1,18 @@
-// AddTokenPage.jsx
-
 import React, { useState } from 'react';
+import { useTokenContext } from '../../../../constants/TokenContext';
 import './addToken.css';
 
-const AddTokenPage = ({ tokens, setTokens, amount, setAmount, onClose }) => {
-  const [tokenName, setTokenName] = useState('');
-  const [tokenAmount, setTokenAmount] = useState('');
+const AddTokenPage = ({ onClose }) => {
+  const { tokens, setTokens } = useTokenContext();
+  const [newToken, setNewToken] = useState({ name: '', amount: '' });
 
-  const handleAddToken = (e) => {
-    e.preventDefault(); // Prevent form submission
-    if (tokenName.trim() && tokenAmount.trim()) {
-      const newToken = { name: tokenName, amount: parseFloat(tokenAmount) };
-      setTokens([...tokens, newToken]);
-      setAmount(parseFloat(amount) + parseFloat(tokenAmount));
+  const handleAddToken = () => {
+    if (newToken.name.trim() && newToken.amount.trim()) {
+      setTokens((prevTokens) => [...prevTokens, { ...newToken }]);
+      setNewToken({ name: '', amount: '' });
       onClose();
+    } else {
+      console.error('Please fill in both token name and amount.');
     }
   };
 
@@ -21,40 +20,38 @@ const AddTokenPage = ({ tokens, setTokens, amount, setAmount, onClose }) => {
     <div className="overlay">
       <div className="popup-container">
         <h2>Add Token</h2>
-        <form onSubmit={handleAddToken}> {/* Add onSubmit handler to the form */}
-          <div className="form-group">
-            <label htmlFor="token" className="form-label">
-              Token:
-            </label>
+        <div className="form-group">
+          <label htmlFor="token" className="form-label">
+            Token:
+          </label>
+          <input
+            type="text"
+            id="token"
+            name="token"
+            value={newToken.name}
+            onChange={(e) => setNewToken({ ...newToken, name: e.target.value })}
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+          <div className="amount-input-group">
             <input
               type="text"
-              id="token"
-              name="token"
-              value={tokenName}
-              onChange={(e) => setTokenName(e.target.value)}
-              className="form-input"
+              id="amount"
+              name="amount"
+              value={newToken.amount}
+              onChange={(e) => setNewToken({ ...newToken, amount: e.target.value })}
+              placeholder="0.00"
+              className="form-input amount-input"
             />
+            <button type="button" className="addicon" onClick={handleAddToken}>
+              Add Token
+            </button>
           </div>
-          <div className="form-group">
-            <div className="amount-input-group">
-              <input
-                type="text"
-                id="tokenAmount"
-                name="tokenAmount"
-                value={tokenAmount}
-                onChange={(e) => setTokenAmount(e.target.value)}
-                placeholder="0.00"
-                className="form-input amount-input"
-              />
-              <button type="submit" className="addicon"> {/* Change button type to submit */}
-                Add Token
-              </button>
-            </div>
-          </div>
-          <button type="button" className="done-button" onClick={onClose}> {/* Change button type to button */}
-            Done
-          </button>
-        </form>
+        </div>
+        <button type="button" className="done-button" onClick={handleAddToken}>
+          Done
+        </button>
       </div>
     </div>
   );
