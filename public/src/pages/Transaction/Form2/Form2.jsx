@@ -70,9 +70,8 @@ const Form2 = ({ onNextForm }) => {
   return (
     <div className="form2_container">
       <div className="form2">
-        <h2>
-          Recipient <FaUserPlus style={{ marginLeft: '5px' }} onClick={addRecipient} />
-        </h2>
+         <h2>Recipient </h2>
+         <FaUserPlus style={{ marginLeft: '60%', width: '18px', height:'18px'}} onClick={addRecipient} />
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input

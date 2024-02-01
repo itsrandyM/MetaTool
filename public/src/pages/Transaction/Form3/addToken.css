@@ -1,71 +1,73 @@
 /* addToken.css */
 
-.add-token-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Adjust as needed */
-  }
-  
-  .add-token-content {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Adjust as needed */
-  }
-  
-  .add-token-header {
-    font-size: 1.5em;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-label1 {
-    display: block;
-    margin-bottom: 5px;
-    margin-left: -90%;
-    color: black;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .amount-input-group {
-    display: flex;
-    align-items: center;
-  }
-  
-  .amount-input {
-    flex: 1; /* Take remaining space */
-    margin-right: 10px;
-  }
-  
-  .addicon {
-    padding: 8px 12px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: -10px;
-  }
-  
-  .done-button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-  }
-  
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* ensure the overlay is above other content */
+}
+
+.popup-container {
+  background-color: #fff; /* background color of the pop-up */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* drop shadow effect */
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: calc(100% - 20px); /* adjust input width */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.amount-input-group {
+  display: flex;
+  align-items: center;
+}
+
+.amount-input {
+  flex: 1; /* allow input to grow */
+  margin-right: 10px; /* adjust spacing */
+}
+
+.addicon {
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.addicon:hover {
+  background-color: #0056b3;
+}
+
+.done-button {
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.done-button:hover {
+  background-color: #0056b3;
+}

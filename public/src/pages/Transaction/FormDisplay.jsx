@@ -7,7 +7,6 @@ import Form5 from './exchange/exchange'
 import Form2 from './Form2/Form2';
 import Form3 from './Form3/Form3';
 import Form4 from './Form4/Form4';
-import AddTokenPage from './Form3/addToken'; // Import AddTokenPage component
 
 const FormDisplay = () => {
   const [currentForm, setCurrentForm] = useState(1);  // Define currentForm state
@@ -38,24 +37,7 @@ const FormDisplay = () => {
         {currentForm === 3 && <Form3 onNextForm={handleNextForm} />}
         {currentForm === 5 && <Form5 onNextForm={handleNextForm} />}
         {currentForm === 4 && <Form4 formData={formData} />}
-
-        {/* AddTokenPage should be rendered conditionally */}
-        {currentForm === 'addToken' && (
-  <AddTokenPage
-    onDone={(token, amount) => {
-      // Store the token and amount in Form3's state
-      setFormData((prevData) => ({
-        ...prevData,
-        form3Data: {
-          ...prevData.form3data,
-          tokens: [...prevData.form3data.token, { token, amount }], // Append new token to the list
-        },
-      }));
-      setCurrentForm(3);
-    }}
-  />
-)}
-      </div>
+   </div>
     </div>
   );
 };
