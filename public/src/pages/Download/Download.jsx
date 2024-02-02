@@ -1,12 +1,20 @@
 // TransactionDetailsPage.js
 import React, { useState, useEffect } from 'react';
+import Lottie from 'react-lottie'
 import { useNavigate } from 'react-router-dom'
 import { SERVER_URL } from '../../../constants';
 import axios from 'axios';
 import './Download.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Foot from '../Transaction/Foot/foot';
+import animationData from '../../../public/load.json'
 
+const defaultOptions = {
+  loop: true, // Set to true for continuous animation
+  autoplay: true, // Set to true for automatic playback
+  animationData: animationData, // Provide the animation data
+  //renderer: 'svg', // Choose the rendering method (svg or canvas)
+};
 
 
 const TransactionDetailsPage = () => {
@@ -73,6 +81,17 @@ const TransactionDetailsPage = () => {
     return property;
   };
 
+  // function renderTokenNames(token) {
+  //   const tokenNames = Object.values(token["0"]["tokenName"]); // Get all tokenName objects
+  //   return (
+  //     <ul>
+  //       {tokenNames.map((tokenName) => (
+  //         <li key={tokenName.name}>Token Name: {tokenName.name}</li>
+  //       ))}
+  //     </ul>
+  //   );
+  // }
+
   return (
     <div>
       <Navbar/>
@@ -80,7 +99,8 @@ const TransactionDetailsPage = () => {
       <h2>Transaction Details</h2>
 
       {loading ? (
-        <p>Loading...</p>
+        //<p>Loading...</p>
+        <Lottie  options={defaultOptions} width={50} height={50}/>
       ) : transactionDetails.length === 0 ? (
         <p>No transaction details found.</p>
       ) : (
@@ -89,11 +109,12 @@ const TransactionDetailsPage = () => {
             {/* Display your transaction details as you were doing */}
             {transactionDetails.map((transaction, index) => (
               <div key={index} className="transaction-item">
-                <p className='item1'>Transaction Name: {transaction.transactionName}</p>
                { /*<p className='item2'>Recipient Name: {renderProperty(transaction.recipient.name)}</p>*/ }
-                <p className='item'>Description: {renderProperty(transaction.description)}</p>
+                <p className='item'>Classification: {renderProperty(transaction.classification.classificationName)}</p>
+                <p className='item'>Description: {renderProperty(transaction.description.descriptionName)}</p>
+                <p className='item1'>Transaction Name: {transaction.transactionName}</p>
                 <p className='item'>Token: {renderProperty(transaction.token)}</p>
-                <p className='item'>Classification: {renderProperty(transaction.classification)}</p>
+                {/* <p className='item'>{renderTokenNames(transaction.token)}</p> */}
                 <hr />
               </div>
             ))}
