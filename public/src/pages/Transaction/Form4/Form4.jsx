@@ -27,7 +27,7 @@ const Form4 = ({formData}) => {
 
     const recipientsData = formData.form3Data.map((recipient, index) => ({
       name: recipient.name,
-      email: recipient.email,
+      org: recipient.organization,
       walletAddress: recipient.wallet,
       comment: recipient.comment,
       // Add other properties as needed
@@ -71,12 +71,12 @@ const Form4 = ({formData}) => {
   return (
     <div className="form_container">
       <form className="summarized">
-        <h2 className="sum_h">Recipient Details</h2>
-        <div className="rec_d">
+        {/* <h2 className="sum_h">Recipient Details</h2> */}
+        {/* <div className="rec_d">
           <p className="data">Name: {formData.form3Data.name}</p>
           <p className="data">Email: {formData.form3Data.email}</p>
           <p className="data">Wallet: {formData.form3Data.wallet}</p>
-        </div>
+        </div> */}
         <br />
         <div className="rec_d2">
           <h2 className="sum_h">Transaction Details</h2>
