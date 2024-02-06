@@ -74,8 +74,6 @@ const Form4 = ({formData}) => {
         {/* <h2 className="sum_h">Recipient Details</h2> */}
         {/* <div className="rec_d">
           <p className="data">Name: {formData.form3Data.name}</p>
-          <p className="data">Email: {formData.form3Data.email}</p>
-          <p className="data">Wallet: {formData.form3Data.wallet}</p>
         </div> */}
         <br />
         <div className="rec_d2">
