@@ -1,4 +1,3 @@
-// TransactionDetailsPage.js
 import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie'
 import { useNavigate } from 'react-router-dom'
@@ -10,15 +9,13 @@ import Foot from '../Transaction/Foot/foot';
 import animationData from '../../../public/load.json'
 
 const defaultOptions = {
-  loop: true, // Set to true for continuous animation
-  autoplay: true, // Set to true for automatic playback
-  animationData: animationData, // Provide the animation data
-  //renderer: 'svg', // Choose the rendering method (svg or canvas)
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
 };
 
-
 const TransactionDetailsPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [transactionDetails, setTransactionDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [jsonPreview, setJsonPreview] = useState('');
@@ -55,7 +52,7 @@ const TransactionDetailsPage = () => {
     }
   };
 
-  const handleDownload = () => {
+  const handleDownloadJSON = () => {
     const jsonData = JSON.stringify(transactionDetails, null, 2);
     setJsonPreview(jsonData);
 
@@ -70,8 +67,34 @@ const TransactionDetailsPage = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-   // window.location.href = 'home';
-    navigate('/home')
+    navigate('/home');
+  };
+
+  const handleDownloadCSV = () => {
+    const csvData = convertToCSV(transactionDetails);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'transaction_details.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    navigate('/home');
+  };
+
+  const convertToCSV = (data) => {
+    // Convert transaction details to CSV format
+    const header = Object.keys(data[0]).join(',');
+    const rows = data.map((transaction) =>
+      Object.values(transaction).map((value) =>
+        typeof value === 'object' ? JSON.stringify(value) : value
+      ).join(',')
+    );
+    return [header, ...rows].join('\n');
   };
 
   const renderProperty = (property) => {
@@ -81,51 +104,38 @@ const TransactionDetailsPage = () => {
     return property;
   };
 
-  // function renderTokenNames(token) {
-  //   const tokenNames = Object.values(token["0"]["tokenName"]); // Get all tokenName objects
-  //   return (
-  //     <ul>
-  //       {tokenNames.map((tokenName) => (
-  //         <li key={tokenName.name}>Token Name: {tokenName.name}</li>
-  //       ))}
-  //     </ul>
-  //   );
-  // }
-
   return (
     <div>
       <Navbar/>
-    <div className="Download_container">
-      <h2>Transaction Details</h2>
-
-      {loading ? (
-        //<p>Loading...</p>
-        <Lottie  options={defaultOptions} width={50} height={50}/>
-      ) : transactionDetails.length === 0 ? (
-        <p>No transaction details found.</p>
-      ) : (
-        <>
-          <div className="fixed">
-            {/* Display your transaction details as you were doing */}
-            {transactionDetails.map((transaction, index) => (
-              <div key={index} className="transaction-item">
-               { /*<p className='item2'>Recipient Name: {renderProperty(transaction.recipient.name)}</p>*/ }
-                <p className='item'>Classification: {renderProperty(transaction.classification.classificationName)}</p>
-                <p className='item'>Description: {renderProperty(transaction.description.descriptionName)}</p>
-                <p className='item1'>Transaction Name: {transaction.transactionName}</p>
-                <p className='item'>Token: {renderProperty(transaction.token)}</p>
-                {/* <p className='item'>{renderTokenNames(transaction.token)}</p> */}
-                <hr />
-              </div>
-            ))}
-          </div>
-          <button onClick={handleDownload} className="download-button">
-            Download JSON
-          </button>
-        </>
-      )}
-    </div>
-    <Foot/>
+      <div className="Download_container">
+        <h2>Transaction Details</h2>
+        {loading ? (
+          <Lottie options={defaultOptions} width={50} height={50}/>
+        ) : transactionDetails.length === 0 ? (
+          <p>No transaction details found.</p>
+        ) : (
+          <>
+            <div className="fixed">
+              {transactionDetails.map((transaction, index) => (
+                <div key={index} className="transaction-item">
+                  <p className='item'>Classification: {renderProperty(transaction.classification.classificationName)}</p>
+                  <p className='item'>Description: {renderProperty(transaction.description.descriptionName)}</p>
+                  <p className='item1'>Transaction Name: {transaction.transactionName}</p>
+                  <p className='item'>Token: {renderProperty(transaction.token)}</p>
+                  <hr />
+                </div>
+              ))}
+            </div>
+            <button onClick={handleDownloadJSON} className="download-button">
+              Download JSON
+            </button>
+            <button onClick={handleDownloadCSV} className="download-button">
+              Download CSV
+            </button>
+          </>
+        )}
+      </div>
+      <Foot/>
     </div>
   );
 };
