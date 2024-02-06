@@ -28,7 +28,7 @@ const Form4 = ({formData}) => {
     const recipientsData = formData.form3Data.map((recipient, index) => ({
       name: recipient.name,
       org: recipient.organization,
-      walletAddress: recipient.wallet,
+      wallet: recipient.wallet,
       comment: recipient.comment,
       // Add other properties as needed
     }));

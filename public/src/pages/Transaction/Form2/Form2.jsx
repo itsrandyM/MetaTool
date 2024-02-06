@@ -7,7 +7,7 @@ import './Form2.css';
 
 const Form2 = ({ onNextForm }) => {
   const [recipients, setRecipients] = useState([
-    { name: '', organization: '', comment: '' },
+    { name: '', organization: '',wallet:'', comment: '' },
   ]);
 
   const toastOptions = {
@@ -51,9 +51,9 @@ const Form2 = ({ onNextForm }) => {
     const currentRecipient = recipients[recipients.length - 1];
 
     // Validate the current recipient before adding a new one
-    if (currentRecipient.name && currentRecipient.organization && isNameValid.test(currentRecipient.name)) {
+    if (currentRecipient.name && currentRecipient.organization && currentRecipient.wallet && isNameValid.test(currentRecipient.name)) {
       // Add a new recipient with the same data structure
-      setRecipients((prevRecipients) => [...prevRecipients, { name: '', organization: '', comment: '' }]);
+      setRecipients((prevRecipients) => [...prevRecipients, { name: '', organization: '', wallet:'', comment: '' }]);
     } else {
       toast.error('Fill in the current recipient details correctly before adding a new one.', toastOptions);
     }
@@ -63,7 +63,7 @@ const Form2 = ({ onNextForm }) => {
     // Clear the form fields for the last recipient
     setRecipients((prevRecipients) => [
       ...prevRecipients.slice(0, prevRecipients.length - 1),
-      { name: '', organization: '', comment: '' },
+      { name: '', organization: '', wallet:'' ,comment: '' },
     ]);
   };
 
@@ -94,6 +94,17 @@ const Form2 = ({ onNextForm }) => {
             className="fixed-width"
           />
         </div>
+        <div className="form-group">
+        <label htmlFor="wallet">Wallet Address:</label>
+          <input
+            type="text"
+            id="wallet"
+            name="wallet"
+            value={recipients[recipients.length - 1].wallet}
+            onChange={(e) => handleRecipientChange('wallet', e.target.value)}
+            className="fixed-width"
+          />
+          </div>
         <div className="form-group">
           <label htmlFor="comment">Comment:</label>
           <textarea

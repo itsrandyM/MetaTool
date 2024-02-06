@@ -12,6 +12,9 @@ const recipientSchema = new mongoose.Schema({
     org:{
         type:String
     },
+    wallet:{
+        type:String
+    },
     comment:{
         type:String
     },

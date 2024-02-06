@@ -88,12 +88,13 @@ const TransactionDetailsPage = () => {
 
   const convertToCSV = (data) => {
     // Convert transaction details to CSV format
-    const header = Object.keys(data[0]).join(',');
-    const rows = data.map((transaction) =>
-      Object.values(transaction).map((value) =>
-        typeof value === 'object' ? JSON.stringify(value) : value
-      ).join(',')
-    );
+    const header = "Recipient address, Amount";
+    const rows = data.map((transaction) => {
+           const recipient = transaction.recipients["0"]
+           const amount = transaction.token['0'].tokenName["0"].amount
+           return `${recipient.wallet},${amount}`;
+    
+    });
     return [header, ...rows].join('\n');
   };
 
