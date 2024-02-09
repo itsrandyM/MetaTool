@@ -9,7 +9,8 @@ const tokenSchema = new mongoose.Schema({
     tokenName: [
         {
           name: { type: String, required: true },
-          amount: { type: Number, required: true }
+          amount: { type: Number, required: true },
+          assetID: {type: String}
         }
       ]
 

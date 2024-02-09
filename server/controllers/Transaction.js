@@ -16,7 +16,8 @@ const NewTransactionController= {
         console.log('Controller received request:', req.body)
         try {
 
-            const { transactionName,transactionDescription ,tokenName,
+            const { //transactionName,transactionDescription ,
+              tokenName,
               descriptionName,
                classificationName,
                recipients: [...recipientData], 
@@ -48,13 +49,13 @@ const tokens = await Promise.all(
 
             const RecipientData = await RecipientsData.create({
                 User: loggedInUser,
-                transactionName:transactionName,
-                transactionDescription:transactionDescription,
+                // transactionName:transactionName,
+                // transactionDescription:transactionDescription,
+                classification,
+                description,
+                exchangeRates:exchangeRates,
                 recipients,
                 token: tokens.map(token => token._id),
-                description,
-                classification,
-                exchangeRates:exchangeRates,
                 verified: true,
             })
     

@@ -5,18 +5,33 @@ const Description = require("./Description")
 const Classification = require("./Classification")
 const User = require("./User")
 
+const exchangeRateSchema = new mongoose.Schema({
+    base_currency: {
+      type: String,
+    },
+    quote_currency: {
+      type: String,
+    },
+    rate: {
+      type: String,
+    },
+    time: {
+      type: String,
+    }
+  });
+
 
 const recipientDataSchema = new mongoose.Schema({
     User: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User
     },
-    transactionName: {
-        type:String
-    },
-     transactionDescription: {
-        type:String
-    },
+    // transactionName: {
+    //     type:String
+    // },
+    //  transactionDescription: {
+    //     type:String
+    // },
 
     recipients: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -37,9 +52,7 @@ const recipientDataSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: Classification
     },
-    exchangeRates:[{
-         type: String
-    }],
+    exchangeRates:[exchangeRateSchema],
     verified: {
         type: Boolean,
         default: false, 

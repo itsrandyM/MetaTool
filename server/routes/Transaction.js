@@ -50,19 +50,11 @@ router.post('/generateJson', authToken, async (req, res, next) => {
       if (obj && typeof obj.toObject === 'function') {
         obj = obj.toObject(); // Convert Mongoose document to plain object
       }
-    
+
       const sanitizedObj = { ...obj };
       delete sanitizedObj._id;
       delete sanitizedObj.__v;
 
-      if (sanitizedObj.createdAt instanceof Date) {
-        sanitizedObj.createdAt = sanitizedObj.createdAt.toISOString();
-      }
-    
-      if (sanitizedObj.updatedAt instanceof Date) {
-        sanitizedObj.updatedAt = sanitizedObj.updatedAt.toISOString();
-      }
-    
       // Recursively remove "_id" and "__v" fields from nested objects
       Object.keys(sanitizedObj).forEach((key) => {
         if (sanitizedObj[key] && typeof sanitizedObj[key] === 'object') {
@@ -73,30 +65,25 @@ router.post('/generateJson', authToken, async (req, res, next) => {
       return sanitizedObj;
     };
 
-    // Remove "_id" and "__v" fields from the entire structure
-    const sanitizedData = verifiedData.map((item) => {
-      const sanitizedItem = removeIdFields(item);
+    // Convert data to the desired JSON structure
+    const structuredData = verifiedData.map(item => {
+      const recipients = item.recipients.map(recipient => removeIdFields(recipient));
+      const token = item.token.map(token => removeIdFields(token));
 
-      // Additional removal for nested "recipients," "token," "description," and "classification"
-      if (Array.isArray(sanitizedItem.recipients)) {
-        sanitizedItem.recipients = sanitizedItem.recipients.map((recipient) => {
-          return removeIdFields(recipient);
-        });
-      }
-   
-      if (Array.isArray(sanitizedItem.token)) {
-        sanitizedItem.token = sanitizedItem.token.map((token) => {
-          return removeIdFields(token);
-        });
-      }
-      sanitizedItem.description = removeIdFields(sanitizedItem.description);
-      sanitizedItem.classification = removeIdFields(sanitizedItem.classification);
-
-      return sanitizedItem;
+      return {
+        classification: removeIdFields(item.classification),
+        description: removeIdFields(item.description),
+        exchangeRates: item.exchangeRates, // Assuming exchangeRates is not an array
+        recipients,
+        token,
+        verified: item.verified,
+        createdAt: item.createdAt.toISOString(),
+        updatedAt: item.updatedAt.toISOString()
+      };
     });
 
     // Generate JSON file content
-    const jsonContent = JSON.stringify(sanitizedData, null, 2);
+    const jsonContent = JSON.stringify(structuredData, null, 2);
 
     res.set('Content-Type', 'application/json');
     res.attachment('metadata.json');
@@ -106,6 +93,7 @@ router.post('/generateJson', authToken, async (req, res, next) => {
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
+
 
 
 module.exports = router;

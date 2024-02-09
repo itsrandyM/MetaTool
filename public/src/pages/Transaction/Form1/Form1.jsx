@@ -16,14 +16,14 @@ const Form1 = ({ onNextForm }) => {
 
   const handleNext = () => {
 
-    if (!name || !description) {
-      toast.error('All fields are required.', toastOptions);
-      return;
-    }
+    // if (!name || !description) {
+    //   toast.error('All fields are required.', toastOptions);
+    //   return;
+    // }
 
     const nameRegex = /^[a-zA-Z]{1,10}$/;
 
-    if (!name || !name.match(nameRegex)) {
+    if (!name.match(nameRegex)) {
       toast.error('Invalid Name.', toastOptions);
       return;
     }

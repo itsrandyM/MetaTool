@@ -69,11 +69,11 @@ function Table() {
             {transactions?.map((transaction, index) => (
               <tr key={index} onClick={() => handleRowClick(index)} className="clickable-row">
                 {/* Adjust these fields based on your actual transaction data */}
-                <td>{transaction.transactionName}</td>
+                {/* <td>{transaction.transactionName}</td> */}
                 <td>{transaction.recipientName}</td>
                 <td>{transaction.token}</td>
-                <td>{transaction.classification}</td>
-                <td>{transaction.description}</td>
+                <td>{transaction.classification.classificationName}</td>
+                <td>{transaction.description.descriptionName}</td>
                 <td>{new Date(transaction.createdAt).toLocaleString()}</td>
               </tr>
             ))}
