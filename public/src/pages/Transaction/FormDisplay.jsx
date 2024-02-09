@@ -7,9 +7,10 @@ import Form5 from './exchange/exchange'
 import Form2 from './Form2/Form2';
 import Form3 from './Form3/Form3';
 import Form4 from './Form4/Form4';
+import Form6 from './Form6/Form6'; // Import Form6 component
 
 const FormDisplay = () => {
-  const [currentForm, setCurrentForm] = useState(1);  // Define currentForm state
+  const [currentForm, setCurrentForm] = useState(1);  
   const [formData, setFormData] = useState({
     form1data: {},
     form2data: {},
@@ -37,7 +38,8 @@ const FormDisplay = () => {
         {currentForm === 3 && <Form3 onNextForm={handleNextForm} />}
         {currentForm === 5 && <Form5 onNextForm={handleNextForm} />}
         {currentForm === 4 && <Form4 formData={formData} />}
-   </div>
+        {currentForm === 6 && <Form6 onNextForm={handleNextForm} />} {/* Render Form6 */}
+      </div>
     </div>
   );
 };
