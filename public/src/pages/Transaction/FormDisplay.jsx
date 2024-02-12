@@ -1,7 +1,6 @@
 // FormDisplay.jsx
 import React, { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
-import Foot from './Foot/foot';
 import Form1 from './Form1/Form1';
 import Form5 from './exchange/exchange'
 import Form2 from './Form2/Form2';
@@ -40,7 +39,6 @@ const FormDisplay = () => {
         {currentForm === 4 && <Form4 formData={formData} />}
         {currentForm === 6 && <Form6 onNextForm={handleNextForm} />} {/* Render Form6 */}
       </div>
-      <Foot/>
     </div>
   );
 };
