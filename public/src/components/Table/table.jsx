@@ -72,8 +72,8 @@ function Table() {
                 {/* <td>{transaction.transactionName}</td> */}
                 <td>{transaction.recipientName}</td>
                 <td>{transaction.token}</td>
-                <td>{transaction.classification.classificationName}</td>
-                <td>{transaction.description.descriptionName}</td>
+                <td>{transaction.classification}</td>
+                <td>{transaction.description}</td>
                 <td>{new Date(transaction.createdAt).toLocaleString()}</td>
               </tr>
             ))}
