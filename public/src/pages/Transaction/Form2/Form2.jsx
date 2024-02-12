@@ -18,7 +18,7 @@ const Form2 = ({ onNextForm }) => {
     theme: 'light',
   };
 
-  const isNameValid = /^[a-zA-Z]{1,10}$/;
+  const isNameValid =/^[a-zA-Z]+[a-zA-Z\s]*$/
 
   const handleNext = () => {
     if (recipients.some((recipient) => !recipient.name || !recipient.organization)) {
