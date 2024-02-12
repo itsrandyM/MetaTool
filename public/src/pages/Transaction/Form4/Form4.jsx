@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { SERVER_URL } from '../../../../constants/index.js';
 import { useAppContext } from '../../../components/Context/AppProvider.jsx';
+import { useTokenContext } from '../../../../constants/TokenContext';
 import SuccessPage from '../Success/Success.jsx';
 import './Form4.css';
 
@@ -12,6 +13,7 @@ const Form4 = ({formData}) => {
   const { updateTransactions } = useAppContext();
   const [successData, setSuccessData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const { setTokens } = useTokenContext();
   
 
   const token = localStorage.getItem('token');
@@ -61,6 +63,7 @@ const Form4 = ({formData}) => {
         console.log('Server response:', response.data);
         updateTransactions(response.data.recipientData);
         setIsSuccess(true);
+        setTokens([{ name: '', amount: 0 }])
       })
       .catch((error) => {
         console.error('Error sending data to the server:', error);
