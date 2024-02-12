@@ -1,25 +1,25 @@
 /* addToken.css */
 
-.overlay {
+/* .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* ensure the overlay is above other content */
-}
+  z-index: 999; 
+} */
 
-.popup-container {
-  background-color: #fff; /* background color of the pop-up */
+/* .popup-container {
+  background-color: #fff; 
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* drop shadow effect */
-}
-
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+} */
+/* 
 .form-group {
   margin-bottom: 10px;
 }
@@ -27,25 +27,25 @@
 .form-label {
   display: block;
   margin-bottom: 5px;
-}
-
+} */
+/* 
 .form-input {
-  width: calc(100% - 20px); /* adjust input width */
+  width: calc(100% - 20px); 
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
-}
-
+} */
+/* 
 .amount-input-group {
   display: flex;
   align-items: center;
-}
-
+} */
+/* 
 .amount-input {
-  flex: 1; /* allow input to grow */
-  margin-right: 10px; /* adjust spacing */
-}
-
+  flex: 1; 
+  margin-right: 10px; 
+} */
+/* 
 .addicon {
   padding: 8px 20px;
   background-color: #007bff;
@@ -53,9 +53,9 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
-}
+} */
 
-.addicon:hover {
+/* .addicon:hover {
   background-color: #0056b3;
 }
 
@@ -70,4 +70,6 @@
 
 .done-button:hover {
   background-color: #0056b3;
-}
+} */
+/* addToken.css */
+
