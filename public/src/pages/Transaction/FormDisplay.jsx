@@ -40,6 +40,7 @@ const FormDisplay = () => {
         {currentForm === 4 && <Form4 formData={formData} />}
         {currentForm === 6 && <Form6 onNextForm={handleNextForm} />} {/* Render Form6 */}
       </div>
+      <Foot/>
     </div>
   );
 };
