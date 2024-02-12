@@ -49,7 +49,6 @@ function LoginForm() {
           email: formData.email,
           password: formData.password,
         }),
-        mode: 'no-cors'
       })
       const data = await response.json()
       if (response.ok) {
