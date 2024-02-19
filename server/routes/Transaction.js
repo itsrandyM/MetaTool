@@ -67,15 +67,19 @@ router.post('/generateJson', authToken, async (req, res, next) => {
 
     // Convert data to the desired JSON structure
     const structuredData = verifiedData.map(item => {
-      const recipients = item.recipients.map(recipient => removeIdFields(recipient));
-      const token = item.token.map(token => removeIdFields(token));
+      // const recipients = item.recipients.map(recipient =>  removeIdFields(recipient));
+    const token = item.token.map(token => removeIdFields(token));
+    const recipients = item.recipients.map(recipient => {
+    const cleanedRecipient = removeIdFields(recipient);
+    cleanedRecipient.token = removeIdFields(item.token);
+    return cleanedRecipient;
+}); 
 
       return {
         classification: removeIdFields(item.classification),
         description: removeIdFields(item.description),
         exchangeRates: item.exchangeRates, // Assuming exchangeRates is not an array
         recipients,
-        token,
         verified: item.verified,
         createdAt: item.createdAt.toISOString(),
         updatedAt: item.updatedAt.toISOString()

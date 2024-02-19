@@ -13,30 +13,30 @@ const TokenBlacklist = require('../models/TokenBlacklist')
 // @route POST /users
 // @access Private
 const RegisterNewUser = asyncHandler(async (req, res) => {
-    const { username, email ,password, roles } = req.body
+    const {email ,password, roles } = req.body
 
     // Confirm data
-    if (!username || !email ||!password || !Array.isArray(roles) || !roles.length) {
+    if (!email ||!password || !Array.isArray(roles) || !roles.length) {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
     // Check for duplicate username
-    const duplicate = await User.findOne({ username }).lean().exec()
+    const duplicate = await User.findOne({ email }).lean().exec()
 
     if (duplicate) {
-        return res.status(409).json({ message: 'Duplicate username' })
+        return res.status(409).json({ message: 'Duplicate email' })
     }
 
     // Hash password 
     const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
 
-    const userObject = { username, email, "password": hashedPwd, roles }
+    const userObject = { email, "password": hashedPwd, roles }
 
     // Create and store new user 
     const user = await User.create(userObject)
 
     if (user) { //created 
-        res.status(201).json({ message: `New user ${username} created` })
+        res.status(201).json({ message: `New user ${email} created` })
     } else {
         res.status(400).json({ message: 'Invalid user data received' })
     }
@@ -48,24 +48,23 @@ const RegisterNewUser = asyncHandler(async (req, res) => {
 const LoginUser = asyncHandler(async (req, res) => {
    
     try{
-        const { username, email ,password } = req.body
+        const { email ,password } = req.body
         const user = await User.findOne({ email }).exec()
     // Confirm data
-    if (!username || !email || !password) {
+    if ( !email || !password) {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
      if (!user) {
         return res.status(401).json({ status: 401, message: 'Invalid email' });
-    } else if (!user.username) {
-        return res.status(401).json({ status: 401, message: 'Invalid username' });
-}else if(!(await bcrypt.compare(password, user.password))) {
+    }
+else if(!(await bcrypt.compare(password, user.password))) {
         return res.status(401).json({ status: 401, message: 'Invalid password' });
     }
     
 const token = jwt.sign({
     _id: user._id,
-    username: user.username,
+    email: user.email,
     isAdmin: user.isAdmin,
     roles: user.roles,
 }, process.env.JWT_SECRET) 

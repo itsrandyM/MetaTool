@@ -9,7 +9,6 @@ import './style.css'
 function LoginForm() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: '',
   })
@@ -45,7 +44,6 @@ function LoginForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: formData.username,
           email: formData.email,
           password: formData.password,
         }),
@@ -59,7 +57,7 @@ function LoginForm() {
 
 navigate('/')
 
-        if (formData.username && formData.email && formData.password) {
+        if (formData.email && formData.password) {
           navigate('home')
         } else {
           toast.error('Please fill the fields', toastOptions)
@@ -80,18 +78,6 @@ navigate('/')
       <h2 className='h2'>Login for Meta</h2>
 
       <form onSubmit={handleSubmit}>
-        <div>
-          <h5 style={{ fontSize: '14px', margin: '2px' }} htmlFor='username'>
-            User Name:
-          </h5>
-          <input
-            type='text'
-            id='username'
-            name='username'
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </div>
         <div>
           <h5 style={{ fontSize: '14px' }} htmlFor='email'>
             Email Address:
