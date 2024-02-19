@@ -2,7 +2,7 @@ table {
     width: 80%;
     border-collapse: collapse;
     margin-top: 1px;
-    margin-left: 10%;
+    margin-left: 5%;
   }
   .title{
     display: flex;
@@ -48,6 +48,7 @@ table {
     border: 0;
     color: black;
     margin-left: 80%;
+    cursor: pointer;
   
   }
   .title{
