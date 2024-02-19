@@ -47,7 +47,7 @@ const Form4 = ({formData}) => {
       amount: formData.form5Data.amount,
       classificationName: formData.form5Data.classification,
       descriptionName: formData.form5Data.description,
-      exchangeRates:formData.form4Data.exchangeRate,
+      exchangeRates:formData.form4Data.exchangeRates,
       };
 
     const axiosConfig = {

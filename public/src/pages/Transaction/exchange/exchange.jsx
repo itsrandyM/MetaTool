@@ -33,9 +33,10 @@ const Form5 = ({ onNextForm }) => {
   const handleNextForm = () => {
     // Proceed to the next form
     if (currentIndex === baseCurrencies.length - 1) {
-      if (Object.values(exchangeRates).some(rates => rates.length > 0)) {
+      if (Object.values(newExchangeRate).some(rates => rates.length > 0)) {
         const formData = {
-          exchangeRates: exchangeRates
+          //put it here
+          exchangeRates:newExchangeRate
         };
         onNextForm(4, formData);
       } else {
