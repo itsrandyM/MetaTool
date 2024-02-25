@@ -27,6 +27,22 @@ const Form4 = ({formData}) => {
 
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
 
+    // const exchangeData = formData.form5Data.exchangeRates.flatMap(rates => rates.map(rate => ({
+    //   base_currency: rate.base_currency,
+    //   quote_currency: rate.quote_currency,
+    //   rate: rate.rate,
+    //   time: rate.time,
+    // })));
+
+    const exchangeData = formData.form4Data.exchangeRates 
+  ? Object.values(formData.form4Data.exchangeRates).flatMap(rates => rates.map(rate => ({
+      base_currency: rate.base_currency,
+      quote_currency: rate.quote_currency,
+      rate: rate.rate,
+      time: rate.time,
+    })))
+  : [];
+
     const recipientsData = formData.form3Data.map((recipient, index) => ({
       name: recipient.name,
       org: recipient.organization,
@@ -34,6 +50,7 @@ const Form4 = ({formData}) => {
       comment: recipient.comment,
       // Add other properties as needed
     }));
+    
 
    
     const requestData = {
@@ -47,7 +64,8 @@ const Form4 = ({formData}) => {
       amount: formData.form5Data.amount,
       classificationName: formData.form5Data.classification,
       descriptionName: formData.form5Data.description,
-      exchangeRates:formData.form4Data.exchangeRates,
+      // exchangeRates:formData.form4Data.exchangeRates,
+      exchangeRates: exchangeData,
       };
 
     const axiosConfig = {
