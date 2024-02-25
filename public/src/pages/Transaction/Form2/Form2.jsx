@@ -1,11 +1,16 @@
 // Form2.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaUserPlus } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; 
+import { useTokenContext } from '../../../../constants/TokenContext';
 import './Form2.css';
+import AddTokenPage from '../Form3/addToken';
+
 
 const Form2 = ({ onNextForm }) => {
+  const { tokens, setTokens } = useTokenContext();
   const [recipients, setRecipients] = useState([
     { name: '', organization: '',wallet:'', comment: '' },
   ]);
@@ -17,8 +22,28 @@ const Form2 = ({ onNextForm }) => {
     draggable: true,
     theme: 'light',
   };
+  const [showAddTokenForm, setShowAddTokenForm] = useState(false);
+  const navigate = useNavigate();
+  
 
   const isNameValid =/^[a-zA-Z]+[a-zA-Z\s]*$/
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showAddTokenForm && event.target.closest('.popup-container') === null) {
+        setShowAddTokenForm(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showAddTokenForm]);
+
+  const handleAddToken = () => {
+    setShowAddTokenForm(true);
+  };
 
   const handleNext = () => {
     if (recipients.some((recipient) => !recipient.name || !recipient.organization)) {
@@ -27,8 +52,15 @@ const Form2 = ({ onNextForm }) => {
     }
 
     if (recipients.every((recipient) => isNameValid.test(recipient.name))) {
-      console.log('Form2 Data:', recipients);
-      onNextForm(3, recipients);
+      console.log('Form2 Data:', recipients, tokens);
+      const formData = {
+        recipients: recipients, // Existing recipient data
+        tokens: tokens.map((token) => ({
+          name: token.name, // Token name
+          amount: token.amount, // Token amount
+        })),
+      };
+      onNextForm(3, formData);
       // Clear the form fields for the next recipient
       clearFormFields();
     } else {
@@ -117,11 +149,65 @@ const Form2 = ({ onNextForm }) => {
             className="fixed-width"
           />
         </div>
+        {tokens.map((token, index) => (
+  <div key={index} className="form-group1">
+    <label htmlFor={`token-${index}`} className="form-label2">
+      Token {index + 1}:
+    </label>
+    <input
+      type="text"
+      id={`token-${index}`}
+      name={`token-${index}`}
+      value={token.name}
+      onChange={(e) =>
+        setTokens((prevTokens) =>
+          prevTokens.map((prevToken, i) =>
+            i === index ? { ...prevToken, name: e.target.value } : prevToken
+          )
+        )
+      }
+      className="form-input1"
+    />
+  </div>
+))}
+
+{tokens.map((token, index) => (
+  <div  key={index} className="form-group">
+    <div className="amount-input-group1">
+      <input
+        type='number'
+        id={`token-${index}`}
+        name={`token-${index}`}
+        value={token.amount}
+        onChange={(e) =>
+          setTokens((prevTokens) =>
+            prevTokens.map((prevToken, i) =>
+              i === index ? { ...prevToken, amount: e.target.value } : prevToken
+            )
+          )
+        }
+        placeholder="0.00"
+        className="form-input2 amount-input1"
+      />
+      <button className="addicon1" onClick={handleAddToken} type="button">
+        Add Token
+      </button>
+    </div>
+  </div>
+))}
+
         <button onClick={handleNext} className="authentic">
           Continue
         </button>
       </div>
       <ToastContainer />
+      {showAddTokenForm && (
+        <AddTokenPage
+          tokens={tokens}
+          setTokens={setTokens}
+          onClose={() => setShowAddTokenForm(false)}
+        />
+      )}
     </div>
   );
 };
