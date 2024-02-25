@@ -62,7 +62,7 @@ const Form1 = ({ onNextForm }) => {
             />
           </div>
         </form>
-        <button onClick={handleNext} style={{ backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}>Start Transaction</button>
+        <button onClick={handleNext} style={{ backgroundColor: '#6B8065', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', transform: 'translateY(-30%)' }}>Start Transaction</button>
       </div>
       <ToastContainer />
     </div>

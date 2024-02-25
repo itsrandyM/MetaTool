@@ -1,62 +1,66 @@
 import React, { useState } from 'react';
-import { useTokenContext } from '../../../../constants/TokenContext';
-import './addToken.css';
 
-const AddTokenPage = ({ onClose }) => {
-  const { tokens, setTokens } = useTokenContext();
-  const [newToken, setNewToken] = useState({ name: '', amount: '' });
+const AddToken = ({ isOpen, onClose, onSubmit }) => {
+  const [tokens, setTokens] = useState([{ name: '', amount: '' }]);
 
   const handleAddToken = () => {
-    if (newToken.name.trim() && newToken.amount.trim()) {
-      // Increment the number of tokens instead of adding a new field
-      setTokens((prevTokens) => [...prevTokens, { ...newToken }]);
-      setNewToken((prevToken) => ({ ...prevToken, amount: '' }));
-      onClose();
-    } else {
-      console.error('Please fill in both token name and amount.');
+    if (tokens.length < 5) {
+      setTokens([...tokens, { name: '', amount: '' }]);
     }
   };
-  
+
+  const handleRemoveToken = (index) => {
+    const updatedTokens = [...tokens];
+    updatedTokens.splice(index, 1);
+    setTokens(updatedTokens);
+  };
+
+  const handleSubmit = () => {
+    onSubmit(tokens);
+    onClose();
+  };
 
   return (
-    <div className="overlay">
-      <div className="popup-container">
-        <h2>Add Token</h2>
-        <div className="form-group">
-          <label htmlFor="token" className="form-label">
-            Token:
-          </label>
-          <input
-            type="text"
-            id="token"
-            name="token"
-            value={newToken.name}
-            onChange={(e) => setNewToken({ ...newToken, name: e.target.value })}
-            className="form-input"
-          />
-        </div>
-        <div className="form-group">
-          <div className="amount-input-group">
+    <div className={`overlay ${isOpen ? 'open' : ''}`}>
+      <div className="overlay-content">
+        <button className="close-button" onClick={onClose}>
+          Close
+        </button>
+        <h2>Add Tokens</h2>
+        {tokens.map((token, index) => (
+          <div key={index}>
             <input
               type="text"
-              id="amount"
-              name="amount"
-              value={newToken.amount}
-              onChange={(e) => setNewToken({ ...newToken, amount: e.target.value })}
-              placeholder="0.00"
-              className="form-input amount-input"
+              value={token.name}
+              onChange={(e) =>
+                setTokens((prevTokens) =>
+                  prevTokens.map((prevToken, i) =>
+                    i === index ? { ...prevToken, name: e.target.value } : prevToken
+                  )
+                )
+              }
+              placeholder="Token Name"
             />
-            <button type="button" className="addicon" onClick={handleAddToken}>
-              Add Token
-            </button>
+            <input
+              type="number"
+              value={token.amount}
+              onChange={(e) =>
+                setTokens((prevTokens) =>
+                  prevTokens.map((prevToken, i) =>
+                    i === index ? { ...prevToken, amount: e.target.value } : prevToken
+                  )
+                )
+              }
+              placeholder="Amount"
+            />
+            <button onClick={() => handleRemoveToken(index)}>Remove</button>
           </div>
-        </div>
-        <button type="button" className="done-button" onClick={onClose}>
-          Done
-        </button>
+        ))}
+        <button onClick={handleAddToken}>Add Token</button>
+        <button onClick={handleSubmit}>Submit</button>
       </div>
     </div>
   );
 };
 
-export default AddTokenPage;
+export default AddToken;

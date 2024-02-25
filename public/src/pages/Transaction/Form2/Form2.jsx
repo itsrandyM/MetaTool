@@ -55,7 +55,7 @@ const Form2 = ({ onNextForm }) => {
   return (
     <div style={{ backgroundColor: '#F2EEE3', padding: '10px', borderRadius: '10px', color: 'black', margin: 'auto', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', width: '300px', marginTop: '4%' }}>
       <div style={{ marginLeft: '35px' }}>
-        <h2 style={{ marginLeft: '-10px', marginTop: '10px' }}>Recipient </h2>
+        <h2 style={{marginLeft: '-35px',  marginTop: '10px' }}>Recipient </h2>
         <div className="form-group" style={{ textAlign: 'left', }}>
           <label htmlFor="name" style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px' }}>Name:</label>
           <input
@@ -101,7 +101,7 @@ const Form2 = ({ onNextForm }) => {
             style={{ width: '80%', padding: '8px', marginBottom: '5px', border: '1px solid #ccc', borderRadius: '5px' }}
           />
         </div>
-        <button onClick={handleNext} style={{ backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}>
+        <button onClick={handleNext} style={{ backgroundColor: '#6B8065', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', transform: 'translateY(-40%)', marginLeft: '-35px' }}>
           Continue
         </button>
       </div>

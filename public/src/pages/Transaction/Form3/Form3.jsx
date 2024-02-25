@@ -1,19 +1,15 @@
-// Form3.jsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom'; 
+import AddToken from './addToken'; // Import the overlay component
 import { useTokenContext } from '../../../../constants/TokenContext';
 import './Form3.css';
-import AddTokenPage from './addToken';
 
 const Form3 = ({ onNextForm }) => {
-  const { tokens, setTokens } = useTokenContext();
+  const { tokens: initialTokens, setTokens } = useTokenContext();
   const [classification, setClassification] = useState('');
   const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState('');
-  const [showAddTokenForm, setShowAddTokenForm] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 8000,
@@ -22,38 +18,23 @@ const Form3 = ({ onNextForm }) => {
     theme: 'light',
   };
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showAddTokenForm && event.target.closest('.popup-container') === null) {
-        setShowAddTokenForm(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showAddTokenForm]);
-
-  const handleAddToken = () => {
-    setShowAddTokenForm(true);
-  };
-
   const handleNext = (e) => {
     e.preventDefault();
-    if (tokens.length > 0 && classification && description) {
+    if (initialTokens.length > 0 && classification && description) {
       const formData = {
-        tokens,
+        tokens: initialTokens,
         classification,
         description,
-        // amount,
       };
       onNextForm(5, formData);
     } else {
       toast.error('Please fill in all fields.', toastOptions);
     }
+  };
+
+  const handleOverlaySubmit = (submittedTokens) => {
+    setTokens(submittedTokens); // Update tokens state with the submitted tokens
+    setShowOverlay(false); // Close the overlay after submission
   };
 
   return (
@@ -72,50 +53,22 @@ const Form3 = ({ onNextForm }) => {
               className="form-input1"
             />
           </div>
-          {tokens.map((token, index) => (
-            <div key={index} className="form-group1">
-              <label htmlFor={`token-${index}`} className="form-label2">
-                Token {index + 1}:
-              </label>
+          <div className="form-group">
+            <label htmlFor="token" className="form-label">Token:</label>
+            <div className="token-input-group">
               <input
                 type="text"
-                id={`token-${index}`}
-                name={`token-${index}`}
-                value={token.name}
-                onChange={(e) =>
-                  setTokens((prevTokens) =>
-                    prevTokens.map((prevToken, i) =>
-                      i === index ? { ...prevToken, name: e.target.value } : prevToken
-                    )
-                  )
-                }
-                className="form-input1"
+                id="token"
+                name="token"
+                value={initialTokens.map(token => token.name).join(', ')} // Display initial tokens inline
+                readOnly
+                className="form-input1 token-input" // Apply styles for token input
               />
-            </div>
-          ))}
-          {tokens.map((token, index) => (
-          <div  key={index} className="form-group">
-            <div className="amount-input-group1">
-              <input
-                type='number'
-                id={`token-${index}`}
-                name={`token-${index}`}
-                value={token.amount}
-                onChange={(e) =>
-                  setTokens((prevTokens) =>
-                    prevTokens.map((prevToken, i) =>
-                      i === index ? { ...prevToken, amount: e.target.value } : prevToken
-                    )
-                  )
-                }
-                placeholder="0.00"
-                className="form-input2 amount-input1"
-              />
-              <button className="addicon1" onClick={handleAddToken} type="button">
+              <button className="addicon1" type="button" onClick={() => setShowOverlay(true)}>
                 Add Token
               </button>
             </div>
-          </div>))}
+          </div>
           <div className="form-group">
             <label htmlFor="description" style={{ marginLeft: '-24px'}}>Description:</label>
             <textarea
@@ -133,15 +86,15 @@ const Form3 = ({ onNextForm }) => {
           </button>
         </form>
       </div>
-      {showAddTokenForm && (
-        <AddTokenPage
-          tokens={tokens}
-          setTokens={setTokens}
-          amount={amount}
-          setAmount={setAmount}
-          onClose={() => setShowAddTokenForm(false)}
+      {/* AddToken for adding tokens */}
+      {showOverlay && (
+        <AddToken
+          initialTokens={initialTokens}
+          onSubmit={handleOverlaySubmit}
+          onClose={() => setShowOverlay(false)}
         />
       )}
+      <ToastContainer />
     </div>
   );
 };

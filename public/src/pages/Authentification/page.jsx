@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaEye, FaEyeSlash, FaSignInAlt } from 'react-icons/fa';
-import './login.css'
-
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -15,7 +13,6 @@ function LoginForm() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [agreeTerms, setAgreeTerms] = useState(false);
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 8000,
@@ -64,74 +61,58 @@ function LoginForm() {
   };
 
   return (
-    <div className="form-container">
-      <div className='icon5'>
-        <img src="/Logo icon 5.png" className="login-icon" width="42px" height="38px" />
-        <h2>DirectEd</h2>
-      </div>
-
-      <h2 className="form-title">Login</h2>
-
-      <form onSubmit={handleSubmit}>
-        <div className="input-container">
-          <label htmlFor="email">Email Address:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-            className='input'
-
-          />
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <div style={{ backgroundColor: '#D9D9D9', width: '300px', padding: '20px', borderRadius: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '20px' }}>
+          <img src="/Logo icon 5.png" alt="DirectEd" className="login-icon" width="42px" height="38px" />
+          <h2>DirectEd</h2>
         </div>
-
-        <div className="input-container">
-          <div className='pass'>
-            <label htmlFor="password">Password:</label>
-            <a href="#" className="forgot-password-link">Forgot Password?</a>
-          </div>
-
-
-          <div className="password-input">
+        <h2 style={{ fontSize: '20px', marginBottom: '20px', color: 'black', fontWeight: '600', textAlign: 'left' }}>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: '10px' }}>
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px', color: 'black' }}>Email Address:</label>
             <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              name="password"
-              value={formData.password}
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
               onChange={handleInputChange}
               required
-              className='input'
+              style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' }}
             />
-            <span
-              onClick={handleTogglePassword}
-              className="password-toggle"
-              title={showPassword ? 'Hide password' : 'Show password'}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
           </div>
-        </div>
 
-        {/* <div className="checkbox-container">
-          <label htmlFor="agreeTerms" style={{ color: 'black', marginLeft: '1px' }}
-          >I agree to the terms and conditions</label>
-          <input
-            type="checkbox"
-            id="agreeTerms"
-            name="agreeTerms"
-            checked={agreeTerms}
-            onChange={() => setAgreeTerms(!agreeTerms)}
-          />
-        </div> */}
+          <div style={{ marginBottom: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+              <label htmlFor="password" style={{ display: 'block', color: 'black' }}>Password:</label>
+              <a href="#" className="forgot-password-link">Forgot Password?</a>
+            </div>
 
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit" className="login">
-          Login
-        </button>
-      </form>
-      <ToastContainer />
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+                style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' }}
+              />
+              <span
+                onClick={handleTogglePassword}
+                style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', cursor: 'pointer' }}
+                title={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+          </div>
+
+          {error && <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>{error}</p>}
+          <button type="submit" style={{ backgroundColor: '#6B8065', color: '#ffff', width: '50%', height: '50px', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '16px', marginLeft: '25%' , transition: 'background-color 0.2s ease-in-out' }}>Login</button>
+        </form>
+        <ToastContainer />
+      </div>
     </div>
   );
 }
