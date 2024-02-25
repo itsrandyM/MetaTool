@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Lottie from 'react-lottie'
-import { useNavigate } from 'react-router-dom'
+import Lottie from 'react-lottie';
+import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
 import axios from 'axios';
-import './Download.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Foot from '../Transaction/Foot/foot';
-import animationData from '../../../public/load.json'
+import animationData from '../../../public/load.json';
 
 const defaultOptions = {
   loop: true,
@@ -88,12 +87,11 @@ const TransactionDetailsPage = () => {
 
   const convertToCSV = (data) => {
     // Convert transaction details to CSV format
-    const header = "Recipient address, Amount";
+    const header = 'Recipient address, Amount';
     const rows = data.map((transaction) => {
-           const recipient = transaction.recipients["0"]
-           const amount = transaction.token['0'].tokenName["0"].amount
-           return `${recipient.wallet},${amount}`;
-    
+      const recipient = transaction.recipients['0'];
+      const amount = transaction.token['0'].tokenName['0'].amount;
+      return `${recipient.wallet},${amount}`;
     });
     return [header, ...rows].join('\n');
   };
@@ -106,37 +104,81 @@ const TransactionDetailsPage = () => {
   };
 
   return (
-    <div>
-      <Navbar/>
-      <div className="Download_container">
-        <h2>Transaction Details</h2>
+    <div style={{ textAlign: 'center' }}>
+      <Navbar />
+      <div
+        className="Download_container"
+        style={{
+          padding: '20px',
+          borderRadius: '10px',
+          backgroundColor: '#f2eee3',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+          margin: '40px auto',
+          maxWidth: '400px', // Reduced width
+        }}
+      >
+        <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Transaction Details</h2>
         {loading ? (
-          <Lottie options={defaultOptions} width={50} height={50}/>
+          <Lottie options={defaultOptions} width={50} height={50} />
         ) : transactionDetails.length === 0 ? (
           <p>No transaction details found.</p>
         ) : (
           <>
-            <div className="fixed">
+            <div className="fixed" style={{ textAlign: 'left' }}>
               {transactionDetails.map((transaction, index) => (
-                <div key={index} className="transaction-item">
-                  <p className='item'>Classification: {renderProperty(transaction.classification.classificationName)}</p>
-                  <p className='item'>Description: {renderProperty(transaction.description.descriptionName)}</p>
-                  <p className='item1'>Transaction Name: {transaction.transactionName}</p>
-                  <p className='item'>Token: {renderProperty(transaction.token)}</p>
-                  <hr />
+                <div key={index} className="transaction-item" style={{ marginBottom: '20px' }}>
+                  <p className="item">
+                    <strong>Classification:</strong> {renderProperty(transaction.classification.classificationName)}
+                  </p>
+                  <p className="item">
+                    <strong>Description:</strong> {renderProperty(transaction.description.descriptionName)}
+                  </p>
+                  <p className="item1">
+                    <strong>Transaction Name:</strong> {transaction.transactionName}
+                  </p>
+                  <p className="item" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                    <strong>Token:</strong> {renderProperty(transaction.token)}
+                  </p>
+                  <hr style={{ margin: '10px 0', border: 'none', borderBottom: '1px solid #ccc' }} />
                 </div>
               ))}
             </div>
-            <button onClick={handleDownloadJSON} className="download-button">
+            <button
+              onClick={handleDownloadJSON}
+              className="download-button"
+              style={{
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                margin: '10px',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease',
+              }}
+            >
               Download JSON
             </button>
-            <button onClick={handleDownloadCSV} className="download-button">
+            <button
+              onClick={handleDownloadCSV}
+              className="download-button"
+              style={{
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                margin: '10px',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease',
+              }}
+            >
               Download CSV
             </button>
           </>
         )}
       </div>
-      <Foot/>
+      <Foot />
     </div>
   );
 };

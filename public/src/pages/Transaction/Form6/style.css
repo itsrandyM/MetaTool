@@ -36,4 +36,22 @@
   .overlay button:hover {
     background-color: #0056b3;
   }
+  input {
+    width: 100%;
+    padding: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
   
+  .authentic {
+    background-color: #6B8065;
+    color: white;
+    padding: 10px;
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+  }

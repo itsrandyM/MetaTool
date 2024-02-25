@@ -1,65 +1,65 @@
 /* Form3.css */
 
 .form3_container {
-    background-color: #F2EEE3;
-    padding: 20px;
-    border-radius: 10px;
-    color: black;
-    margin-left: 36%;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 300px;
-    margin-top: 4%;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-label1 {
-    display: block;
-    margin-bottom: 5px;
-    margin-left: -70%;
-    color: black;
-    font-size: 14px;
-  }
-  
-  .form-input1 {
-    width: 70%;
-    padding: 3px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .amount-input-group1 {
-    display: flex;
-    align-items: center;
-    margin-left: 45px;
-    margin-top: -8px;
-    width: 70%; /* Adjusted width to match .form-input1 */
-  }
-  
-  .amount-input1 {
-    flex: 1;
-    margin-right: 1px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 8px;
-  }
-  
-  .addicon1 {
-    padding: 6px 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: -10px;
-    font-size: 14px;
-    
-  }
-  
+  background-color: #F2EEE3;
+  padding: 10px;
+  border-radius: 10px;
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+  margin-top: 4%;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-label1 {
+  display: block;
+  margin-bottom: 5px;
+  color: black;
+  font-size: 14px;
+  margin-left: 0; /* Align label to the left */
+}
+
+.form-input1 {
+  width: calc(100% - 20px); /* Adjusted width */
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.amount-input-group1 {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -8px;
+  width: calc(100% - 20px); /* Adjusted width */
+}
+
+.amount-input1 {
+  flex: 1;
+  margin-right: 5px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.addicon1 {
+  padding: 8px 12px; /* Adjusted padding */
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: -10px;
+  font-size: 14px;
+}
