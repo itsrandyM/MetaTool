@@ -6,16 +6,17 @@ const AddTokenPage = ({ onClose }) => {
   const { tokens, setTokens } = useTokenContext();
   const [newToken, setNewToken] = useState({ name: '', amount: '' });
 
-
   const handleAddToken = () => {
     if (newToken.name.trim() && newToken.amount.trim()) {
+      // Increment the number of tokens instead of adding a new field
       setTokens((prevTokens) => [...prevTokens, { ...newToken }]);
-      setNewToken({ name: '', amount: '' });
+      setNewToken((prevToken) => ({ ...prevToken, amount: '' }));
       onClose();
     } else {
       console.error('Please fill in both token name and amount.');
     }
   };
+  
 
   return (
     <div className="overlay">
@@ -50,7 +51,7 @@ const AddTokenPage = ({ onClose }) => {
             </button>
           </div>
         </div>
-        <button type="button" className="done-button" onClick={handleAddToken}>
+        <button type="button" className="done-button" onClick={onClose}>
           Done
         </button>
       </div>

@@ -69,7 +69,7 @@ const Form3 = ({ onNextForm }) => {
               name="classification"
               value={classification}
               onChange={(e) => setClassification(e.target.value)}
-              className="fixed-width"
+              className="form-input1"
             />
           </div>
           {tokens.map((token, index) => (
@@ -117,7 +117,7 @@ const Form3 = ({ onNextForm }) => {
             </div>
           </div>))}
           <div className="form-group">
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="description" style={{ marginLeft: '-24px'}}>Description:</label>
             <textarea
               id="description"
               name="description"
@@ -125,7 +125,7 @@ const Form3 = ({ onNextForm }) => {
               cols="50"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="fixed-width"
+              className="form-input1"
             />
           </div>
           <button type="submit" className="authentic">
