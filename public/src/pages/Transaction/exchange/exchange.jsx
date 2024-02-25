@@ -124,7 +124,7 @@ const Form5 = ({ onNextForm}) => {
   useEffect(() => {
     const initialRates = {};
     tokens.forEach(token => {
-      initialRates[token.name] = [{  base_currency: token.name, quote_currency: '', rate: '', time: '' }];
+      initialRates[token.name] = [{  base_currency: token.name, quote_currency: 'USD', rate: '', time: '' }];
     });
     setExchangeRates(initialRates);
   }, [tokens]);
