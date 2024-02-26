@@ -44,7 +44,7 @@ const Form4 = ({ formData }) => {
       transactionName: formData.form2Data.name,
       transactionDescription: formData.form2Data.description,
       recipients: recipientsData,
-      tokenName: formData.form5Data.tokens.map((token) => ({
+      tokenName: formData.form3Data.tokens.map((token) => ({
         name: token.name,
         amount: token.amount,
       })),
