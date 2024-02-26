@@ -200,8 +200,8 @@ const Form2 = ({ onNextForm }) => {
          </div>
          <ToastContainer />
          {showAddTokenForm && (
-  <AddTokenPage
-    tokens={tokens}
+          <AddTokenPage
+            tokens={tokens}
     setTokens={setTokens}
 
     onClose={() => setShowAddTokenForm(false)}
