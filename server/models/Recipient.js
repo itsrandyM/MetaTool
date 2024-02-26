@@ -1,5 +1,6 @@
 const  mongoose = require ("mongoose")
 const User = require("./User")
+const Token = require("./Token")
 
 const recipientSchema = new mongoose.Schema({
     User: {
@@ -18,6 +19,10 @@ const recipientSchema = new mongoose.Schema({
     comment:{
         type:String
     },
+    token:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Token
+    }],
     token1:{
         type: String
     },
