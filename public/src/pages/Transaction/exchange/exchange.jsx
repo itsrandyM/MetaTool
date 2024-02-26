@@ -164,8 +164,6 @@ const Form5 = ({ onNextForm}) => {
     setExchangeRates(updatedRates);
   };
 
-  console.log('first:', exchangeRates[tokens[currentIndex].name])
-  console.log(exchangeRates)
   return (
     <>
       <h2>EXCHANGE RATES</h2>

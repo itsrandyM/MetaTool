@@ -31,7 +31,7 @@ const Form4 = ({ formData }) => {
     })))
   : [];
 
-    const recipientsData = formData.form3Data.recipients.map((recipient, index) => ({
+    const recipientsData = formData.form5Data.recipients.map((recipient, index) => ({
       name: recipient.name,
       org: recipient.organization,
       wallet: recipient.wallet,
@@ -44,13 +44,13 @@ const Form4 = ({ formData }) => {
       transactionName: formData.form2Data.name,
       transactionDescription: formData.form2Data.description,
       recipients: recipientsData,
-      tokenName: formData.form3Data.tokens.map((token) => ({
+      tokenName: formData.form5Data.tokens.map((token) => ({
         name: token.name,
         amount: token.amount,
       })),
       amount: formData.form5Data.amount,
-      classificationName: formData.form5Data.classification,
-      descriptionName: formData.form5Data.description,
+      classificationName: formData.form2Data.classification,
+      descriptionName: formData.form2Data.description,
       // exchangeRates:formData.form4Data.exchangeRates,
       exchangeRates: exchangeData,
       };

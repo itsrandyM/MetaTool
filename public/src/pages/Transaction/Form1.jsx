@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Form1 = ({ onNextForm }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [classification, setClassification] = useState('');
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -20,10 +21,15 @@ const Form1 = ({ onNextForm }) => {
       toast.error('Invalid Name.', toastOptions);
       return;
     }
-    if (name && description) {
+    if (!classification) {
+      toast.error('Please provide a classification.', toastOptions);
+      return;
+    }
+    if (name && description && classification) {
       const formData = {
         name,
         description,
+        classification,
       };
 
       console.log('Form1 Data:', formData)
@@ -46,6 +52,17 @@ const Form1 = ({ onNextForm }) => {
               name="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              style={{ width: '80%', padding: '8px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+            />
+          </div>
+          <div style={{ width: '100%', marginBottom: '10px' }}>
+            <label htmlFor="classification" style={{ marginBottom: '5px', display: 'block', textAlign: 'left', marginLeft: '28px' }}>Classification:</label>
+            <input
+              type="text"
+              id="classification"
+              name="classification"
+              value={classification}
+              onChange={(e) => setClassification(e.target.value)}
               style={{ width: '80%', padding: '8px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
             />
           </div>

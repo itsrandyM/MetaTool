@@ -109,6 +109,7 @@ const TransactionDetailsPage = () => {
         className="Download_container"
         style={{
           padding: '20px',
+          color:'black',
           borderRadius: '10px',
           backgroundColor: '#f2eee3',
           boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',

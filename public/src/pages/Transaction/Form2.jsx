@@ -252,7 +252,7 @@ const Form2 = ({ onNextForm }) => {
         })),
         
       };
-      onNextForm(3, formData);    
+      onNextForm(5, formData);    
       clearFormFields();
     } else {
       if (!isNameValid.test(recipients[0].name)) {
@@ -320,18 +320,20 @@ const Form2 = ({ onNextForm }) => {
             style={{ width: '80%', padding: '8px', marginBottom: '5px', border: '1px solid #ccc', borderRadius: '5px' }}
           />
         </div>
-        <div className="form-group">
+       <div className="form-group" style={{ textAlign: 'left' }}>
           <label htmlFor="token" className="form-label">Token:</label>
           <div className="token-input-group">
             <input
+               
               type="text"
               id="token"
               name="token"
               value={initialTokens.map(token => token.name).join(', ')} // Display initial tokens inline
               readOnly
-              className="form-input1 token-input" // Apply styles for token input
+            style={{ width: '80%', padding: '8px', marginBottom: '5px', border: '1px solid #ccc', borderRadius: '5px' }}
+            // Apply styles for token input
             />
-            <button className="addicon1" type="button" onClick={() => setShowOverlay(true)}>
+            <button className="addicon1" type="button" onClick={() => setShowOverlay(true)} style={{margin: '5px'}} >
               Add Token
             </button>
           </div>
