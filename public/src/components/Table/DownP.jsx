@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
 import Navbar from '../../../src/components/Navbar/Navbar'
-import Foot from '../../../src/pages/Transaction/Foot/foot'
 import './DownP.css';
 
 function DownloadPage() {
@@ -117,7 +116,6 @@ function DownloadPage() {
         </button>
       )}
     </div>
-    <Foot/>
     </div>
   );
 }

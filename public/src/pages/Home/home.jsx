@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../../components/Table/table';
-import Navbar from '../../components/Navbar/Navbar' 
-import Footer from '../../components/Footer/footer';
-import Carousel from '../../components/carousel/carousel';
-import './style.css'
-//import { SERVER_URL } from '../../../constants';
+import Navbar from '../../components/Navbar/Navbar';
+// import { SERVER_URL } from '../../../constants';
 
 const WelcomePage = () => {
   const [userName, setUserName] = useState('');
   const [position, setPosition] = useState('');
   const [accountBalance, setAccountBalance] = useState(0);
-  // Simulate data retrieval from a server
+  
   useEffect(() => {
-    // You would replace these with actual API calls
+    // Simulate data retrieval from a server
     /* const fetchData = async () => {
       try {
         const response = await fetch(`${SERVER_URL}/users/${id}`)
@@ -29,29 +26,26 @@ const WelcomePage = () => {
     catch(error){
       console.error('Error fetching data',error.message)
     } */
-    
+
     const storedUserName = localStorage.getItem('userName');
     const storedPosition = localStorage.getItem('position')
 
-    setUserName(storedUserName || "User" );
+    setUserName(storedUserName || "User");
     setPosition(storedPosition || "Employee");
     setAccountBalance(null);
   }, []);
 
   return (
-    <div className='home-page'>
-      <Navbar/>
-      <div className='content'>
-      <h2>Welcome to Meta Tool</h2>
-      <p>{userName} : {position}</p>
-      <h3>Account Balance:</h3>
-      <h6 className='h6'>${accountBalance}</h6>
-      </div>
+    <>
+    <Navbar/>
+    <div style={{ display: 'block', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', height: '100vh' }}>
+      <h2 style={{ color: 'black', fontSize: '20px', marginLeft: '15px' }}>Welcome to Meta Tool</h2>
       <div>
-      <Table/>
+        <Table />
       </div>
-     <Footer/>
-    </div>
+    </div>    
+    </>
+
   );
 }
 

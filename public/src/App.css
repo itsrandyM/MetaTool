@@ -1,5 +1,6 @@
-#root{
+#root {
+    justify-content: center; /* Center its children horizontally */
     align-items: center;
-    
-}
+    width: 100%; /* Ensure full width */
+  }
   

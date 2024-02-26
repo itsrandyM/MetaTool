@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
 import axios from 'axios';
 import Navbar from '../../components/Navbar/Navbar';
-import Foot from '../Transaction/Foot/foot';
 import animationData from '../../../public/load.json';
 
 const defaultOptions = {
@@ -178,7 +177,6 @@ const TransactionDetailsPage = () => {
           </>
         )}
       </div>
-      <Foot />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { useAppContext } from '../Context/AppProvider';
-import './style.css';
+import './table.css';
 import { SERVER_URL } from '../../../constants';
 
 function Table() {
@@ -48,13 +48,9 @@ function Table() {
   };
 
   return (
-    <div>
-      <button className='tran' onClick={() => navigate('/form-display')}>
-        <title className='title'> New Transaction</title>
-        <Icon icon="icomoon-free:new-tab" className='icon1' />
-      </button>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       {dataLoaded && (
-        <table>
+        <table style={{ width: '80%', borderCollapse: 'collapse', marginTop: '1px' }}>
           <thead>
             <tr>
               <th>Transaction Name</th>
@@ -69,7 +65,7 @@ function Table() {
             {transactions?.map((transaction, index) => (
               <tr key={index} onClick={() => handleRowClick(index)} className="clickable-row">
                 {/* Adjust these fields based on your actual transaction data */}
-                {/* <td>{transaction.transactionName}</td> */}
+                <td>{transaction.transactionName}</td>
                 <td>{transaction.recipientName}</td>
                 <td>{transaction.token}</td>
                 <td>{transaction.classification}</td>

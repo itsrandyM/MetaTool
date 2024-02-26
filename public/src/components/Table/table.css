@@ -1,0 +1,40 @@
+.title {
+  display: flex;
+  align-items: center;
+}
+
+th {
+  background-color: #395241;
+  color: black;
+  font-weight: 500;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  color: black;
+  padding: 8px;
+  font-size: small;
+  border: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #cce6ff;
+}
+
+.icon1 {
+  width: 20px;
+  height: 20px;
+}
+
+.tran:hover {
+  background-color: rgb(177, 175, 175);
+}
+
+/* Make the table scroll horizontally on small screens */
+@media only screen and (max-width: 768px) {
+  table {
+    width: 100%;
+    overflow-x: auto;
+  }
+}

@@ -15,12 +15,8 @@
     font-size: 15px;
     font-weight: bold;
   }
-  .link{
-    margin-left: 55%;
-    gap: 3px;
-  }
-  .a{
-    color: #F3EEE2;
-    text-decoration: none;
-    font-size: 20px;
-  }
+  
+.transactbtn{
+  padding: 10px;
+  transform: translateY(-12px);
+}

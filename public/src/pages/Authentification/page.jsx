@@ -65,7 +65,7 @@ function LoginForm() {
       <div style={{ backgroundColor: '#D9D9D9', width: '300px', padding: '20px', borderRadius: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '20px' }}>
           <img src="/Logo icon 5.png" alt="DirectEd" className="login-icon" width="42px" height="38px" />
-          <h2>DirectEd</h2>
+          <h2 style={{color:'black'}}>DirectEd</h2>
         </div>
         <h2 style={{ fontSize: '20px', marginBottom: '20px', color: 'black', fontWeight: '600', textAlign: 'left' }}>Login</h2>
         <form onSubmit={handleSubmit}>
