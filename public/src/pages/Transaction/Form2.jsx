@@ -234,15 +234,16 @@ const Form2 = ({ onNextForm }) => {
     theme: 'light',
   };
 
-  const isNameValid = /^[a-zA-Z]+[a-zA-Z\s]*$/;
-
+  const isNameValid = /^[a-zA-Z]+[a-zA-Z\s]*$/
+  const isWalletValid = /^[a-zA-Z0-9]{25,}$/
+  
   const handleNext = () => {
     if (recipients.some((recipient) => !recipient.name || !recipient.organization)) {
       toast.error('All fields are required for each recipient.', toastOptions);
       return;
     }
-
-    if (recipients.every((recipient) => isNameValid.test(recipient.name))) {
+  
+    if (recipients.every((recipient) => isNameValid.test(recipient.name) && isWalletValid.test(recipient.wallet))) {
       console.log('Form2 Data:', recipients);
       const formData = {
         recipients: recipients, // Existing recipient data
@@ -250,15 +251,16 @@ const Form2 = ({ onNextForm }) => {
           name: token.name, // Token name
           amount: token.amount, // Token amount
         })),
-        
       };
-      onNextForm(5, formData);    
+      onNextForm(5, formData);
       clearFormFields();
     } else {
       if (!isNameValid.test(recipients[0].name)) {
         toast.error('Invalid Name.', toastOptions);
+      } else if (!isWalletValid.test(recipients[0].wallet)) { // Added check for invalid wallet
+        toast.error('Invalid Wallet Address.', toastOptions);
       }
-      // Additional validation error handling...
+      // ... additional validation error handling, if needed
     }
   };
 

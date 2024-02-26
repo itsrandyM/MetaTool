@@ -191,7 +191,7 @@ const Form5 = ({ onNextForm}) => {
             <div className="time-card">
               <h3>Time</h3>
               <input
-                type="text"
+                type="time"
                 value={rate.time}
                 onChange={(e) => handleRateChange(tokens[currentIndex].name, index, 'time', e.target.value)}
               />

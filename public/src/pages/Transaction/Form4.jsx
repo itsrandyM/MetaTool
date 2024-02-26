@@ -81,8 +81,8 @@ const Form4 = ({ formData }) => {
       <hr style={{ width: '50%', margin: 'auto', marginBottom: '20px' }} />
       <form className="summarized" style={{ textAlign: 'left' }}>
         <div style={{ marginBottom: '15px' }}>
-          <p style={{ marginBottom: '5px' }}>Classification: {formData.form5Data.classification}</p>
-          <p style={{ marginBottom: '5px' }}>Description: {formData.form5Data.description}</p>
+          <p style={{ marginBottom: '5px' }}>Classification: {formData.form2Data.classification}</p>
+          <p style={{ marginBottom: '5px' }}>Description: {formData.form2Data.description}</p>
         </div>
       </form>
       <button onClick={handleSendData} style={{ backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}>
@@ -94,3 +94,5 @@ const Form4 = ({ formData }) => {
 };
 
 export default Form4;
+
+//validation
