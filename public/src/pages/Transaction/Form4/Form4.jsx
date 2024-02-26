@@ -31,7 +31,7 @@ const Form4 = ({ formData }) => {
     })))
   : [];
 
-    const recipientsData = formData.form3Data.map((recipient, index) => ({
+    const recipientsData = formData.form3Data.recipients.map((recipient, index) => ({
       name: recipient.name,
       org: recipient.organization,
       wallet: recipient.wallet,
