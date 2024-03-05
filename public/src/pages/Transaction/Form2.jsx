@@ -218,6 +218,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddToken from './Form3/addToken'; // Import the overlay component
 import { useTokenContext } from '../../../constants/TokenContext';
+import { FaUserPlus } from 'react-icons/fa';
+
 
 const Form2 = ({ onNextForm }) => {
   const { tokens: initialTokens, setTokens } = useTokenContext();
