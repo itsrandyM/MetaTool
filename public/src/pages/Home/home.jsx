@@ -39,7 +39,7 @@ const WelcomePage = () => {
     <>
     <Navbar/>
     <div style={{ display: 'block', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', height: '100vh' }}>
-      <h2 style={{ color: 'black', fontSize: '20px' }}>Welcome to Meta Tool</h2>
+      <h2 style={{ color: 'black', fontSize: '20px', marginLeft: '42%' }}>Welcome to Meta Tool</h2>
       <div>
         <Table />
       </div>

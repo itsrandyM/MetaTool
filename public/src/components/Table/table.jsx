@@ -9,7 +9,7 @@ function Table() {
   const navigate = useNavigate();
   const { transactions, updateTransactions } = useAppContext();
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState(null)
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ function Table() {
           method: 'GET', // Specify the HTTP method
           headers: new Headers({
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           }),
         });
 
@@ -47,6 +47,18 @@ function Table() {
     navigate(`/download/${index}`);
   };
 
+  // Function to set full content as title attribute for each cell
+  const setFullContentAsTitle = () => {
+    const cells = document.querySelectorAll('td');
+    cells.forEach((cell) => {
+      cell.setAttribute('title', cell.textContent);
+    });
+  };
+
+  useEffect(() => {
+    setFullContentAsTitle();
+  }, [transactions]);
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       {dataLoaded && (
@@ -65,12 +77,12 @@ function Table() {
             {transactions?.map((transaction, index) => (
               <tr key={index} onClick={() => handleRowClick(index)} className="clickable-row">
                 {/* Adjust these fields based on your actual transaction data */}
-                <td>{transaction.transactionName}</td>
-                <td>{transaction.recipientName}</td>
-                <td>{transaction.token}</td>
-                <td>{transaction.classification}</td>
-                <td>{transaction.description}</td>
-                <td>{new Date(transaction.createdAt).toLocaleString()}</td>
+                <td>{transaction?.transactionName || '{...}'}</td>
+                <td>{transaction?.recipientName || '{...}'}</td>
+                <td>{transaction?.token || '{...}'}</td>
+                <td>{transaction?.classification || '{...}'}</td>
+                <td>{transaction?.description || '{...}'}</td>
+                <td>{transaction?.createdAt ? new Date(transaction.createdAt).toLocaleString() : '{...}'}</td>
               </tr>
             ))}
           </tbody>
