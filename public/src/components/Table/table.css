@@ -3,19 +3,27 @@
   align-items: center;
 }
 
+table {
+  width: 100%;
+  table-layout: fixed; /* Ensures all columns have the same width */
+}
 th {
   background-color: #395241;
-  color: black;
   font-weight: 500;
   padding: 10px;
   text-align: left;
 }
 
-td {
+th, td {
+  width: 16.67%; /* Equal width for all columns (100% / 6 columns) */
   color: black;
   padding: 8px;
   font-size: small;
   border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap; /* Prevents text wrapping */
+  overflow: hidden; /* Hides overflow content */
+  text-overflow: ellipsis; /* Displays ellipsis (...) when content overflows */
 }
 
 tr:hover {
@@ -30,6 +38,14 @@ tr:hover {
 .tran:hover {
   background-color: rgb(177, 175, 175);
 }
+/* Add hover effect */
+td:hover {
+  overflow: visible;
+  white-space: normal;
+  word-wrap: break-word;
+  z-index: 2;
+}
+
 
 /* Make the table scroll horizontally on small screens */
 @media only screen and (max-width: 768px) {

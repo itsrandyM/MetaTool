@@ -82,30 +82,31 @@ function LoginForm() {
             />
           </div>
 
-          <div style={{ marginBottom: '10px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-              <label htmlFor="password" style={{ display: 'block', color: 'black' }}>Password:</label>
-              <a href="#" className="forgot-password-link">Forgot Password?</a>
-            </div>
+          <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
+            <label htmlFor="password" style={{ display: 'block', color: 'black' }}>Password:</label>
+          </div>
 
-            <div style={{ position: 'relative' }}>
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-                style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' }}
-              />
-              <span
-                onClick={handleTogglePassword}
-                style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', cursor: 'pointer' }}
-                title={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
+          <div style={{ position: 'relative' }}>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' }}
+            />
+            <span
+              onClick={handleTogglePassword}
+              style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', cursor: 'pointer',color: 'black',  }}
+              title={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
+
+          <div style={{ textAlign: 'right', transform: 'translateY(-25%)'  }}>
+            <a href="#" className="forgot-password-link">Forgot Password?</a>
           </div>
 
           {error && <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>{error}</p>}

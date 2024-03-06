@@ -3,7 +3,6 @@ import Lottie from 'react-lottie';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
 import axios from 'axios';
-import Navbar from '../../components/Navbar/Navbar';
 import animationData from '../../../public/load.json';
 
 const defaultOptions = {
@@ -104,7 +103,6 @@ const TransactionDetailsPage = () => {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <Navbar />
       <div
         className="Download_container"
         style={{

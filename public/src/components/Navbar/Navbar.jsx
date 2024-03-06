@@ -12,7 +12,7 @@ const Navbar = () => {
       </div>
       <div>
         <NavLink to="/form-display">
-          <button className="transactbtn">Transact</button>
+          <button className="transactbtn" style={{ marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '5px', backgroundColor: '#4CAF50', color: 'white', fontSize: '16px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}>Transact</button>
         </NavLink>
       </div>
     </div>
