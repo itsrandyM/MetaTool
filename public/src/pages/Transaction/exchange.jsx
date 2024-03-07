@@ -85,7 +85,7 @@ const Form5 = ({ onNextForm }) => {
               <label htmlFor="time" style={{ marginLeft: '20px' }}>Time</label>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <input
-                  type="text"
+                  type="time"
                   value={rate.time}
                   onChange={(e) => handleRateChange(tokens[currentIndex].name, index, 'time', e.target.value)}
                   style={{ width: '80%', padding: '8px', border: '1px solid #ccc', borderRadius: '5px' }}

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-const TokenTable = ({ tokens, onClose, onRemoveToken, onAddToken }) => {
+const TokenTable = ({ recipients, onClose, onRemoveToken, onAddToken }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [newTokenName, setNewTokenName] = useState('');
   const [newTokenAmount, setNewTokenAmount] = useState('');
 
-  const handleAddToken = () => {
+  const handleAddToken = (recipientId) => {
     const newToken = { name: newTokenName, amount: newTokenAmount };
-    onAddToken(newToken); // Call the onAddToken function passed from Form2
+    onAddToken(recipientId, newToken); // Call the onAddToken function passed from Form2
     setShowOverlay(false);
     setNewTokenName('');
     setNewTokenAmount('');
@@ -23,18 +23,22 @@ const TokenTable = ({ tokens, onClose, onRemoveToken, onAddToken }) => {
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr>
+              <th style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>Recipient</th>
               <th style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>Name</th>
               <th style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>Amount</th>
               <th style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>Action</th> {/* New column for removing tokens */}
             </tr>
           </thead>
           <tbody>
-            {tokens.map((token, index) => (
-              <tr key={index} style={{ borderBottom: '1px solid #ccc' }}>
-                <td style={{ padding: '10px' }}>{token.name}</td>
-                <td style={{ padding: '10px' }}>{token.amount}</td>
-                <td style={{ padding: '10px' }}><button onClick={() => onRemoveToken(index)}>-</button></td> {/* Button to remove token */}
-              </tr>
+            {recipients.map((recipient, recipientIndex) => (
+              recipient.selectedTokens.map((token, tokenIndex) => (
+                <tr key={`${recipient.id}-${tokenIndex}`} style={{ borderBottom: '1px solid #ccc' }}>
+                  <td style={{ padding: '10px' }}>{recipient.name}</td>
+                  <td style={{ padding: '10px' }}>{token.name}</td>
+                  <td style={{ padding: '10px' }}>{token.amount}</td>
+                  <td style={{ padding: '10px' }}><button onClick={() => onRemoveToken(recipient.id, tokenIndex)}>-</button></td> {/* Button to remove token */}
+                </tr>
+              ))
             ))}
           </tbody>
         </table>
@@ -55,7 +59,7 @@ const TokenTable = ({ tokens, onClose, onRemoveToken, onAddToken }) => {
               <input type="text" id="newTokenAmount" value={newTokenAmount} onChange={(e) => setNewTokenAmount(e.target.value)} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-              <button onClick={handleAddToken} style={{ backgroundColor: '#6B8065', padding: '12px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', width: '45%',  }}>Add</button>
+              <button onClick={() => handleAddToken(recipients[recipients.length - 1].id)} style={{ backgroundColor: '#6B8065', padding: '12px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', width: '45%',  }}>Add</button>
               <button onClick={() => setShowOverlay(false)} style={{ backgroundColor: '#ccc', padding: '12px', color: 'black', border: 'none', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', width: '45%' }}>Cancel</button>
             </div>
           </div>
