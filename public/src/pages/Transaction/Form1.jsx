@@ -40,7 +40,7 @@ const Form1 = ({ onNextForm }) => {
   };
 
   return (
-    <div style={{ backgroundColor: '#F2EEE3', padding: '10px', borderRadius: '10px', color: 'black', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', maxWidth: '300px' }}>
+    <div style={{ backgroundColor: '#F2EEE3', padding: '10px', borderRadius: '10px', color: 'black', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', maxWidth: '300px' }}>
       <div className="form1">
         <h2>New Transaction</h2>
         <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

@@ -14,8 +14,8 @@ th {
   text-align: left;
 }
 
-th, td {
-  width: 16.67%; /* Equal width for all columns (100% / 6 columns) */
+th,
+td {
   color: black;
   padding: 8px;
   font-size: small;
@@ -38,6 +38,7 @@ tr:hover {
 .tran:hover {
   background-color: rgb(177, 175, 175);
 }
+
 /* Add hover effect */
 td:hover {
   overflow: visible;
@@ -46,11 +47,25 @@ td:hover {
   z-index: 2;
 }
 
-
-/* Make the table scroll horizontally on small screens */
+/* Make the table stack vertically on small screens */
 @media only screen and (max-width: 768px) {
-  table {
-    width: 100%;
-    overflow-x: auto;
+  th,
+  td {
+    display: block;
+    width: auto;
+    text-align: left;
+  }
+  
+  th {
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  td {
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
   }
 }

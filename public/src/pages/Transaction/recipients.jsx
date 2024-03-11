@@ -1,41 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import AddToken from './addToken';
 
-const AddRecipientForm = ({ onSubmit }) => {
-  const [name, setName] = useState('');
-  const [organization, setOrganization] = useState('');
+const RecipientFormOverlay = ({
+  showOverlay,
+  onClose,
+  recipients,
+  initialTokens,
+  handleTokenChange,
+  handleRecipientChange,
+  setRecipients,
+  setTokens,
+}) => {
+  if (!showOverlay) return null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ name, organization });
-    setName('');
-    setOrganization('');
+  const handleOverlaySubmit = (submittedTokens) => {
+    setTokens(submittedTokens);
+    onClose(); // Close the overlay after submission
   };
 
+  // Your JSX for the recipient form here...
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
+    <div className="overlay">
+      <div className="overlay-content">
+        {/* Your recipient form JSX */}
+        <AddToken
+          recipientId={recipients[recipients.length - 1].id}
+          initialTokens={initialTokens}
+          onSubmit={(selectedTokens) => {
+            handleTokenChange(recipients[recipients.length - 1].id, selectedTokens);
+            handleOverlaySubmit(selectedTokens);
+          }}
+          onClose={onClose}
         />
       </div>
-      <div className="form-group">
-        <label htmlFor="organization">Organization:</label>
-        <input
-          type="text"
-          id="organization"
-          value={organization}
-          onChange={(e) => setOrganization(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Add Recipient</button>
-    </form>
+    </div>
   );
 };
 
-export default AddRecipientForm;
+export default RecipientFormOverlay;
