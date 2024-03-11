@@ -48,7 +48,7 @@ const TokenTable = ({ recipients, onClose, onRemoveToken, onAddToken }) => {
       {/* Add Token Overlay */}
       {showOverlay && (
         <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: '9999' }}>
-          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', maxWidth: '400px' }}>
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', maxWidth: '400px', color: 'black' }}>
             <h3>Add Token</h3>
             <div className="form-group" style={{ textAlign: 'left' }}>
               <label htmlFor="newTokenName">Token Name:</label>
