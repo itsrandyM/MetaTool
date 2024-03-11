@@ -126,13 +126,13 @@ const TransactionDetailsPage = () => {
               {transactionDetails.map((transaction, index) => (
                 <div key={index} className="transaction-item" style={{ marginBottom: '20px' }}>
                   <p className="item">
-                    <strong>Classification:</strong> {renderProperty(transaction.classification.classificationName)}
+                    <strong>Classification:</strong> {renderProperty(transaction.classification)}
                   </p>
                   <p className="item">
-                    <strong>Description:</strong> {renderProperty(transaction.description.descriptionName)}
+                    <strong>Description:</strong> {renderProperty(transaction.description)}
                   </p>
                   <p className="item1">
-                    <strong>Transaction Name:</strong> {transaction.transactionName}
+                    <strong>Transaction Name:</strong> {transaction.transaction}
                   </p>
                   <p className="item" style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
                     <strong>Token:</strong> {renderProperty(transaction.token)}

@@ -31,8 +31,8 @@ const Form4 = ({ formData }) => {
       comment: recipient.comment,
       token1:recipient.selectedTokens[0].name,
       amount1:recipient.selectedTokens[0].amount,
-      token2:recipient.selectedTokens[1].name,
-      amount2:recipient.selectedTokens[1].amount,
+      token2: recipient.selectedTokens.length > 1 ? recipient.selectedTokens[1].name : undefined,
+      amount2: recipient.selectedTokens.length > 1 ? recipient.selectedTokens[1].amount : undefined
       // token3:,
       // amount3:,
     }));
