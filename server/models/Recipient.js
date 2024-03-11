@@ -19,10 +19,10 @@ const recipientSchema = new mongoose.Schema({
     comment:{
         type:String
     },
-    token:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: Token
-    }],
+    // token:[{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: Token
+    // }],
     token1:{
         type: String
     },

@@ -48,7 +48,6 @@ const Form2 = ({ onNextForm }) => {
    };
 
    const handleRecipientChange = (id, field, value) => {
-     // Update the corresponding recipient's field
      setRecipients((prevRecipients) =>
        prevRecipients.map((recipient) =>
          recipient.id === id ? { ...recipient, [field]: value } : recipient

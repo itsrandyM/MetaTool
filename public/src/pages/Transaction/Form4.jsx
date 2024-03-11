@@ -15,13 +15,6 @@ const Form4 = ({ formData }) => {
   const handleSendData = () => {
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
 
-    // const exchangeData = formData.form5Data.exchangeRates.flatMap(rates => rates.map(rate => ({
-    //   base_currency: rate.base_currency,
-    //   quote_currency: rate.quote_currency,
-    //   rate: rate.rate,
-    //   time: rate.time,
-    // })));
-
     const exchangeData = formData.form4Data.exchangeRates 
   ? Object.values(formData.form4Data.exchangeRates).flatMap(rates => rates.map(rate => ({
       base_currency: rate.base_currency,
@@ -36,6 +29,12 @@ const Form4 = ({ formData }) => {
       org: recipient.organization,
       wallet: recipient.wallet,
       comment: recipient.comment,
+      token1:recipient.selectedTokens[0].name,
+      amount1:recipient.selectedTokens[0].amount,
+      token2:recipient.selectedTokens[1].name,
+      amount2:recipient.selectedTokens[1].amount,
+      // token3:,
+      // amount3:,
     }));
     
 

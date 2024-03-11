@@ -67,33 +67,33 @@ router.post('/generateJson', authToken, async (req, res, next) => {
    // Function to remove the keys "0" and "tokenName" from the token object
 // Function to remove the keys "0" and "tokenName" from each token in the token object
 // Function to remove unnecessary fields from the token object
-const removeTokenKeys = (token) => {
-  if (token && typeof token === 'object') {
-      const cleanedToken = {};
+// const removeTokenKeys = (token) => {
+//   if (token && typeof token === 'object') {
+//       const cleanedToken = {};
 
-      // Iterate over each token
-      Object.keys(token).forEach(key => {
-          const tokenData = token[key];
-          if (tokenData && typeof tokenData === 'object') {
-              // Remove the "_id" and "__v" fields
-              delete tokenData._id;
-              delete tokenData.__v;
+//       // Iterate over each token
+//       Object.keys(token).forEach(key => {
+//           const tokenData = token[key];
+//           if (tokenData && typeof tokenData === 'object') {
+//               // Remove the "_id" and "__v" fields
+//               delete tokenData._id;
+//               delete tokenData.__v;
 
-              // Extracting name and amount from tokenName
-              const tokenName = tokenData.tokenName && tokenData.tokenName[0];
-              if (tokenName && typeof tokenName === 'object') {
-                  cleanedToken[key] = {
-                      name: tokenName.name,
-                      amount: tokenName.amount
-                  };
-              }
-          }
-      });
+//               // Extracting name and amount from tokenName
+//               const tokenName = tokenData.tokenName && tokenData.tokenName[0];
+//               if (tokenName && typeof tokenName === 'object') {
+//                   cleanedToken[key] = {
+//                       name: tokenName.name,
+//                       amount: tokenName.amount
+//                   };
+//               }
+//           }
+//       });
 
-      return cleanedToken;
-  }
-  return token;
-};
+//       return cleanedToken;
+//   }
+//   return token;
+// };
 
 
     // Convert data to the desired JSON structure
@@ -101,7 +101,7 @@ const removeTokenKeys = (token) => {
       // const recipients = item.recipients.map(recipient =>  removeIdFields(recipient));
     const recipients = item.recipients.map(recipient => {
     const cleanedRecipient = removeIdFields(recipient);
-    cleanedRecipient.token =  removeTokenKeys(item.token)//item.token.map(removeIdFields);
+    //cleanedRecipient.token =  removeTokenKeys(item.token)//item.token.map(removeIdFields);
     return cleanedRecipient;
 }); 
 
