@@ -69,8 +69,8 @@ const Form2 = ({ onNextForm }) => {
         return recipient;
       });
       setTokens(getCombinedTokens(updatedRecipients)); // Update context with combined tokens
-      setSelectedRecipientId(id)
-      console.log('selected:',selectedRecipientId)
+      // setSelectedRecipientId(id)
+      // console.log('selected:',selectedRecipientId)
       return updatedRecipients;
     });
   };
@@ -103,10 +103,10 @@ const Form2 = ({ onNextForm }) => {
   //  const handleOverlaySubmit = (submittedTokens) => {     setTokens(submittedTokens); // Update tokens state with the submitted tokens
   //   setShowOverlay(false); // Close the overlay after submission
   // };
-  const handleTokenClick = (recipient) => {
+  const handleTokenClick = (recipientId) => {
     setShowTokenTable(!showTokenTable);
-    setSelectedRecipientId(recipient.id)
-    console.log('selected:',selectedRecipientId)
+    setSelectedRecipientId(recipientId);
+    console.log('selected:', recipientId);
   };
 
   // Function to close the token table
@@ -198,7 +198,7 @@ const Form2 = ({ onNextForm }) => {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div className="token-info" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '8px', backgroundColor: '#f0f0f0', width: '8rem', borderRadius: '10px', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', padding: '2px' }}>
-              <div className="token-count" onClick={handleTokenClick} style={{ padding: '8px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', borderRadius: '10px', marginRight: '10px', marginLeft: '2px' }}>
+              <div className="token-count" onClick={() => handleTokenClick(recipient.id)} style={{ padding: '8px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', borderRadius: '10px', marginRight: '10px', marginLeft: '2px' }}>
                 {recipient.tokenCount}
               </div>
               <button className="addicon1" type="button" onClick={() => setShowOverlay(true)} style={{ padding: '8px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', transform: 'translateY(12%)' }}>
@@ -220,7 +220,7 @@ const Form2 = ({ onNextForm }) => {
         <TokenTable
           recipients={recipients}
           selectedRecipientId={selectedRecipientId}
-          onClose={handleCloseTokenTable()}
+          onClose={handleCloseTokenTable}
           onRemoveToken={handleRemoveToken}
           onAddToken={handleAddToken}
         />

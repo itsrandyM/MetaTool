@@ -19,7 +19,7 @@ const TokenTable = ({ recipients, selectedRecipientId, onClose, onRemoveToken, o
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <button onClick={onClose} style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: '20px' }}>X</button>
         </div>
-        <h3>Token List</h3>
+        <h3 style={{color: 'black'}}>Token List</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr>
