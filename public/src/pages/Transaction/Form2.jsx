@@ -17,6 +17,7 @@ const Form2 = ({ onNextForm }) => {
   ]);
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTokenTable, setShowTokenTable] = useState(false);
+  const [selectedRecipientId, setSelectedRecipientId] = useState(0)
 
   const toastOptions = {
     position: 'bottom-right',
@@ -68,6 +69,8 @@ const Form2 = ({ onNextForm }) => {
         return recipient;
       });
       setTokens(getCombinedTokens(updatedRecipients)); // Update context with combined tokens
+      setSelectedRecipientId(id)
+      console.log('selected:',selectedRecipientId)
       return updatedRecipients;
     });
   };
@@ -100,8 +103,10 @@ const Form2 = ({ onNextForm }) => {
   //  const handleOverlaySubmit = (submittedTokens) => {     setTokens(submittedTokens); // Update tokens state with the submitted tokens
   //   setShowOverlay(false); // Close the overlay after submission
   // };
-  const handleTokenClick = () => {
+  const handleTokenClick = (recipient) => {
     setShowTokenTable(!showTokenTable);
+    setSelectedRecipientId(recipient.id)
+    console.log('selected:',selectedRecipientId)
   };
 
   // Function to close the token table
@@ -153,6 +158,7 @@ const Form2 = ({ onNextForm }) => {
       return updatedRecipients;
     });
   };
+  console.log('s:',selectedRecipientId)
   return (
     <>
       {recipients.map((recipient, index) => (
@@ -213,7 +219,8 @@ const Form2 = ({ onNextForm }) => {
       {showTokenTable && (
         <TokenTable
           recipients={recipients}
-          onClose={handleCloseTokenTable}
+          selectedRecipientId={selectedRecipientId}
+          onClose={handleCloseTokenTable()}
           onRemoveToken={handleRemoveToken}
           onAddToken={handleAddToken}
         />
@@ -221,7 +228,7 @@ const Form2 = ({ onNextForm }) => {
 
       {showOverlay && (
         <AddToken
-          recipientId={recipients[recipients.length - 1].id} Pass recipient ID
+          recipientId={recipients[recipients.length - 1].id} //Pass recipient ID
           initialTokens={initialTokens}
           onSubmit={(selectedTokens) => {
             handleTokenChange(recipients[recipients.length - 1].id, selectedTokens);// Pass recipient ID here
