@@ -35,7 +35,7 @@ const TokenTable = ({ recipients, selectedRecipientId, onClose, onRemoveToken, o
       {/* <td style={{ padding: '10px' }}>{recipient.name}</td> */}
       <td style={{ padding: '10px' }}>{token.name}</td>
       <td style={{ padding: '10px' }}>{token.amount}</td>
-      <td style={{ padding: '10px' }}><button onClick={() => onRemoveToken(recipient.id, tokenIndex)}>-</button></td> {/* Button to remove token */}
+      <td style={{ padding: '10px' }}><button onClick={() => onRemoveToken(selectedRecipientId, tokenIndex)}>-</button></td> {/* Button to remove token */}
     </tr>
 
 ))}
