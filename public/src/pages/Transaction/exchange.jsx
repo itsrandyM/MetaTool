@@ -7,6 +7,13 @@ const Form5 = ({ onNextForm }) => {
   const { tokens } = useTokenContext();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [exchangeRates, setExchangeRates] = useState({});
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "light",
+  };
 
   useEffect(() => {
     const initialRates = {};
@@ -19,19 +26,21 @@ const Form5 = ({ onNextForm }) => {
   const handleNextForm = () => {
     // Proceed to the next form
     if (currentIndex === tokens.length - 1) {
+
+      const areFieldsEmpty = tokens[currentIndex].name in exchangeRates &&
+      exchangeRates[tokens[currentIndex].name].some(rate => rate.rate.trim() === '' || rate.time.trim() === '');
+
+
       if (Object.values(exchangeRates).every(rates => rates.length > 0)) {
+        
+        if(!areFieldsEmpty) {
         const formData = {
           exchangeRates: exchangeRates
         };
         onNextForm(4, formData);
-      } else {
-        toast.error('Please enter exchange rates for all tokens.', {
-          position: "bottom-right",
-          autoClose: 8000,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "light",
-        });
+        toast.success('Exchange rates added succesfully!')
+     } } else {
+        toast.error('Please enter exchange rates for all tokens.',toastOptions);
       }
     } else {
       setCurrentIndex(prevIndex => prevIndex + 1);
@@ -94,6 +103,7 @@ const Form5 = ({ onNextForm }) => {
             </div>
           </div>
         ))}
+        <ToastContainer />
 
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <button onClick={handlePrevForm} disabled={currentIndex === 0} style={{ marginLeft: '10px', padding: '10px 20px', border: 'none', borderRadius: '5px', backgroundColor: '#4CAF50', color: 'white', fontSize: '16px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}>
@@ -103,7 +113,6 @@ const Form5 = ({ onNextForm }) => {
             {currentIndex === tokens.length - 1 ? 'Continue' : 'Next'}
           </button>
         </div>
-        <ToastContainer />
       </div>
     </>
   );
