@@ -213,3 +213,4 @@ const Form2 = ({ onNextForm }) => {
 };
 
 export default Form2;
+

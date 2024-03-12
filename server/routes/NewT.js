@@ -7,6 +7,7 @@ router.post('/addRecipientTransaction',authToken,NewTransactionController.addRec
 router.get('/getRecipientTransactions',authToken,NewTransactionController.getRecipientData)
 router.get('/downloadRecipientData/:selectedTransctionId',authToken,NewTransactionController.downloadRData)
 router.get('/getRecipientTransaction/:id',authToken,NewTransactionController.getDataById)
+router.post('/addHash',authToken,NewTransactionController.addHash)
 
 
 module.exports = router

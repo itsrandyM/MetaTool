@@ -5,6 +5,7 @@ const Classification = require('../models/Classification')
 const RecipientsData = require('../models/RecipientsData')
 const User = require('../models/User')
 const Recipient = require('../models/Recipient')
+const Hash = require('../models/Hash')
 
 const fs = require('fs');
 const path = require('path');
@@ -143,8 +144,46 @@ const tokens = await Promise.all(
       console.error(error);
       res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
+  },
+  
+  addHash: async (req, res) => {
+  console.log("req:", req.body)
+    try {
+      // Extract data from request body
+      const loggedInUser = req.user;
+      const {TXHash, wallet } = req.body;
+  
+      // Validate input
+      if (!TXHash || !wallet) {
+        return res.status(400).json({ error: 'All fields are required' });
+      }
+  
+      // Check if the user exists
+      const user = await User.findById(loggedInUser);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Create a new hash document
+      const hash = new Hash({
+        User: loggedInUser,
+        TXHash,
+        Wallet: wallet
+      });
+  
+      // Save the hash document to the database
+      await hash.save();
+  
+      // Return success response
+      res.status(201).json({ success: true, hash });
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
   
+
   /*downloadRData: async (req, res) => {
     try {
       console.log('req:',req.body)

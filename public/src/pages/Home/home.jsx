@@ -1,57 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../../components/Table/table';
-import Navbar from '../../components/Navbar/Navbar' 
-import Footer from '../../components/Footer/footer';
-import Carousel from '../../components/carousel/carousel';
-import './style.css'
-//import { SERVER_URL } from '../../../constants';
+import Navbar from '../../components/Navbar/Navbar';
 
 const WelcomePage = () => {
-  const [userName, setUserName] = useState('');
-  const [position, setPosition] = useState('');
-  const [accountBalance, setAccountBalance] = useState(0);
-  // Simulate data retrieval from a server
-  useEffect(() => {
-    // You would replace these with actual API calls
-    /* const fetchData = async () => {
-      try {
-        const response = await fetch(`${SERVER_URL}/users/${id}`)
-        const data = await response.json()
-
-        if (!response.ok) {
-          throw new Error(data.message || 'Failed to fetch user data')}
-
-          const user = data.user 
-    
-    setUserName(user.username);
-    setPosition(user.roles[0]);
-    setAccountBalance(100000);} 
-    catch(error){
-      console.error('Error fetching data',error.message)
-    } */
-    
-    const storedUserName = localStorage.getItem('userName');
-    const storedPosition = localStorage.getItem('position')
-
-    setUserName(storedUserName || "User" );
-    setPosition(storedPosition || "Employee");
-    setAccountBalance(null);
-  }, []);
 
   return (
-    <div className='home-page'>
-      <Navbar/>
-      <div className='content'>
-      <h2>Welcome to Meta Tool</h2>
-      <p>{userName} : {position}</p>
-      <h3>Account Balance:</h3>
-      <h6 className='h6'>${accountBalance}</h6>
+    <>
+      <Navbar />
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '0 20px' }}>
+        <h2 style={{ color: 'black', fontSize: '20px', textAlign: 'center' }}>Welcome to Meta Tool</h2>
+        <div style={{ maxWidth: '100%', overflowX: 'auto', marginTop: '20px', width: '100%' }}>
+          <Table />
+        </div>
       </div>
-      <div>
-      <Table/>
-      </div>
-     <Footer/>
-    </div>
+    </>
+
+
   );
 }
 
