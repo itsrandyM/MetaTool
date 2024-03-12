@@ -7,12 +7,12 @@ const TokenTable = ({ recipients, selectedRecipientId, onClose, onRemoveToken, o
 
   const handleAddToken = (recipientId) => {
     const newToken = { name: newTokenName, amount: newTokenAmount };
-    onAddToken(recipientId, newToken); // Call the onAddToken function passed from Form2
+    onAddToken(recipientId, newToken);
     setShowOverlay(false);
     setNewTokenName('');
     setNewTokenAmount('');
   };
-
+  
   return (
     <div style={{ position: 'fixed', top: '0', left: '0', width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', zIndex: '9999' }}>
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: '#fff', padding: '20px', borderRadius: '10px', width: '80%', height: 'auto', maxHeight: '80%', overflowY: 'auto', maxWidth: '800px' }}>
@@ -60,7 +60,7 @@ const TokenTable = ({ recipients, selectedRecipientId, onClose, onRemoveToken, o
               <input type="text" id="newTokenAmount" value={newTokenAmount} onChange={(e) => setNewTokenAmount(e.target.value)} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-              <button onClick={() => handleAddToken(recipients[recipients.length - 1].id)} style={{ backgroundColor: '#6B8065', padding: '12px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', width: '45%',  }}>Add</button>
+              <button onClick={() => handleAddToken(selectedRecipientId)} style={{ backgroundColor: '#6B8065', padding: '12px', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', width: '45%',  }}>Add</button>
               <button onClick={() => setShowOverlay(false)} style={{ backgroundColor: '#ccc', padding: '12px', color: 'black', border: 'none', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease', width: '45%' }}>Cancel</button>
             </div>
           </div>
