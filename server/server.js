@@ -13,6 +13,7 @@ const TransactionRouter = require('./routes/NewT')
 const DataRouter = require('./routes/Transaction')
 const UserRouter = require('./routes/userRoutes')
 const AuthRouter = require('./routes/AuthRoutes')
+const CsvRouter = require('./routes/CsvTransaction')
 
 //app routes
 app.use(logger)
@@ -31,6 +32,7 @@ app.use('/api',TransactionRouter)
 app.use('/api',AddRecipient)
 app.use('/api',DataRouter)
 app.use('/users',UserRouter)
+app.use('/api',CsvRouter)
 
 
 //db connection
