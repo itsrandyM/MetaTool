@@ -2,7 +2,7 @@ const  mongoose = require ("mongoose")
 const User = require('./User')
 const Hash = require("./Hash")
 const Recipient = require("./Recipient")
-const RecipientsData = require('./RecipientsData')
+const RecipientData = require('./RecipientsData')
 const Currency = require("./Currency")
 
 const csvSchema = new mongoose.Schema({
@@ -22,6 +22,12 @@ const csvSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: Currency
     },
+  
+    RecipientData: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: RecipientData
+    },
+
     verified: {
         type: Boolean,
         default: true, 
@@ -33,3 +39,7 @@ const csvSchema = new mongoose.Schema({
 
 })
 module.exports = mongoose.model('Csv', csvSchema)
+  // exchangeRates: {
+    //     type:[exchangeRates],
+    //     ref: RecipientsData
+    // },

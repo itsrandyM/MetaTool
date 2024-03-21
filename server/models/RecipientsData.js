@@ -17,7 +17,21 @@ const exchangeRateSchema = new mongoose.Schema({
     },
     time: {
       type: String,
-    }
+    },
+    stablecoin:{
+      type:Boolean,
+      default:false
+    },
+    stablecoinUSD:{
+     type:Number
+    },
+    NCA:{
+      type:Boolean,
+      default:false
+    },
+    NCAUSD:{
+      type:Number
+     },
   });
 
 

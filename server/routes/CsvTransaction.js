@@ -1,20 +1,31 @@
 const express = require('express')
 const router = express.Router()
+const authToken = require('../middleware/AuthMW')
 const Csv = require('../models/csv'); // Assuming correct path to Csv model
 const Hash = require('../models/Hash'); // Assuming correct path to Hash model
 const Currency = require('../models/Currency')
+const RecipientData = require('../models/RecipientsData')
 // import User from '../models/User'
 // import Recipient from "./models/Recipient"
-// import RecipientsData from '../models/RecipientsData'
+
 // import { Router } from "express"
 
-router.get('/details', async (req, res, next) => {
+router.get('/details',authToken , async (req, res, next) => {
     try{
-        const user = req.user;
-        const verifiedData = await Csv.find({ User: user, verified: true})
+        const loggedInUser = req.user;
+        const verifiedData = await Csv.find({ User: loggedInUser, verified: true})
           .sort({ createdAt: 1 })
           .populate('Hash')
           .populate('Currency')
+        // .populate('RecipientData')
+        .populate({
+            path: 'RecipientData',
+            select: 'exchangeRates classification' ,
+            populate: { 
+                path: 'classification',
+                select: 'classificationName'
+              }
+          })
           .exec()
     
         // if (verifiedData.length === 0) {
@@ -28,7 +39,7 @@ router.get('/details', async (req, res, next) => {
     }
 })
 
-router.post('/addDetails', async (req, res, next) => {
+router.post('/addDetails',authToken , async (req, res, next) => {
     console.log('DATA:',req.body)
     try{
         const loggedInUser = req.user
@@ -46,11 +57,13 @@ router.post('/addDetails', async (req, res, next) => {
         const hash = new Hash({  User:loggedInUser, TXHash, Wallet})
         await hash.save()
         
+        const latestRecipientsData = await RecipientData.findOne({ User: loggedInUser }).sort({ createdAt: -1 }).exec()
       
         const CsvDetails = new Csv({
             User: loggedInUser,
             Currency: currency._id,
             Hash:hash._id,
+            RecipientData:  latestRecipientsData._id,
             verified:true
 
         })
