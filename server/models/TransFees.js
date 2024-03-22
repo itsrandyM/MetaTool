@@ -7,7 +7,7 @@ const feesSchema = new mongoose.Schema({
         ref: User
     },
    TxFee:{
-    type: String
+    type: Number
    },
    TxPerRecipient: {
     type:Number
