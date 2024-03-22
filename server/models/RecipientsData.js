@@ -25,6 +25,9 @@ const exchangeRateSchema = new mongoose.Schema({
     stablecoinUSD:{
      type:Number
     },
+    stablecoinSent:{
+      type: Number
+    },
     NCA:{
       type:Boolean,
       default:false
@@ -32,6 +35,9 @@ const exchangeRateSchema = new mongoose.Schema({
     NCAUSD:{
       type:Number
      },
+     NCASent:{
+      type: Number
+     }
   });
 
 
