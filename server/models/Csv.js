@@ -4,6 +4,7 @@ const Hash = require("./Hash")
 const Recipient = require("./Recipient")
 const RecipientData = require('./RecipientsData')
 const Currency = require("./Currency")
+const Fees = require('./TransFees')
 
 const csvSchema = new mongoose.Schema({
     User: {
@@ -27,7 +28,10 @@ const csvSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: RecipientData
     },
-
+    Fees: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Fees
+    },
     verified: {
         type: Boolean,
         default: true, 
