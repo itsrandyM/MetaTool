@@ -1,81 +1,75 @@
 const express = require('express')
 const router = express.Router()
 const authToken = require('../middleware/AuthMW')
-const Csv = require('../models/csv'); // Assuming correct path to Csv model
-const Hash = require('../models/Hash'); // Assuming correct path to Hash model
+const Csv = require('../models/Csv')
+const Hash = require('../models/Hash')
 const Currency = require('../models/Currency')
 const RecipientData = require('../models/RecipientsData')
-// import User from '../models/User'
-// import Recipient from "./models/Recipient"
 
-// import { Router } from "express"
-
-router.get('/details',authToken , async (req, res, next) => {
-    try{
+router.get('/details', authToken, async (req, res, next) => {
+    try {
         const loggedInUser = req.user;
-        const verifiedData = await Csv.find({ User: loggedInUser, verified: true})
-          .sort({ createdAt: 1 })
-          .populate('Hash')
-          .populate('Currency')
-        // .populate('RecipientData')
-        .populate({
-            path: 'RecipientData',
-            select: 'exchangeRates classification' ,
-            populate: { 
-                path: 'classification',
-                select: 'classificationName'
-              }
-          })
-          .exec()
-    
-        // if (verifiedData.length === 0) {
-        //   return res.status(404).json({ success: true, error: 'No verified data found', data: [] });
-        // }
-        res.status(200).json({success:true , verifiedData})
-    }
-    catch(error){
-        res.status(404).json({success:false , error, message:"Data Doesn't exist!" })
+        const verifiedData = await Csv.find({ User: loggedInUser, verified: true })
+            .sort({ createdAt: 1 })
+            .populate('Hash')
+            .populate('Currency')
+            .populate({
+                path: 'RecipientData',
+                select: 'exchangeRates classification',
+                populate: {
+                    path: 'classification',
+                    select: 'classificationName'
+                }
+            })
+            .exec();
 
+        res.status(200).json({ success: true, verifiedData });
+    } catch (error) {
+        res.status(404).json({ success: false, error, message: "Data Doesn't exist!" });
     }
-})
+});
 
-router.post('/addDetails',authToken , async (req, res, next) => {
-    console.log('DATA:',req.body)
-    try{
-        const loggedInUser = req.user
-        const { localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, TXHash, Wallet  } = req.body
+router.post('/addDetails', authToken, async (req, res, next) => {
+    console.log('DATA:', req.body);
+    try {
+        const loggedInUser = req.user;
+        const { localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, TXHash, Wallet, txFee } = req.body;
+
+        // Calculate the total transaction fee
+        const txFeeUsd = localCurrencyAmount * txFee;
 
         const currency = new Currency({
-            User:loggedInUser,
+            User: loggedInUser,
             localCurrencyName,
             localCurrencyAmount,
             localCurrencyUsdRate,
             localCurrencyUsdAmount: localCurrencyAmount * localCurrencyUsdRate
-          })
-          await currency.save()
-         
-        const hash = new Hash({  User:loggedInUser, TXHash, Wallet})
-        await hash.save()
-        
-        const latestRecipientsData = await RecipientData.findOne({ User: loggedInUser }).sort({ createdAt: -1 }).exec()
-      
+        });
+        await currency.save();
+
+        const hash = new Hash({ User: loggedInUser, TXHash, Wallet });
+        await hash.save();
+
+        const latestRecipientsData = await RecipientData.findOne({ User: loggedInUser }).sort({ createdAt: -1 }).exec();
+
         const CsvDetails = new Csv({
             User: loggedInUser,
             Currency: currency._id,
-            Hash:hash._id,
-            RecipientData:  latestRecipientsData._id,
-            verified:true
+            Hash: hash._id,
+            RecipientData: latestRecipientsData._id,
+            verified: true
+        });
+        await CsvDetails.save();
 
-        })
-        await CsvDetails.save()
+        const totalUsdValue = 
+            localCurrencyAmount + txFeeUsd + (
+            latestRecipientsData.NCA_sent * latestRecipientsData.NCA_USD);
 
-        res.status(201).json({success:true, data:CsvDetails })    
-
+        res.status(201).json({ success: true, data: CsvDetails, totalUsdValue });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: "Internal Server Error" });
     }
-    catch(error){
-        console.error(error)
-        res.status(500).json({success: false, error:"Internal Server Error"})
-    }
-})
+});
 
-module.exports = router
+module.exports = router;

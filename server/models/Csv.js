@@ -32,10 +32,6 @@ const csvSchema = new mongoose.Schema({
         type: Boolean,
         default: true, 
       }
-  
-    
-   
- 
 
 })
 module.exports = mongoose.model('Csv', csvSchema)
