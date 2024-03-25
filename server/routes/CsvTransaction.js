@@ -5,6 +5,11 @@ const Csv = require('../models/Csv')
 const Hash = require('../models/Hash')
 const Currency = require('../models/Currency')
 const RecipientData = require('../models/RecipientsData')
+const Fees = require('../models/TransFees')
+// import User from '../models/User'
+// import Recipient from "./models/Recipient"
+
+// import { Router } from "express"
 
 router.get('/details', authToken, async (req, res, next) => {
     try {
@@ -29,14 +34,11 @@ router.get('/details', authToken, async (req, res, next) => {
     }
 });
 
-router.post('/addDetails', authToken, async (req, res, next) => {
-    console.log('DATA:', req.body);
-    try {
-        const loggedInUser = req.user;
-        const { localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, TXHash, Wallet, txFee } = req.body;
-
-        // Calculate the total transaction fee
-        const txFeeUsd = localCurrencyAmount * txFee;
+router.post('/addDetails',authToken , async (req, res, next) => {
+    console.log('DATA:',req.body)
+    try{
+        const loggedInUser = req.user
+        const { localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, TXHash, Wallet,TxFee,TxPerRecipient,TxPerRecipientUSD  } = req.body
 
         const currency = new Currency({
             User: loggedInUser,
@@ -44,22 +46,32 @@ router.post('/addDetails', authToken, async (req, res, next) => {
             localCurrencyAmount,
             localCurrencyUsdRate,
             localCurrencyUsdAmount: localCurrencyAmount * localCurrencyUsdRate
-        });
-        await currency.save();
+          })
+          await currency.save()
+         
+        const hash = new Hash({  User:loggedInUser, TXHash, Wallet})
+        await hash.save()
+        
+        const latestRecipientsData = await RecipientData.findOne({ User: loggedInUser }).sort({ createdAt: -1 }).exec()
 
-        const hash = new Hash({ User: loggedInUser, TXHash, Wallet });
-        await hash.save();
-
-        const latestRecipientsData = await RecipientData.findOne({ User: loggedInUser }).sort({ createdAt: -1 }).exec();
-
+        const fees = new Fees({
+            User:loggedInUser,
+            TxFee,
+            TxPerRecipient,
+            TxPerRecipientUSD
+        })
+        await Fees.save()
+      
         const CsvDetails = new Csv({
             User: loggedInUser,
             Currency: currency._id,
-            Hash: hash._id,
-            RecipientData: latestRecipientsData._id,
-            verified: true
-        });
-        await CsvDetails.save();
+            Hash:hash._id,
+            RecipientData:  latestRecipientsData._id,
+            Fees: fees._id,
+            verified:true
+
+        })
+        await CsvDetails.save()
 
         const totalUsdValue = 
             localCurrencyAmount + txFeeUsd + (
