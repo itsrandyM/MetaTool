@@ -38,16 +38,19 @@ router.post('/addDetails',authToken , async (req, res, next) => {
     console.log('DATA:',req.body)
     try{
         const loggedInUser = req.user
-        const { localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, TXHash, Wallet,TxFee,TxPerRecipient,TxPerRecipientUSD  } = req.body
+        const {// localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, 
+            TXHash, Wallet,TxFee,
+            // TxPerRecipient,TxPerRecipientUSD 
+         } = req.body
 
-        const currency = new Currency({
-            User: loggedInUser,
-            localCurrencyName,
-            localCurrencyAmount,
-            localCurrencyUsdRate,
-            localCurrencyUsdAmount: localCurrencyAmount * localCurrencyUsdRate
-          })
-          await currency.save()
+        // const currency = new Currency({
+        //     User: loggedInUser,
+        //     localCurrencyName,
+        //     localCurrencyAmount,
+        //     localCurrencyUsdRate,
+        //     localCurrencyUsdAmount: localCurrencyAmount * localCurrencyUsdRate
+        //   })
+        //   await currency.save()
          
         const hash = new Hash({  User:loggedInUser, TXHash, Wallet})
         await hash.save()
@@ -57,14 +60,14 @@ router.post('/addDetails',authToken , async (req, res, next) => {
         const fees = new Fees({
             User:loggedInUser,
             TxFee,
-            TxPerRecipient,
-            TxPerRecipientUSD
+            // TxPerRecipient,
+            // TxPerRecipientUSD
         })
-        await Fees.save()
+        await fees.save()
       
         const CsvDetails = new Csv({
             User: loggedInUser,
-            Currency: currency._id,
+           // Currency: currency._id,
             Hash:hash._id,
             RecipientData:  latestRecipientsData._id,
             Fees: fees._id,
@@ -73,11 +76,13 @@ router.post('/addDetails',authToken , async (req, res, next) => {
         })
         await CsvDetails.save()
 
-        const totalUsdValue = 
-            localCurrencyAmount + txFeeUsd + (
-            latestRecipientsData.NCA_sent * latestRecipientsData.NCA_USD);
+        // const totalUsdValue = 
+        //     localCurrencyAmount + TxPerRecipientUSD + (
+        //     latestRecipientsData.NCA_sent * latestRecipientsData.NCA_USD);
 
-        res.status(201).json({ success: true, data: CsvDetails, totalUsdValue });
+        res.status(201).json({ success: true, data: CsvDetails, 
+        //    totalUsdValue
+         });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, error: "Internal Server Error" });

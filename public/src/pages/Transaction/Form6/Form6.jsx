@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+//import { SERVER_URL } from '../../../../constants/index.js';
+import axios from 'axios';
 
 const Form6 = () => {
   const [txHash, setTxHash] = useState('');
   const [address, setAddress] = useState('');
   const [txFee, setTxFee] = useState(0);
+  const token = localStorage.getItem('token');
+
 
   const handleTxHashChange = (e) => {
     setTxHash(e.target.value);
@@ -17,8 +21,30 @@ const Form6 = () => {
     setTxFee(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmitData = (e) => {
     e.preventDefault();
+    console.log('Sending Data to server')
+    const serverUrl =  `http://localhost:4000/api/addDetails`
+    const sendData = {
+      TXHash: txHash,
+      Wallet: address,
+      TxFee: txFee
+    }
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    axios
+    .post(serverUrl, sendData, axiosConfig)
+    .then((response) => {
+      console.log('Server response:', response.data)
+    })
+    .catch((error) => {
+      console.error('Error sending data to the server:', error)
+    });
+
     console.log('TxHash:', txHash);
     console.log('Address:', address);
     console.log('Transaction Fee:', txFee);
@@ -27,7 +53,7 @@ const Form6 = () => {
   return (
     <div style={{ backgroundColor: '#F2EEE3', padding: '20px', borderRadius: '10px', color: 'black', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', maxWidth: '400px', margin: 'auto' }}>
       <h2 style={{ marginBottom: '20px' }}>Transaction Details</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <form  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ marginBottom: '15px', width: '100%' }}>
           <label htmlFor="txHash" style={{ marginBottom: '5px', display: 'block', textAlign: 'left' }}>TxHash:</label>
           <input
@@ -58,7 +84,7 @@ const Form6 = () => {
             style={{ width: '90%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc' }}
           />
         </div>
-        <button type="submit" style={{ backgroundColor: '#6B8065', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}>Submit</button>
+        <button onClick={handleSubmitData} style={{ backgroundColor: '#6B8065', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}>Submit</button>
       </form>
     </div>
   );
