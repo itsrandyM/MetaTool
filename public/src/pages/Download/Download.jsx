@@ -64,23 +64,11 @@ const TransactionDetailsPage = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    navigate('/home');
+    navigate('/form6');
   };
 
-  const handleDownloadCSV = () => {
-    const csvData = convertToCSV(transactionDetails);
-    const blob = new Blob([csvData], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'transaction_details.csv';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
-    navigate('/home');
+  const handleContinue = () => {
+    navigate('/form6');
   };
 
   const convertToCSV = (data) => {
@@ -158,7 +146,7 @@ const TransactionDetailsPage = () => {
               Download JSON
             </button>
             <button
-              onClick={handleDownloadCSV}
+              onClick={handleContinue}
               className="download-button"
               style={{
                 backgroundColor: '#007bff',
@@ -171,7 +159,7 @@ const TransactionDetailsPage = () => {
                 transition: 'background-color 0.3s ease',
               }}
             >
-              Download CSV
+              Continue
             </button>
           </>
         )}
