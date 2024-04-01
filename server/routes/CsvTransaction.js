@@ -20,7 +20,7 @@ router.get('/details', authToken, async (req, res, next) => {
             .populate('Currency')
             .populate({
                 path: 'RecipientData',
-                select: 'exchangeRates classification',
+                select: 'exchangeRates classification recipients',
                 populate: {
                     path: 'classification',
                     select: 'classificationName'

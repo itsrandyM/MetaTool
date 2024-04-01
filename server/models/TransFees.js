@@ -14,6 +14,9 @@ const feesSchema = new mongoose.Schema({
    },
    TxPerRecipientUSD: {
     type:Number
+   },
+   tokenChain:{
+    type:String
    }
 
 })
