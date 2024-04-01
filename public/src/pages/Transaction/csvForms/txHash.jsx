@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Form6 = () => {
+const TransactionForm = () => {
   const [txHash, setTxHash] = useState('');
   const [address, setAddress] = useState('');
   const [txFee, setTxFee] = useState(0);
@@ -64,4 +64,4 @@ const Form6 = () => {
   );
 };
 
-export default Form6;
+export default TransactionForm;
