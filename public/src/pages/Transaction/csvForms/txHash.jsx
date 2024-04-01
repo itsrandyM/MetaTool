@@ -23,7 +23,7 @@ const TransactionForm = () => {
 
   const handleSubmitData = () => {
     console.log('Sending Data to server')
-    // e.preventDefault();
+    e.preventDefault();
     const serverUrl =  `http://localhost:4000/api/addDetails`
     const sendData = {
       TxHash: txHash,
@@ -53,7 +53,7 @@ const TransactionForm = () => {
   return (
     <div style={{ backgroundColor: '#F2EEE3', padding: '20px', borderRadius: '10px', color: 'black', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', maxWidth: '400px', margin: 'auto' }}>
       <h2 style={{ marginBottom: '20px' }}>Transaction Details</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ marginBottom: '15px', width: '100%' }}>
           <label htmlFor="txHash" style={{ marginBottom: '5px', display: 'block', textAlign: 'left' }}>TxHash:</label>
           <input
