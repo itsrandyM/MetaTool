@@ -60,7 +60,7 @@ router.post('/addDetails',authToken , async (req, res, next) => {
             TxPerRecipient,
             TxPerRecipientUSD
         })
-        await Fees.save()
+        await fees.save()
       
         const CsvDetails = new Csv({
             User: loggedInUser,
@@ -74,7 +74,7 @@ router.post('/addDetails',authToken , async (req, res, next) => {
         await CsvDetails.save()
 
         const totalUsdValue = 
-            localCurrencyAmount + txFeeUsd + (
+            localCurrencyAmount + TxPerRecipientUSD + (
             latestRecipientsData.NCA_sent * latestRecipientsData.NCA_USD);
 
         res.status(201).json({ success: true, data: CsvDetails, totalUsdValue });

@@ -21,7 +21,7 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
   };
 
   return (
-    <div className={`overlay ${isOpen ? 'open' : ''}`} style={{ width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className={`overlay ${isOpen ? 'open' : ''}`} style={{ width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999, display: 'flex', justifyContent: 'center', alignItems: 'center',position:'absolute' }}>
       <div className="overlay-content" style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', maxWidth: '400px', width: '100%'}}>
         <h2>Add Tokens</h2>
         {tokens.map((token, index) => (
