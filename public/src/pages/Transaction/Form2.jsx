@@ -7,6 +7,7 @@ import { useTokenContext } from '../../../constants/TokenContext';
 import { FaUserPlus, FaTrash } from 'react-icons/fa';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import TokenTable from '../Transaction/tokens';
+import PaymentForm from './csvForms/local';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -18,6 +19,8 @@ const Form2 = ({ onNextForm }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTokenTable, setShowTokenTable] = useState(false);
   const [selectedRecipientId, setSelectedRecipientId] = useState(0)
+  const [showCSVModal, setShowCSVModal] = useState(false);
+
 
   const toastOptions = {
     position: 'bottom-right',
@@ -51,14 +54,14 @@ const Form2 = ({ onNextForm }) => {
     }
   };
 
-   const handleRecipientChange = (id, field, value) => {
-     setRecipients((prevRecipients) =>
-       prevRecipients.map((recipient) =>
-         recipient.id === id ? { ...recipient, [field]: value } : recipient
-       )
-     );
-   };
-  
+  const handleRecipientChange = (id, field, value) => {
+    setRecipients((prevRecipients) =>
+      prevRecipients.map((recipient) =>
+        recipient.id === id ? { ...recipient, [field]: value } : recipient
+      )
+    );
+  };
+
 
   const handleTokenChange = (id, selectedTokens) => {
     setRecipients(prevRecipients => {
@@ -158,11 +161,11 @@ const Form2 = ({ onNextForm }) => {
       return updatedRecipients;
     });
   };
-  console.log('s:',selectedRecipientId)
+  console.log('s:', selectedRecipientId)
   return (
     <>
       {recipients.map((recipient, index) => (
-        <div key={index} style={{backgroundColor: '#F2EEE3', border: '1px solid #ccc', padding: '20px', borderRadius: '10px', marginBottom: '20px', color: 'black', width: '400px' }}>
+        <div key={index} style={{ backgroundColor: '#F2EEE3', border: '1px solid #ccc', padding: '20px', borderRadius: '10px', marginBottom: '20px', color: 'black', width: '400px' }}>
           <h2 style={{}}>Recipient {index + 1}</h2>
           <div className="form-group" style={{ textAlign: 'left', }}>
             <label htmlFor={`name-${recipient.id}`} style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px' }}>Name:</label>
@@ -213,6 +216,9 @@ const Form2 = ({ onNextForm }) => {
               )}
             </div>
           </div>
+          <div>
+              <button onClick={() => setShowCSVModal(true)} style={{ padding: '8px', backgroundColor: '#28a745', color: 'white', border: 'none', cursor: 'pointer'}}>CSV Details</button>
+          </div>
         </div>
       ))}
 
@@ -237,9 +243,10 @@ const Form2 = ({ onNextForm }) => {
           onClose={() => setShowOverlay(false)}
         />
       )}
+      {showCSVModal && <PaymentForm onClose={() => setShowCSVModal(false)} />}
       <ToastContainer />
       <div>
-        <button type="button" onClick={addRecipient} style={{ width: '100%', border: '1px dotted black', padding: '10px', borderRadius: '5px', marginBottom: '10px'}}>
+        <button type="button" onClick={addRecipient} style={{ width: '100%', border: '1px dotted black', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}>
           ADD RECIPIENT
         </button>
         <div style={{ textAlign: 'left' }}>
