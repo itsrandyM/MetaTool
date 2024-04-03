@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CSVDetailsModal = ({ onClose }) => {
+const CSVDetailsModal = ({ onClose, onSubmit }) => {
   const [currencyName, setCurrencyName] = useState('');
   const [amount, setAmount] = useState(0);
   const [rate, setRate] = useState(0);
@@ -20,13 +20,12 @@ const CSVDetailsModal = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Currency Name:', currencyName);
-    console.log('Amount:', amount);
-    console.log('Local USD:', localUSD);
-    console.log('Rate in USD:', rate);
-    setCurrencyName('');
-    setAmount(0);
-    setRate(0);
+    const formData = {
+      currencyName: currencyName,
+      amount: amount,
+      rate: rate
+    };
+    onSubmit(formData); // Pass CSV details to the onSubmit function
     onClose(); // Close the overlay
   };
 

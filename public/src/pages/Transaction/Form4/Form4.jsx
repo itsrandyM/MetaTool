@@ -6,24 +6,19 @@ import { useTokenContext } from '../../../../constants/TokenContext';
 import SuccessPage from '../Success/Success.jsx';
 import './Form4.css';
 
-const Form4 = ({formData}) => {
+const Form4 = ({ formData, csvDetails }) => {
   console.log('Received formData:', formData);
-  
+  console.log('Received csvDetails:', csvDetails);
 
   const { updateTransactions } = useAppContext();
   const [successData, setSuccessData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const { setTokens } = useTokenContext();
-  
-
   const token = localStorage.getItem('token');
-
-  
-  
 
   const handleSendData = () => {
     console.log('Sending data to the server...');
-    console.log('FormData to be sent:', formData); // Log formData before sending
+    console.log('FormData to be sent:', formData); 
 
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
 
@@ -35,10 +30,9 @@ const Form4 = ({formData}) => {
       // Add other properties as needed
     }));
 
-   
     const requestData = {
-      transactionName:formData.form2Data.name,
-      transactionDescription:formData.form2Data.description,
+      transactionName: formData.form2Data.name,
+      transactionDescription: formData.form2Data.description,
       recipients: recipientsData,
       tokenName: formData.form3Data.tokens.map((token) => ({
         name: token.name,
@@ -47,8 +41,9 @@ const Form4 = ({formData}) => {
       amount: formData.form5Data.amount,
       classificationName: formData.form5Data.classification,
       descriptionName: formData.form5Data.description,
-      exchangeRates:formData.form4Data.exchangeRate,
-      };
+      exchangeRates: formData.form4Data.exchangeRate,
+      csvDetails: csvDetails,
+    };
 
     const axiosConfig = {
       headers: {
@@ -74,21 +69,7 @@ const Form4 = ({formData}) => {
   return (
     <div className="form_container">
       <form className="summarized">
-        {/* <h2 className="sum_h">Recipient Details</h2> */}
-        {/* <div className="rec_d">
-          <p className="data">Name: {formData.form3Data.name}</p>
-        </div> */}
-        <br />
-        <div className="rec_d2">
-          <h2 className="sum_h">Transaction Details</h2>
-          {/* {formData.form3Data.tokens.map((token, index) => (
-            <p key={index} className="data">
-             Token: {token.name}
-           </p>
-         ))} */}
-          <p className="data2">Classification: {formData.form5Data.classification}</p>
-          <p className="data3">Description: {formData.form5Data.description}</p>
-        </div>
+        {/* Render form data */}
       </form>
       <button onClick={handleSendData} className="authentic">
         Save and submit
@@ -99,4 +80,3 @@ const Form4 = ({formData}) => {
 };
 
 export default Form4;
-
