@@ -6,6 +6,7 @@ const RecipientsData = require('../models/RecipientsData')
 const User = require('../models/User')
 const Recipient = require('../models/Recipient')
 const Hash = require('../models/Hash')
+const Crypto = require('../models/Crypto')
 
 const fs = require('fs');
 const path = require('path');
@@ -196,6 +197,22 @@ catch(error){
 console.error(error)
 res.status(500).json({ error: 'Internal Server Error' });
 }
+  },
+  addCrypto: async(req,res) => {
+    try {
+      const newCrypto = await Crypto.create(req.body);
+      res.status(201).json(newCrypto);
+  } catch (err) {
+      res.status(400).json({ message: err.message });
+  }
+  }, 
+  getCrypto: async(req, res) => {
+    try {
+      const cryptos = await Crypto.find();
+      res.status(200).json(cryptos);
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+  }
   }
   
 

@@ -11,7 +11,7 @@ const Fees = require('../models/TransFees')
 
 // import { Router } from "express"
 
-router.get('/details', authToken, async (req, res, next) => {
+router.get('/details',  async (req, res, next) => {
     try {
         const loggedInUser = req.user;
         const verifiedData = await Csv.find({ User: loggedInUser, verified: true })
@@ -20,7 +20,7 @@ router.get('/details', authToken, async (req, res, next) => {
             .populate('Currency')
             .populate({
                 path: 'RecipientData',
-                select: 'exchangeRates classification recipients',
+                select: 'exchangeRates classification',
                 populate: {
                     path: 'classification',
                     select: 'classificationName'
@@ -38,19 +38,19 @@ router.post('/addDetails',authToken , async (req, res, next) => {
     console.log('DATA:',req.body)
     try{
         const loggedInUser = req.user
-        const {// localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, 
+        const {localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, 
             TXHash, Wallet,TxFee,
             // TxPerRecipient,TxPerRecipientUSD 
          } = req.body
 
-        // const currency = new Currency({
-        //     User: loggedInUser,
-        //     localCurrencyName,
-        //     localCurrencyAmount,
-        //     localCurrencyUsdRate,
-        //     localCurrencyUsdAmount: localCurrencyAmount * localCurrencyUsdRate
-        //   })
-        //   await currency.save()
+        const currency = new Currency({
+            User: loggedInUser,
+            localCurrencyName,
+            localCurrencyAmount,
+            localCurrencyUsdRate,
+            localCurrencyUsdAmount: localCurrencyAmount * localCurrencyUsdRate
+          })
+          await currency.save()
          
         const hash = new Hash({  User:loggedInUser, TXHash, Wallet})
         await hash.save()

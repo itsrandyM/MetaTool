@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 //import { SERVER_URL } from '../../../../constants/index.js';
 import axios from 'axios';
 
-const Form6 = () => {
+const Form6 = ({formData}) => {
+  console.log('Received formData:', formData);
   const [txHash, setTxHash] = useState('');
   const [address, setAddress] = useState('');
   const [txFee, setTxFee] = useState(0);
@@ -26,6 +27,9 @@ const Form6 = () => {
     console.log('Sending Data to server')
     const serverUrl =  `http://localhost:4000/api/addDetails`
     const sendData = {
+      localCurrencyName:formData.form3Data.csvDetails.currencyName, 
+      localCurrencyAmount:formData.form3Data.csvDetails.amount, 
+      localCurrencyUsdRate:formData.form3Data.csvDetails.rate, 
       TXHash: txHash,
       Wallet: address,
       TxFee: txFee

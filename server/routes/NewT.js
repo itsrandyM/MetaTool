@@ -9,6 +9,10 @@ router.get('/downloadRecipientData/:selectedTransctionId',authToken,NewTransacti
 router.get('/getRecipientTransaction/:id',authToken,NewTransactionController.getDataById)
 router.post('/addHash',authToken,NewTransactionController.addHash)
 router.post('/LocalCurrency',authToken,NewTransactionController.LocalCurrency)
+router.post('/addCryptos',NewTransactionController.addCrypto)
+router.get('/getCryptos',authToken,NewTransactionController.getCrypto)
 
 
 module.exports = router
+
+
