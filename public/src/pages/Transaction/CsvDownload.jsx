@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
 import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
-import axios from 'axios';
+// import axios from 'axios';
 import animationData from '../../../public/load.json';
+import Papa from 'papaparse';
 
 const defaultOptions = {
   loop: true,
@@ -15,6 +16,12 @@ const CsvDetails = () => {
   const navigate = useNavigate();
   const [csvfileDetails, setCsvfileDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null)
+
+
+useEffect(() => {
+downloadCsv()
+},[])
 
   async function downloadCsv() {
     try {
@@ -23,6 +30,9 @@ const CsvDetails = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
       const data = await response.json();
       console.log(data)
   
@@ -39,27 +49,30 @@ const CsvDetails = () => {
         link.click();
   
         URL.revokeObjectURL(csvUrl); 
+        setLoading(false)
       } else {
         console.error('Could not receive data from databse. Please try again', error)
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
       
+      console.error('Error fetching data:', error);
+      setError(error.message || 'An error occurred while downloading CSV.');
+      setLoading(false);      
     }
   }
 
 
 
-  const convertToCSV = (data) => {
-    // Convert transaction details to CSV format
-    const header = 'Recipient address, Amount';
-    const rows = data.map((transaction) => {
-      const recipient = transaction.recipients['0'];
-      const amount = transaction.token['0'].tokenName['0'].amount;
-      return `${recipient.wallet},${amount}`;
-    });
-    return [header, ...rows].join('\n');
-  };
+  // const convertToCSV = (data) => {
+  //   // Convert transaction details to CSV format
+  //   const header = 'Recipient address, Amount';
+  //   const rows = data.map((transaction) => {
+  //     const recipient = transaction.recipients['0'];
+  //     const amount = transaction.token['0'].tokenName['0'].amount;
+  //     return `${recipient.wallet},${amount}`;
+  //   });
+  //   return [header, ...rows].join('\n');
+  // };
 
 
   function processDataForCsv(verifiedData) {
@@ -71,7 +84,7 @@ const CsvDetails = () => {
     });
   
     // Define CSV headers (column names) including the current date and Recipient
-    const headers = ['Date', 'Recipient', 'Classification', 'Base Currency', 'Quote Currency', 'Rate',  'Wallet', 'Currency Name', 'Currency Amount', 'USD Rate', 'USD Amount'];
+    const headers = ['Date', 'From wallet', 'To whom', 'Local currency', 'Local amount', 'Local-USD', 'USD to be sent', 'Classification', 'Tx ID'];
   
     let rows = [];
     verifiedData.forEach(item => {
@@ -79,19 +92,26 @@ const CsvDetails = () => {
   
       recipients.forEach(recipient => {
         const exchangeRate = item.exchangeRates && item.exchangeRates[0] ? item.exchangeRates[0] : {};
+        const hash = item.Hash ? item.Hash.TXHash || '' : '';
+        const wallet = item.Hash ? item.Hash.Wallet || '' : '';
+        // const currencyName = item.Currency ? item.Currency.localCurrencyName || '' : '';
+        // const currencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '' : '';
+        // const usdRate = item.Currency ? item.Currency.localCurrencyUsdRate || '' : '';
+        // const usdAmount = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : '';
+        
   
         const rowData = [
           currentDate,
+          wallet,
           recipient.name || '',
-          item.classification || '',
-          exchangeRate.base_currency || '',
-          exchangeRate.quote_currency || '',
-          exchangeRate.rate || '',
-          recipient.wallet || '',
           item.Currency ? item.Currency.localCurrencyName || '' : '',
           item.Currency ? item.Currency.localCurrencyAmount || '' : '',
           item.Currency ? item.Currency.localCurrencyUsdRate || '' : '',
-          item.Currency ? item.Currency.localCurrencyUsdAmount || '' : ''
+          item.Currency ? item.Currency.localCurrencyUsdAmount || '' : '',
+          item.classification || '',
+          exchangeRate.base_currency || '',
+          exchangeRate.rate || '',
+          hash
         ];
   
         rows.push(rowData);
@@ -101,31 +121,7 @@ const CsvDetails = () => {
     const csvData = [headers, ...rows];
     return csvData;
   }
-    // const headers = ['Recipient Address']
-    // const csvRows = [];
-    // const recipientData = verifiedData.RecipientData; // Access RecipientData
-  
-    // // Extract data excluding recipients array
-    // const baseData = {
-    //   ...verifiedData, // Spread operator for all verifiedData properties
-    //   RecipientData: { // Exclude recipients and keep other RecipientData fields
-    //     exchangeRates: recipientData.exchangeRates,
-    //     classification: recipientData.classification,
-    //     // ... other fields from RecipientData (excluding recipients)
-    //   },
-    // };
-  
-    // // Loop through each recipient
-    // recipientData.recipients.forEach(recipient => {
-    //   const rowData = {
-    //     ...baseData, // Include base data for all recipients
-    //     // Add recipient specific details here (e.g., recipient.name, recipient.address)
-    //   };
-    //   csvRows.push(rowData);
-    // });
-  
-    // return csvRows;
-  }
+
 
   const renderProperty = (property) => {
     if (typeof property === 'object') {
@@ -176,6 +172,6 @@ const CsvDetails = () => {
       </div>
     </div>
   );
-;
+            };
 
 export default CsvDetails;

@@ -39,8 +39,8 @@ router.post('/addDetails',authToken , async (req, res, next) => {
     try{
         const loggedInUser = req.user
         const {localCurrencyName, localCurrencyAmount, localCurrencyUsdRate, 
-            TXHash, Wallet,TxFee,
-            // TxPerRecipient,TxPerRecipientUSD 
+            TXHash, Wallet,TxFee,TxPerRecipient,
+            // TxPerRecipientUSD 
          } = req.body
 
         const currency = new Currency({
@@ -60,7 +60,7 @@ router.post('/addDetails',authToken , async (req, res, next) => {
         const fees = new Fees({
             User:loggedInUser,
             TxFee,
-            // TxPerRecipient,
+            TxPerRecipient,
             // TxPerRecipientUSD
         })
         await fees.save()

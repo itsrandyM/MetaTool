@@ -32,7 +32,8 @@ const Form6 = ({formData}) => {
       localCurrencyUsdRate:formData.form3Data.csvDetails.rate, 
       TXHash: txHash,
       Wallet: address,
-      TxFee: txFee
+      TxFee: txFee,
+      TxPerRecipient: txFee / formData.form3Data.recipients.length
     }
     const axiosConfig = {
       headers: {
