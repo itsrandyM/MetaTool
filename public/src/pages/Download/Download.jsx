@@ -64,24 +64,21 @@ const TransactionDetailsPage = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    navigate('/form6');
   };
 
   const handleContinue = () => {
-    navigate('/form6');
+    const csvData = convertToCSV(transactionDetails);
+    const jsonData = JSON.stringify(transactionDetails, null, 2);
+  
+    const formData = {
+      transactionDetails: transactionDetails,
+      csvData: csvData,
+      jsonData: jsonData
+    };
+  
+    navigate('/form6', { state: formData });
   };
-
-  const convertToCSV = (data) => {
-    // Convert transaction details to CSV format
-    const header = 'Recipient address, Amount';
-    const rows = data.map((transaction) => {
-      const recipient = transaction.recipients['0'];
-      const amount = transaction.token['0'].tokenName['0'].amount;
-      return `${recipient.wallet},${amount}`;
-    });
-    return [header, ...rows].join('\n');
-  };
-
+  
   const renderProperty = (property) => {
     if (typeof property === 'object') {
       return JSON.stringify(property);

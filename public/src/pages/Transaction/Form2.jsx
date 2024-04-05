@@ -7,7 +7,7 @@ import { useTokenContext } from '../../../constants/TokenContext';
 import { FaUserPlus, FaTrash } from 'react-icons/fa';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import TokenTable from '../Transaction/tokens';
-import PaymentForm from './csvForms/local';
+import CSVDetailsModal from './csvForms/local';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -20,6 +20,10 @@ const Form2 = ({ onNextForm }) => {
   const [showTokenTable, setShowTokenTable] = useState(false);
   const [selectedRecipientId, setSelectedRecipientId] = useState(0)
   const [showCSVModal, setShowCSVModal] = useState(false);
+  const [csvCurrencyName, setCsvCurrencyName] = useState('');
+  const [csvAmount, setCsvAmount] = useState(0);
+  const [csvRate, setCsvRate] = useState(0);
+  
 
 
   const toastOptions = {
@@ -42,11 +46,16 @@ const Form2 = ({ onNextForm }) => {
     if (recipients.every((recipient) => isNameValid.test(recipient.name) && isWalletValid.test(recipient.wallet))) {
       console.log('Form2 Data:', recipients);
       const formData = {
-        recipients: recipients, // Existing recipient data
+        recipients: recipients, 
         tokens: initialTokens.map((token) => ({
-          name: token.name, // Token name
-          amount: token.amount, // Token amount
-        })),
+          name: token.name, 
+          amount: token.amount, 
+        })), 
+        csvDetails: {
+          currencyName: csvCurrencyName, 
+          amount: csvAmount, 
+          rate: csvRate, 
+        }
       };
       onNextForm(5, formData);
     } else {
@@ -162,6 +171,11 @@ const Form2 = ({ onNextForm }) => {
     });
   };
   console.log('s:', selectedRecipientId)
+
+  const handleCSVSubmit = (formData) => {
+    // Process formData as needed
+    console.log('CSV Details:', formData);
+  };
   return (
     <>
       {recipients.map((recipient, index) => (
@@ -243,7 +257,12 @@ const Form2 = ({ onNextForm }) => {
           onClose={() => setShowOverlay(false)}
         />
       )}
-      {showCSVModal && <PaymentForm onClose={() => setShowCSVModal(false)} />}
+      {showCSVModal && <CSVDetailsModal onClose={() => setShowCSVModal(false)} onSubmit={(formData) => {
+        setCsvCurrencyName(formData.currencyName);
+        setCsvAmount(formData.amount);
+        setCsvRate(formData.rate);
+        setShowCSVModal(false);
+      }} />}
       <ToastContainer />
       <div>
         <button type="button" onClick={addRecipient} style={{ width: '100%', border: '1px dotted black', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}>
