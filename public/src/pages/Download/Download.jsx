@@ -65,14 +65,25 @@ const TransactionDetailsPage = () => {
     URL.revokeObjectURL(url);
 
   };
+  const convertToCSV = (data) => {
+    // Convert transaction details to CSV format
+    const header = 'Recipient address, Amount';
+    const rows = data.map((transaction) => {
+      const recipient = transaction.recipients['0']; 
+  
+      const amount = transaction.token['0'].tokenName['0'].amount; // Potential source of error
+      return `${recipient.wallet},${amount}`;
+    });
+    return [header, ...rows].join('\n');
+  };
 
   const handleContinue = () => {
-    const csvData = convertToCSV(transactionDetails);
+    // const csvData = convertToCSV(transactionDetails);
     const jsonData = JSON.stringify(transactionDetails, null, 2);
   
     const formData = {
       transactionDetails: transactionDetails,
-      csvData: csvData,
+      // csvData: csvData,
       jsonData: jsonData
     };
   
