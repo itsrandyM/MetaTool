@@ -78,17 +78,17 @@ const TransactionDetailsPage = () => {
   };
 
   const handleContinue = () => {
-    // const csvData = convertToCSV(transactionDetails);
     const jsonData = JSON.stringify(transactionDetails, null, 2);
   
     const formData = {
       transactionDetails: transactionDetails,
-      // csvData: csvData,
       jsonData: jsonData
     };
   
-    navigate('/form6', { state: formData });
+    navigate('/form6', { state: { formData } }); // Ensure formData is wrapped inside an object
   };
+  
+  
   
   const renderProperty = (property) => {
     if (typeof property === 'object') {
