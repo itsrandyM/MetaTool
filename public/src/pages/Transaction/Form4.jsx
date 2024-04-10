@@ -11,6 +11,7 @@ const Form4 = ({ formData }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const { setTokens } = useTokenContext();
   const token = localStorage.getItem('token');
+  console.log('Data:',formData)
 
   const handleSendData = () => {
     const serverUrl = `${SERVER_URL}/api/addRecipientTransaction`;
