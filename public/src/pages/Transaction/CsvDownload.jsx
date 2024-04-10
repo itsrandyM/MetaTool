@@ -96,7 +96,7 @@ const CsvDetails = () => {
     verifiedData.forEach(item => {
       const hash = item.Hash ? item.Hash.TXHash || '' : '';
       const wallet = item.Hash ? item.Hash.Wallet || '' : '';
-      const recipientName = item.RecipientData && item.RecipientData.name ? item.RecipientData.name : ''; // Check if RecipientData and name exist
+      const recipientName = item.RecipientData ? item.RecipientData.recipients.name || '' : '';
       const txFee = item.Fees ? item.Fees.TxFee || '' : '';
       const txFeePerRecipient = item.Fees ? item.Fees.TxPerRecipient || '':''
       const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '': ''

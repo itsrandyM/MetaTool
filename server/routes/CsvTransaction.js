@@ -22,11 +22,21 @@ router.get('/details',authToken ,  async (req, res, next) => {
             .populate('Fees')
             .populate({
                 path: 'RecipientData',
-                select: 'exchangeRates classification',
+                select: 'exchangeRates classification ',
                 populate: {
                     path: 'classification',
                     select: 'classificationName'
-                }
+                },
+                
+            })
+            .populate({
+                path: 'RecipientData',
+                select: 'exchangeRates recipients ',
+                populate: {
+                    path: 'recipients',
+                    select: 'name'
+                },
+                
             })
             .exec();
 
