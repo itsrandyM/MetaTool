@@ -35,7 +35,7 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
         console.error('Error fetching crypto data:', error);
         setError(error.message || 'Failed to fetch data'); // Set a generic error message
       } finally {
-        setIsLoading(false);
+setIsLoading(false);
       }
     };
     
