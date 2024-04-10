@@ -37,9 +37,9 @@ const csvSchema = new mongoose.Schema({
         default: true, 
       }
 
-})
+},
+{
+    timestamps: true
+}
+)
 module.exports = mongoose.model('Csv', csvSchema)
-  // exchangeRates: {
-    //     type:[exchangeRates],
-    //     ref: RecipientsData
-    // },
