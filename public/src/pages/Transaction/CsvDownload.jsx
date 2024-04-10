@@ -32,14 +32,14 @@ const CsvDetails = () => {
       }
       const data = await response.json();
       console.log(data);
-
+  
       if (data.success) {
         const csvData = processDataForCsv(data.verifiedData);
         const csvString = Papa.unparse(csvData);
-
-        const blob = new Blob([csvData], { type: 'text/csv' });
+  
+        const blob = new Blob([csvString], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
-    
+  
         const link = document.createElement('a');
         link.href = url;
         link.download = 'transaction_details.csv';
@@ -47,7 +47,7 @@ const CsvDetails = () => {
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-    
+  
         setLoading(false);
       } else {
         console.error('Could not receive data from database. Please try again', error);
@@ -58,91 +58,59 @@ const CsvDetails = () => {
       setLoading(false);
     }
   }
+  
 
   function processDataForCsv(verifiedData) {
-  const currentDate = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-
-  const headers = [
-    'Date',
-    'From wallet',
-    'To whom',
-    'Local currency',
-    'Local amount',
-    'Local-USD',
-    'USD to be sent',
-    'Stablecoin',
-    'Stablecoin-USD',
-    'USD-Stablecoin',
-    'NCA',
-    'NCA-USD',
-    'USD-NCA',
-    'Stablecoin sent',
-    'NCA sent',
-    'Classification',
-    'Tx Fee',
-    'Tx ID',
-  ];
-
-  let rows = [];
-
-  // Assuming verifiedData is an array of objects
-  verifiedData.forEach(item => {
-    const recipients = item.recipients || [];
-    const exchangeRates = item.exchangeRates || [];
-
-    recipients.forEach(recipient => {
-      exchangeRates.forEach(exchangeRate => {
-        const isStablecoin = exchangeRate.stablecoin === 'true';
-        const isNCA = exchangeRate.NCA === 'true';
-        const hash = item.Hash ? item.Hash.TXHash || '' : '';
-        const wallet = item.Hash ? item.Hash.Wallet || '' : '';
-        const stablecoinUSDValue = isStablecoin ? parseFloat(exchangeRate.rate) : null;
-        const ncaUSDValue = isNCA ? parseFloat(exchangeRate.rate) : null;
-
-        const rowData = [
-          currentDate,
-          wallet,
-          recipient.name || '',
-          item.Currency ? item.Currency.localCurrencyName || '' : '',
-          item.Currency ? item.Currency.localCurrencyAmount || '' : '',
-          item.Currency ? item.Currency.localCurrencyUsdRate || '' : '',
-          '', // Placeholder for USD to be sent (filled later)
-          isStablecoin ? exchangeRate.base_currency || '' : '',
-          isStablecoin ? exchangeRate.rate || '' : '',
-          isStablecoin ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : '',
-          isNCA ? exchangeRate.base_currency || '' : '',
-          isNCA ? exchangeRate.rate || '' : '',
-          isNCA ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : '',
-          isStablecoin && stablecoinUSDValue !== null ? (parseFloat(exchangeRate.rate) * stablecoinUSDValue).toFixed(4) : '',
-          isNCA && ncaUSDValue !== null ? (parseFloat(exchangeRate.rate) * ncaUSDValue).toFixed(4) : '',
-          item.classification ? item.classification.classificationName || '' : '',
-          item.Fees ? item.Fees.TxFee || '' : '',
-          hash,
-        ];
-
-        rows.push(rowData);
-      });
+    const currentDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
     });
-  });
-
-  // Loop again to calculate "USD to be sent" based on exchange rates
-  rows.forEach((row, index) => {
-    const recipientIndex = verifiedData.findIndex(item => item.recipients && item.recipients.find(r => r.name === row[2]));
-    const exchangeRate = verifiedData[recipientIndex]?.exchangeRates?.find(
-      r => r.base_currency === row[7] || r.base_currency === row[10]
-    );
-    if (exchangeRate) {
-      row[6] = (parseFloat(exchangeRate.rate) * parseFloat(row[4])).toFixed(4);
-    }
-  });
-
-  const csvData = [headers, ...rows];
-  return csvData;
-}
+  
+    const headers = [
+      'Date',
+      'From wallet',
+      'To whom',
+      'Classification',
+      'Tx Fee',
+      'Tx ID',
+      'Stablecoin',
+      'NCA'
+    ];
+  
+    let rows = [];
+  
+    verifiedData.forEach(item => {
+      const hash = item.Hash ? item.Hash.TXHash || '' : '';
+      const wallet = item.Hash ? item.Hash.Wallet || '' : '';
+      const recipientName = item.RecipientData && item.RecipientData.name ? item.RecipientData.name : ''; // Check if RecipientData and name exist
+      const txFee = item.Fees ? item.Fees.TxFee || '' : '';
+  
+      const exchangeRate = item.RecipientData && item.RecipientData.exchangeRates.length > 0 ? item.RecipientData.exchangeRates[0] : null;
+      const stablecoin = exchangeRate ? exchangeRate.stablecoin || '' : '';
+      const nca = exchangeRate ? exchangeRate.NCA || '' : '';
+      const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
+  
+      const rowData = [
+        currentDate,
+        wallet,
+        recipientName,
+        classification,
+        txFee,
+        hash,
+        stablecoin,
+        nca
+      ];
+  
+      rows.push(rowData);
+    });
+  
+    return [headers, ...rows]; 
+  }
+  
+  
+  
+  
 
   
   
