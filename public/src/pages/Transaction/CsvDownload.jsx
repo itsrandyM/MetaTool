@@ -62,90 +62,89 @@ const CsvDetails = () => {
 
   function processDataForCsv(verifiedData) {
     const currentDate = new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
     });
-  
+
     const headers = [
-      'Date',
-      'From wallet',
-      'To whom',
-      'Local currency',
-      'Local amount',
-      'Local-USD',
-      'USD to be sent',
-      'Stablecoin',
-      'Stablecoin-USD',
-      'USD-Stablecoin',
-      'NCA',
-      'NCA-USD',
-      'USD-NCA',
-      'Stablecoin sent',
-      'NCA sent',
-      'Tx fee',
-      'Tx fee/tx',
-      'Tx fee/tx(USD)',
-      'Classification',
-      'Tx ID',
-      
+        'Date',
+        'From wallet',
+        'To whom',
+        'Local currency',
+        'Local amount',
+        'Local-USD',
+        'USD to be sent',
+        'Stablecoin',
+        'Stablecoin-USD',
+        'USD-Stablecoin',
+        'NCA',
+        'NCA-USD',
+        'USD-NCA',
+        'Stablecoin sent',
+        'NCA sent',
+        'Tx fee',
+        'Tx fee/tx',
+        'Tx fee/tx(USD)',
+        'Classification',
+        'Tx ID',
     ];
-  
+
     let rows = [];
-  
+
     verifiedData.forEach(item => {
-      const hash = item.Hash ? item.Hash.TXHash || '' : '';
-      const wallet = item.Hash ? item.Hash.Wallet || '' : '';
-      const recipientName = item.RecipientData ? item.RecipientData.recipients.name || '' : '';
-      const txFee = item.Fees ? item.Fees.TxFee || '' : '';
-      const txFeePerRecipient = item.Fees ? item.Fees.TxPerRecipient || '':''
-      const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '': ''
-      const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '':'';
-      const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '':''
-      const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '':""
-      const exchangeRate = item.RecipientData && item.RecipientData.exchangeRates.length > 0 ? item.RecipientData.exchangeRates[0] : null;
-      const isNCA = exchangeRate.NCA === 'true';
-      const nca = isNCA ? exchangeRate.base_currency || '' : '';
-      const NcaUsd = isNCA ? exchangeRate.rate || '':''
-      const UsdNca = isNCA ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : '' 
-      const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
-      const isStablecoin = exchangeRate.stablecoin === 'true'
-      const stablecoin = isStablecoin ? exchangeRate.base_currency || '' : ''
-      const stablecoinUSD = isStablecoin ? exchangeRate.rate || '':''
-      const UsdStablecoin = isStablecoin ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : ''
-      const TotalSC = stablecoinUSD * totalUSD
-      const TotalNCA =NcaUsd * totalUSD
-      const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd
-  
-      const rowData = [
-        currentDate,
-        wallet,
-        recipientName,
-        CurrencyName,
-        CurrencyAmount,
-        currencyUsd,
-        totalUSD,
-        stablecoin,
-        stablecoinUSD,
-        UsdStablecoin,
-        nca,
-        NcaUsd,
-        UsdNca,
-        TotalSC,
-        TotalNCA,
-        txFee,
-        txFeePerRecipient,
-        txFeePerRecipientUsd,
-        classification,
-        hash,
-        
-      ];
-  
-      rows.push(rowData);
+        const hash = item.Hash ? item.Hash.TXHash || '' : '';
+        const wallet = item.Hash ? item.Hash.Wallet || '' : '';
+        const recipientName = item.RecipientData && item.RecipientData.name ? item.RecipientData.name : ''; // Check if RecipientData and name exist
+        const txFee = item.Fees ? item.Fees.TxFee || '' : '';
+        const txFeePerRecipient = item.Fees ? item.Fees.TxPerRecipient || '' : '';
+        const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '' : ''
+        const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '' : '';
+        const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '' : ''
+        const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : ""
+        const exchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true);
+        const isNCA = exchangeRate && exchangeRate.NCA;
+        const nca = isNCA ? exchangeRate.base_currency || '' : '';
+        const NcaUsd = isNCA ? exchangeRate.rate || '' : '';
+        const UsdNca = isNCA ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : '';
+        const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
+        const isStablecoin = exchangeRate && exchangeRate.stablecoin;
+        const stablecoin = isStablecoin ? exchangeRate.base_currency || '' : ''
+        const stablecoinUSD = isStablecoin ? exchangeRate.rate || '' : '';
+        const UsdStablecoin = isStablecoin ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : '';
+        const TotalSC = stablecoinUSD * totalUSD
+        const TotalNCA = NcaUsd * totalUSD
+        const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd
+
+        const rowData = [
+            currentDate,
+            wallet,
+            recipientName,
+            CurrencyName,
+            CurrencyAmount,
+            currencyUsd,
+            totalUSD,
+            stablecoin,
+            stablecoinUSD,
+            UsdStablecoin,
+            nca,
+            NcaUsd,
+            UsdNca,
+            TotalSC,
+            TotalNCA,
+            txFee,
+            txFeePerRecipient,
+            txFeePerRecipientUsd,
+            classification,
+            hash,
+        ];
+
+        rows.push(rowData);
     });
-  
-    return [headers, ...rows]; 
-  }
+
+    return [headers, ...rows];
+}
+
   
   
   
