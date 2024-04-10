@@ -1,9 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 
 const AddToken = ({ isOpen, onClose, onSubmit }) => {
   const [tokens, setTokens] = useState([{ name: '', amount: '' }]);
+  const [tokenOptions, setTokenOptions] = useState([])
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(''); // New state for selected option
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      setError(null); // Clear any previous errors
+
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:4000/api/getCryptos',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data)
+        setTokenOptions(response.data.data);
+      } catch (error) {
+        console.error('Error fetching crypto data:', error);
+        setError(error.message || 'Failed to fetch data'); // Set a generic error message
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [])
+
+  // const tokenOptions = ["DJED", "Etherium", "USDT", "Bitcoin", "ADA"]; // Add your token options here
+
+  // Filter options based on search term
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+    const filtered = tokenOptions.filter(option => option.toLowerCase().includes(searchTerm));
+    setFilteredOptions(filtered);
+  };
+
+  // Handle selecting an option from the dropdown
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+
+  // Handle updating token name based on search or selection
+  const handleTokenChange = (e) => {
+    const updatedTokens = [...tokens];
+    const index = e.target.dataset.index; // Get the index of the token being edited
+    updatedTokens[index].name = e.target.value || selectedOption; // Use either search term or selected option
+    setSelectedOption(''); // Clear selected option after use
+    setTokens(updatedTokens);
+  };
+
+  // useEffect to update filtered options when selectedOption changes
+  useEffect(() => {
+    if (selectedOption) {
+      const filtered = tokenOptions.filter(option => option === selectedOption);
+      setFilteredOptions(filtered);
+    } else {
+      handleSearch({ target: { value: searchTerm } }); // Re-filter based on searchTerm
+    }
+  }, [selectedOption, searchTerm]);
 
   const handleAddToken = () => {
     if (tokens.length < 5) {
@@ -22,53 +91,26 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
     onClose();
   };
 
-  const tokenOptions = ["DJED", "Etherium", "USDT", "Bitcoin", "ADA"]; // Add your token options here
-
-  // Filter options based on search term
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value;
-    setSearchTerm(searchTerm);
-    const filtered = tokenOptions.filter(option =>
-      option.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredOptions(filtered);
-  };
-
   return (
     <div className={`overlay ${isOpen ? 'open' : ''}`} style={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div className="overlay-content" style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', maxWidth: '400px', width: '100%'}}>
+      <div className="overlay-content" style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', maxWidth: '400px', width: '100%' }}>
         <h2>Add Tokens</h2>
         {tokens.map((token, index) => (
           <div key={index} style={{ marginBottom: '10px' }}>
             <input
               type="text"
               value={token.name}
-              onChange={(e) =>
-                setTokens((prevTokens) =>
-                  prevTokens.map((prevToken, i) =>
-                    i === index ? { ...prevToken, name: e.target.value } : prevToken
-                  )
-                )
-              }
+              onChange={handleTokenChange} // Use combined handler
               placeholder="Search Token"
               style={{ width: 'calc(100% - 80px)', marginRight: '10px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-              onInput={handleSearch}
+              data-index={index} // Pass index for updating the correct token
+              list="tokenOptions" // Connect to the option list
             />
-            <select
-              value={token.name}
-              onChange={(e) =>
-                setTokens((prevTokens) =>
-                  prevTokens.map((prevToken, i) =>
-                    i === index ? { ...prevToken, name: e.target.value } : prevToken
-                  )
-                )
-              }
-              style={{ width: 'calc(100% - 80px)', marginRight: '10px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-            >
+            <datalist id="tokenOptions">
               {filteredOptions.map((option, optionIndex) => (
                 <option key={optionIndex} value={option}>{option}</option>
               ))}
-            </select>
+            </datalist>
             <input
               type="number"
               value={token.amount}

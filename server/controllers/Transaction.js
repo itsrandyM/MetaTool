@@ -208,8 +208,8 @@ res.status(500).json({ error: 'Internal Server Error' });
   }, 
   getCrypto: async(req, res) => {
     try {
-      const cryptos = await Crypto.find();
-      res.status(200).json(cryptos);
+      const cryptos = await Crypto.find({});
+      res.status(200).json({data:cryptos});
   } catch (err) {
       res.status(500).json({ message: err.message });
   }
