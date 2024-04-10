@@ -63,10 +63,12 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
               style={{ width: '80px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
             />
             <button onClick={() => handleRemoveToken(index)} style={{ marginLeft: '10px', padding: '8px 12px', borderRadius: '4px', backgroundColor: '#f44336', color: '#fff', border: 'none', cursor: 'pointer' }}>Remove</button>
+            {index !== tokens.length - 1 && (
+              <button onClick={handleAddToken} style={{ marginLeft: '10px', padding: '8px 12px', borderRadius: '4px', backgroundColor: '#4caf50', color: '#fff', border: 'none', cursor: 'pointer' }}>Add Token</button>
+            )}
           </div>
         ))}
-        <button onClick={handleAddToken} style={{ marginBottom: '10px', padding: '8px 12px', borderRadius: '4px', backgroundColor: '#4caf50', color: '#fff', border: 'none', cursor: 'pointer' }}>Add Token</button>
-        <button onClick={handleSubmit} style={{ padding: '8px 12px', borderRadius: '4px', backgroundColor: '#2196f3', color: '#fff', border: 'none', cursor: 'pointer' }}>Submit</button>
+        <button onClick={handleSubmit} style={{ marginTop: '10px', padding: '8px 12px', borderRadius: '4px', backgroundColor: '#2196f3', color: '#fff', border: 'none', cursor: 'pointer' }}>Submit</button>
       </div>
     </div>
   );
