@@ -5,16 +5,9 @@ import axios from 'axios';
 const AddToken = ({ isOpen, onClose, onSubmit }) => {
   const [tokens, setTokens] = useState([{ name: '', amount: '' }]);
   const [tokenOptions, setTokenOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null); // Clear any previous errors
-
+    const fetchTokens = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:4000/api/getCryptos', {
@@ -22,18 +15,24 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
             Authorization: `Bearer ${token}`,
           },
         });
+
         console.log(response.data); // Check the structure of the data
+
+        if (response.data && response.data.data && Array.isArray(response.data.data)) {
+          const options = response.data.data.map(token => ({
+            value: token.Name,
+            label: token.Name
+          }));
+          setTokenOptions(options);
+        } else {
+          console.error('Unexpected data format:', response.data);
+        }
       } catch (error) {
         console.error('Error fetching crypto data:', error);
-        setError(error.message || 'Failed to fetch data'); // Set a generic error message
-      } finally {
-        setIsLoading(false);
       }
     };
 
-
-
-    fetchData();
+    fetchTokens();
   }, []);
 
   const handleAddToken = () => {
@@ -55,7 +54,7 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
 
   return (
     <div className={`overlay ${isOpen ? 'open' : ''}`} style={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div className="overlay-content" style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', maxWidth: '400px', width: '100%' }}>
+      <div className="overlay-content" style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', maxWidth: '400px', width: '100%'}}>
         <h2>Add Tokens</h2>
         {tokens.map((token, index) => (
           <div key={index} style={{ marginBottom: '10px' }}>
@@ -68,7 +67,6 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
                 setTokens(updatedTokens);
               }}
               placeholder="Search or Select Token"
-              key={index}
             />
             <input
               type="number"
