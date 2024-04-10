@@ -102,16 +102,17 @@ const CsvDetails = () => {
         const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '' : '';
         const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '' : ''
         const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : ""
-        const exchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true);
-        const isNCA = exchangeRate && exchangeRate.NCA;
-        const nca = isNCA ? exchangeRate.base_currency || '' : '';
-        const NcaUsd = isNCA ? exchangeRate.rate || '' : '';
-        const UsdNca = isNCA ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : '';
+        const stablecoinExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true);
+        const ncaExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.NCA === true);
+        const isNCA = ncaExchangeRate && ncaExchangeRate.NCA;
+        const nca = isNCA ? ncaExchangeRate.base_currency || '' : '';
+        const NcaUsd = isNCA ? ncaExchangeRate.rate || '' : '';
+        const UsdNca = isNCA ? (1 / parseFloat(ncaExchangeRate.rate)).toFixed(4) : '';
         const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
-        const isStablecoin = exchangeRate && exchangeRate.stablecoin;
-        const stablecoin = isStablecoin ? exchangeRate.base_currency || '' : ''
-        const stablecoinUSD = isStablecoin ? exchangeRate.rate || '' : '';
-        const UsdStablecoin = isStablecoin ? (1 / parseFloat(exchangeRate.rate)).toFixed(4) : '';
+        const isStablecoin = stablecoinExchangeRate && stablecoinExchangeRate.stablecoin;
+        const stablecoin = isStablecoin ? stablecoinExchangeRate.base_currency || '' : ''
+        const stablecoinUSD = isStablecoin ? stablecoinExchangeRate.rate || '' : '';
+        const UsdStablecoin = isStablecoin ? (1 / parseFloat(stablecoinExchangeRate.rate)).toFixed(4) : '';
         const TotalSC = stablecoinUSD * totalUSD
         const TotalNCA = NcaUsd * totalUSD
         const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd
