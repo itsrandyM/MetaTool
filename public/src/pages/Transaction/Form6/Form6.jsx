@@ -11,7 +11,8 @@ const Form6 = ({formData}) => {
   const [txFee, setTxFee] = useState(0);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-
+  const formDataFromForm4 = JSON.parse(localStorage.getItem('formDataFromForm4'))
+  console.log(formDataFromForm4)
 
 
   const handleTxHashChange = (e) => {
@@ -31,13 +32,13 @@ const Form6 = ({formData}) => {
     console.log('Sending Data to server')
     const serverUrl =  `http://localhost:4000/api/addDetails`
     const sendData = {
-      // localCurrencyName:formData.form3Data.csvDetails.currencyName, 
-      // localCurrencyAmount:formData.form3Data.csvDetails.amount, 
-      // localCurrencyUsdRate:formData.form3Data.csvDetails.rate, 
+      localCurrencyName:formDataFromForm4.form5Data.csvDetails.currencyName, 
+      localCurrencyAmount:formDataFromForm4.form5Data.csvDetails.amount, 
+      localCurrencyUsdRate:formDataFromForm4.form5Data.csvDetails.rate, 
       TXHash: txHash,
       Wallet: address,
       TxFee: txFee,
-      // TxPerRecipient: txFee / formData.form3Data.recipients.length
+      TxPerRecipient: txFee / formDataFromForm4.form5Data.recipients.length
     }
     const axiosConfig = {
       headers: {

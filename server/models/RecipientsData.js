@@ -20,7 +20,7 @@ const exchangeRateSchema = new mongoose.Schema({
     },
     stablecoin:{
       type:Boolean,
-      default:false
+      default:true
     },
     stablecoinUSD:{
      type:Number

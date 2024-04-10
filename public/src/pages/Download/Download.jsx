@@ -79,7 +79,7 @@ const TransactionDetailsPage = () => {
 
   const handleContinue = () => {
     const jsonData = JSON.stringify(transactionDetails, null, 2);
-  
+    const formDataFromForm4 = JSON.parse(localStorage.getItem('formDataFromForm4'))
     const formData = {
       transactionDetails: transactionDetails,
       jsonData: jsonData
