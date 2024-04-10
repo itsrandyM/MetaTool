@@ -13,31 +13,61 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
 
 
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true);
+  //     setError(null); // Clear any previous errors
+
+  //     try {
+  //       const token = localStorage.getItem('token');
+  //       const response = await axios.get('http://localhost:4000/api/getCryptos',
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //       console.log(response.data)
+  //       setTokenOptions(response.data.data);
+  //     } catch (error) {
+  //       console.error('Error fetching crypto data:', error);
+  //       setError(error.message || 'Failed to fetch data'); // Set a generic error message
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [])
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       setError(null); // Clear any previous errors
-
+    
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:4000/api/getCryptos',
-        {
+        const response = await axios.get('http://localhost:4000/api/getCryptos', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        });
+    
+        console.log(response.data); // Check the structure of the data
+        if (Array.isArray(response.data.data)) {
+          setTokenOptions(response.data.data.map(token => ({ value: token.Name, label: token.Name })));
+        } else {
+          console.error('Unexpected data format:', response.data);
+          setError('Unexpected data format');
         }
-      );
-      console.log(response.data)
-        setTokenOptions(response.data.data);
       } catch (error) {
         console.error('Error fetching crypto data:', error);
         setError(error.message || 'Failed to fetch data'); // Set a generic error message
       } finally {
-        setIsLoading(false);
+setIsLoading(false);
       }
     };
-
-    fetchData();
+      fetchData();
   }, [])
 
   // const tokenOptions = ["DJED", "Etherium", "USDT", "Bitcoin", "ADA"]; // Add your token options here
