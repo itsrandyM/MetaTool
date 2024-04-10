@@ -71,6 +71,18 @@ const CsvDetails = () => {
       'Date',
       'From wallet',
       'To whom',
+      'Local currency',
+      'Local amount',
+      'Local-USD',
+      'USD to be sent',
+      'Stablecoin',
+      'Stablecoin-USD',
+      'USD-Stablecoin',
+      'NCA',
+      'NCA-USD',
+      'USD-NCA',
+      'Stablecoin sent',
+      'NCA sent',
       'Classification',
       'Tx Fee',
       'Tx ID',
@@ -86,6 +98,10 @@ const CsvDetails = () => {
       const recipientName = item.RecipientData && item.RecipientData.name ? item.RecipientData.name : ''; // Check if RecipientData and name exist
       const txFee = item.Fees ? item.Fees.TxFee || '' : '';
   
+      const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '': ''
+      const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '':'';
+      const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '':''
+      const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '':""
       const exchangeRate = item.RecipientData && item.RecipientData.exchangeRates.length > 0 ? item.RecipientData.exchangeRates[0] : null;
       const stablecoin = exchangeRate ? exchangeRate.stablecoin || '' : '';
       const nca = exchangeRate ? exchangeRate.NCA || '' : '';
@@ -95,6 +111,10 @@ const CsvDetails = () => {
         currentDate,
         wallet,
         recipientName,
+        CurrencyName,
+       CurrencyAmount,
+      currencyUsd,
+      totalUSD,
         classification,
         txFee,
         hash,
