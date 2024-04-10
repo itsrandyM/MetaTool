@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 const AddToken = ({ isOpen, onClose, onSubmit }) => {
   const [tokens, setTokens] = useState([{ name: '', amount: '' }]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredOptions, setFilteredOptions] = useState([]);
 
   const handleAddToken = () => {
     if (tokens.length < 5) {
@@ -20,6 +22,18 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
     onClose();
   };
 
+  const tokenOptions = ["DJED", "Etherium", "USDT", "Bitcoin", "ADA"]; // Add your token options here
+
+  // Filter options based on search term
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    const filtered = tokenOptions.filter(option =>
+      option.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredOptions(filtered);
+  };
+
   return (
     <div className={`overlay ${isOpen ? 'open' : ''}`} style={{ position: 'absolute', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className="overlay-content" style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', maxWidth: '400px', width: '100%'}}>
@@ -36,9 +50,25 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
                   )
                 )
               }
-              placeholder="Token Name"
+              placeholder="Search Token"
               style={{ width: 'calc(100% - 80px)', marginRight: '10px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+              onInput={handleSearch}
             />
+            <select
+              value={token.name}
+              onChange={(e) =>
+                setTokens((prevTokens) =>
+                  prevTokens.map((prevToken, i) =>
+                    i === index ? { ...prevToken, name: e.target.value } : prevToken
+                  )
+                )
+              }
+              style={{ width: 'calc(100% - 80px)', marginRight: '10px', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+            >
+              {filteredOptions.map((option, optionIndex) => (
+                <option key={optionIndex} value={option}>{option}</option>
+              ))}
+            </select>
             <input
               type="number"
               value={token.amount}
