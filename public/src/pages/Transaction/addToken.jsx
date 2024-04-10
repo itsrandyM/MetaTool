@@ -3,7 +3,7 @@ import Select from 'react-select';
 import axios from 'axios';
 
 const AddToken = ({ isOpen, onClose, onSubmit }) => {
-  const [tokens, setTokens] = useState([{ name: '', amount: '' }]);
+  const [tokens, setTokens] = useState([{ name: '', amount: '',NCA: false, stablecoin: false }]);
   const [tokenOptions, setTokenOptions] = useState([]);
 
   useEffect(() => {
@@ -21,9 +21,12 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
         if (response.data && response.data.data && Array.isArray(response.data.data)) {
           const options = response.data.data.map(token => ({
             value: token.Name,
-            label: token.Name
+            label: token.Name,
+            NCA: token.NCA,
+            stablecoin: token.Stablecoin
           }));
           setTokenOptions(options);
+          localStorage.setItem('cryptoData', JSON.stringify(response.data.data))
         } else {
           console.error('Unexpected data format:', response.data);
         }
@@ -37,7 +40,7 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
 
   const handleAddToken = () => {
     if (tokens.length < 5) {
-      setTokens([...tokens, { name: '', amount: '' }]);
+      setTokens([...tokens, { name: '', amount:'',NCA: false, stablecoin: false  }]);
     }
   };
 
@@ -48,6 +51,7 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
   };
 
   const handleSubmit = () => {
+    const cryptoDat = JSON.parse(localStorage.getItem('cryptoData'))
     onSubmit(tokens);
     onClose();
   };
@@ -64,6 +68,9 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
               onChange={(selectedOption) => {
                 const updatedTokens = [...tokens];
                 updatedTokens[index].name = selectedOption.value;
+                updatedTokens[index].NCA = selectedOption.NCA; // Update NCA value
+                updatedTokens[index].stablecoin = selectedOption.stablecoin;
+                console.log('to:',updatedTokens)
                 setTokens(updatedTokens);
               }}
               placeholder="Search or Select Token"

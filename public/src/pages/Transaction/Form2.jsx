@@ -38,6 +38,7 @@ const Form2 = ({ onNextForm }) => {
   const isWalletValid = /^[a-zA-Z0-9]{25,}$/;
 
   const handleNext = () => {
+    const cryptoDat = JSON.parse(localStorage.getItem('cryptoData'))
     if (recipients.some((recipient) => !recipient.name || !recipient.organization || recipient.selectedTokens.length === 0)) {
       toast.error('All fields are required for each recipient, and at least one token must be selected.', toastOptions);
       return;

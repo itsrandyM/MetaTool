@@ -7,6 +7,8 @@ const Form5 = ({ onNextForm }) => {
   const { tokens } = useTokenContext();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [exchangeRates, setExchangeRates] = useState({});
+  const cryptoDat = JSON.parse(localStorage.getItem('cryptoData'))
+  console.log(cryptoDat)
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -15,13 +17,41 @@ const Form5 = ({ onNextForm }) => {
     theme: "light",
   };
 
+
+
   useEffect(() => {
     const initialRates = {};
     tokens.forEach(token => {
-      initialRates[token.name] = [{ base_currency: token.name, quote_currency: 'USD', rate: '', time: '' }];
+      initialRates[token.name] = [{ base_currency: token.name, quote_currency: 'USD', rate: '', time: '',NCA:false,Stablecoin:false }];
     });
     setExchangeRates(initialRates);
   }, [tokens]);
+
+useEffect(() => {
+    // Function to update NCA and Stablecoin values in exchangeRates based on cryptoDat
+    const updateExchangeRatesWithCryptoDat = () => {
+      const updatedRates = { ...exchangeRates };
+
+      tokens.forEach(token => {
+        // Find the corresponding token in cryptoDat
+        const cryptoToken = cryptoDat.find(cryptoToken => cryptoToken.Name === token.name);
+
+        if (cryptoToken) {
+          // If a matching token is found, update NCA and Stablecoin values
+          updatedRates[token.name] = updatedRates[token.name].map(rate => ({
+            ...rate,
+            NCA: cryptoToken.NCA,
+            Stablecoin: cryptoToken.Stablecoin
+          }));
+        }
+      });
+
+      setExchangeRates(updatedRates);
+    };
+
+    // Call the function to update exchangeRates when tokens or cryptoDat change
+    updateExchangeRatesWithCryptoDat();
+  }, [tokens, cryptoDat]);
 
   const handleNextForm = () => {
     // Proceed to the next form

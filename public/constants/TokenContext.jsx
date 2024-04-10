@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react'
 export const tokenContext = createContext()
 
 export const TokenProvider = ({ children }) => {
-  const [tokens, setTokens] = useState([{ name: '', amount: 0 }])
+  const [tokens, setTokens] = useState([{ name: '', amount: 0,NCA: Boolean, stablecoin: Boolean  }])
 
   return (
     <tokenContext.Provider value={{ tokens, setTokens }}>
