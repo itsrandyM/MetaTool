@@ -17,41 +17,54 @@ const Form5 = ({ onNextForm }) => {
     theme: "light",
   };
 
-
-
+  // useEffect(() => {
+  //   const initialRates = {};
+  //   tokens.forEach(token => {
+  //     // Set default values for NCA and Stablecoin
+  //     const nca = false;
+  //     const stablecoin = false;
+  
+  //     // Check if the token exists in cryptoDat
+  //     const cryptoToken = cryptoDat.find(cryptoToken => cryptoToken.Name === token.name);
+  //     if (cryptoToken) {
+  //       // If the token exists in cryptoDat, use its NCA and Stablecoin values
+  //       nca = cryptoToken.NCA;
+  //       stablecoin = cryptoToken.Stablecoin;
+  //     }
+  
+  //     // Set initial rates with token name, NCA, and Stablecoin values
+  //     initialRates[token.name] = [{ base_currency: token.name, quote_currency: 'USD', rate: '', time: '', NCA: nca, Stablecoin: stablecoin }];
+  //   });
+  //   setExchangeRates(initialRates);
+  // }, [tokens, cryptoDat]);
+  // useEffect(() => {
+  //   const initialRates = {};
+  //   tokens.forEach(token => {
+  //     initialRates[token.name] = [{ base_currency: token.name, quote_currency: 'USD', rate: '', time: '',NCA:false,Stablecoin:false }];
+  //   });
+  //   setExchangeRates(initialRates);
+  // }, [tokens]);
   useEffect(() => {
     const initialRates = {};
     tokens.forEach(token => {
-      initialRates[token.name] = [{ base_currency: token.name, quote_currency: 'USD', rate: '', time: '',NCA:false,Stablecoin:false }];
+      // Find the corresponding token in cryptoDat
+      const cryptoToken = cryptoDat.find(cryptoToken => cryptoToken.Name === token.name);
+
+      // Set NCA and Stablecoin values based on cryptoDat (if found)
+      const nca = cryptoToken?.NCA || false; // Use optional chaining for NCA
+      const stablecoin = cryptoToken?.Stablecoin || false; // Use optional chaining for Stablecoin
+
+      initialRates[token.name] = [{
+        base_currency: token.name,
+        quote_currency: 'USD',
+        rate: '',
+        time: '',
+        NCA: nca,
+        Stablecoin: stablecoin
+      }];
     });
     setExchangeRates(initialRates);
   }, [tokens]);
-
-useEffect(() => {
-    // Function to update NCA and Stablecoin values in exchangeRates based on cryptoDat
-    const updateExchangeRatesWithCryptoDat = () => {
-      const updatedRates = { ...exchangeRates };
-
-      tokens.forEach(token => {
-        // Find the corresponding token in cryptoDat
-        const cryptoToken = cryptoDat.find(cryptoToken => cryptoToken.Name === token.name);
-
-        if (cryptoToken) {
-          // If a matching token is found, update NCA and Stablecoin values
-          updatedRates[token.name] = updatedRates[token.name].map(rate => ({
-            ...rate,
-            NCA: cryptoToken.NCA,
-            Stablecoin: cryptoToken.Stablecoin
-          }));
-        }
-      });
-
-      setExchangeRates(updatedRates);
-    };
-
-    // Call the function to update exchangeRates when tokens or cryptoDat change
-    updateExchangeRatesWithCryptoDat();
-  }, [tokens, cryptoDat]);
 
   const handleNextForm = () => {
     // Proceed to the next form

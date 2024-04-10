@@ -24,6 +24,8 @@ const Form4 = ({ formData }) => {
       quote_currency: rate.quote_currency,
       rate: rate.rate,
       time: rate.time,
+      stablecoin:rate.Stablecoin,
+      NCA:rate.NCA
     })))
   : [];
 
