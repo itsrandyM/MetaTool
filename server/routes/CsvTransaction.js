@@ -15,8 +15,8 @@ router.get('/details',authToken ,  async (req, res, next) => {
     try {
         const loggedInUser = req.user;
         const verifiedData = await Csv.find({ User: loggedInUser, verified: true })
-            .sort({ createdAt: 1 })
             .limit(1)
+            .sort({ createdAt: -1 })
             .populate('Hash')
             .populate('Currency')
             .populate('Fees')
