@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
 import Papa from 'papaparse';
 import animationData from '../../../public/load.json';
+import { NavLink } from 'react-router-dom';
 
 const defaultOptions = {
   loop: true,
@@ -32,14 +33,14 @@ const CsvDetails = () => {
       }
       const data = await response.json();
       console.log(data);
-  
+
       if (data.success) {
         const csvData = processDataForCsv(data.verifiedData);
         const csvString = Papa.unparse(csvData);
-  
+
         const blob = new Blob([csvString], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
-  
+
         const link = document.createElement('a');
         link.href = url;
         link.download = 'transaction_details.csv';
@@ -47,7 +48,7 @@ const CsvDetails = () => {
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-  
+
         setLoading(false);
       } else {
         console.error('Could not receive data from database. Please try again', error);
@@ -58,104 +59,99 @@ const CsvDetails = () => {
       setLoading(false);
     }
   }
-  
+
 
   function processDataForCsv(verifiedData) {
     const currentDate = new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
     });
 
     const headers = [
-        'Date',
-        'From wallet',
-        'To whom',
-        'Local currency',
-        'Local amount',
-        'Local-USD',
-        'USD to be sent',
-        'Stablecoin',
-        'Stablecoin-USD',
-        'USD-Stablecoin',
-        'NCA',
-        'NCA-USD',
-        'USD-NCA',
-        'Stablecoin sent',
-        'NCA sent',
-        'Tx fee',
-        'Tx fee/tx',
-        'Tx fee/tx(USD)',
-        'Classification',
-        'Tx ID',
+      'Date',
+      'From wallet',
+      'To whom',
+      'Local currency',
+      'Local amount',
+      'Local-USD',
+      'USD to be sent',
+      'Stablecoin',
+      'Stablecoin-USD',
+      'USD-Stablecoin',
+      'NCA',
+      'NCA-USD',
+      'USD-NCA',
+      'Stablecoin sent',
+      'NCA sent',
+      'Tx fee',
+      'Tx fee/tx',
+      'Tx fee/tx(USD)',
+      'Classification',
+      'Tx ID',
     ];
 
     let rows = [];
 
     verifiedData.forEach(item => {
-        const hash = item.Hash ? item.Hash.TXHash || '' : '';
-        const wallet = item.Hash ? item.Hash.Wallet || '' : '';
-        // const recipientName =   item.RecipientData?.recipients?.[0]?.name || ''// Check if RecipientData and name exist
-        const txFee = item.Fees ? item.Fees.TxFee || '' : '';
-        const txFeePerRecipient = item.Fees ? item.Fees.TxPerRecipient || '' : '';
-        const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '' : ''
-        const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '' : '';
-        const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '' : ''
-        const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : ""
-        const stablecoinExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true);
-        const ncaExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.NCA === true);
-        const isNCA = ncaExchangeRate && ncaExchangeRate.NCA;
-        const nca = isNCA ? ncaExchangeRate.base_currency || '' : '';
-        const NcaUsd = isNCA ? ncaExchangeRate.rate || '' : '';
-        const UsdNca = isNCA ? (1 / parseFloat(ncaExchangeRate.rate)).toFixed(4) : '';
-        const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
-        const isStablecoin = stablecoinExchangeRate && stablecoinExchangeRate.stablecoin;
-        const stablecoin = isStablecoin ? stablecoinExchangeRate.base_currency || '' : ''
-        const stablecoinUSD = isStablecoin ? stablecoinExchangeRate.rate || '' : '';
-        const UsdStablecoin = isStablecoin ? (1 / parseFloat(stablecoinExchangeRate.rate)).toFixed(4) : '';
-        const TotalSC = stablecoinUSD * totalUSD
-        const TotalNCA = NcaUsd * totalUSD
-        const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd
+      const hash = item.Hash ? item.Hash.TXHash || '' : '';
+      const wallet = item.Hash ? item.Hash.Wallet || '' : '';
+      // const recipientName =   item.RecipientData?.recipients?.[0]?.name || ''// Check if RecipientData and name exist
+      const txFee = item.Fees ? item.Fees.TxFee || '' : '';
+      const txFeePerRecipient = item.Fees ? item.Fees.TxPerRecipient || '' : '';
+      const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '' : ''
+      const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '' : '';
+      const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '' : ''
+      const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : ""
+      const stablecoinExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true);
+      const ncaExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.NCA === true);
+      const isNCA = ncaExchangeRate && ncaExchangeRate.NCA;
+      const nca = isNCA ? ncaExchangeRate.base_currency || '' : '';
+      const NcaUsd = isNCA ? ncaExchangeRate.rate || '' : '';
+      const UsdNca = isNCA ? (1 / parseFloat(ncaExchangeRate.rate)).toFixed(4) : '';
+      const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
+      const isStablecoin = stablecoinExchangeRate && stablecoinExchangeRate.stablecoin;
+      const stablecoin = isStablecoin ? stablecoinExchangeRate.base_currency || '' : ''
+      const stablecoinUSD = isStablecoin ? stablecoinExchangeRate.rate || '' : '';
+      const UsdStablecoin = isStablecoin ? (1 / parseFloat(stablecoinExchangeRate.rate)).toFixed(4) : '';
+      const TotalSC = stablecoinUSD * totalUSD
+      const TotalNCA = NcaUsd * totalUSD
+      const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd
 
-       
-    const recipientsData = item.RecipientData && item.RecipientData.recipients;
-    recipientsData.forEach(recipient => {
-      const rowData = [
-        currentDate,
-        wallet,
-        recipient.name || '', // Use recipient's name if available
-        CurrencyName,
-        CurrencyAmount,
-        currencyUsd,
-        totalUSD,
-        stablecoin,
-        stablecoinUSD,
-        UsdStablecoin,
-        nca,
-        NcaUsd,
-        UsdNca,
-        TotalSC,
-        TotalNCA,
-        txFee,
-        txFeePerRecipient,
-        txFeePerRecipientUsd,
-        classification,
-        hash,
-      ];
 
-      rows.push(rowData);
+      const recipientsData = item.RecipientData && item.RecipientData.recipients;
+      recipientsData.forEach(recipient => {
+        const rowData = [
+          currentDate,
+          wallet,
+          recipient.name || '', // Use recipient's name if available
+          CurrencyName,
+          CurrencyAmount,
+          currencyUsd,
+          totalUSD,
+          stablecoin,
+          stablecoinUSD,
+          UsdStablecoin,
+          nca,
+          NcaUsd,
+          UsdNca,
+          TotalSC,
+          TotalNCA,
+          txFee,
+          txFeePerRecipient,
+          txFeePerRecipientUsd,
+          classification,
+          hash,
+        ];
+
+        rows.push(rowData);
+      });
     });
-  });
 
-  return [headers, ...rows];
+    return [headers, ...rows];
 
-}
+  }
 
-
-function goToHomepage() {
-  navigate('/home'); 
-}
-  
 
   const renderProperty = property => {
     if (typeof property === 'object') {
@@ -204,8 +200,8 @@ function goToHomepage() {
             >
               Download CSV file
             </button>
-            <button
-              onClick={goToHomepage}
+            <NavLink
+              to="/home"
               className="homepage-button"
               style={{
                 backgroundColor: '#6B8065',
@@ -218,6 +214,7 @@ function goToHomepage() {
                 transition: 'background-color 0.3s ease, transform 0.1s ease', // Added transform transition
                 boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Added boxShadow for the pop effect
                 marginTop: '20px', // Added margin top to separate buttons
+                textDecoration: 'none', // Remove underline from NavLink
               }}
               onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} // Increase scale on hover
               onMouseOut={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when not hovered
@@ -225,7 +222,7 @@ function goToHomepage() {
               onMouseUp={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when click released
             >
               Go to Homepage
-            </button>
+            </NavLink>
 
           </>
         )}
