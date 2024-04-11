@@ -79,7 +79,7 @@ const CsvDetails = () => {
       'Stablecoin',
       'Stablecoin-USD',
       'USD-Stablecoin',
-      'NCA',
+      'Native Crypto Asset(NCA)',
       'NCA-USD',
       'USD-NCA',
       'Stablecoin sent',
