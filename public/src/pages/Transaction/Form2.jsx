@@ -23,7 +23,7 @@ const Form2 = ({ onNextForm }) => {
   const [csvCurrencyName, setCsvCurrencyName] = useState('');
   const [csvAmount, setCsvAmount] = useState(0);
   const [csvRate, setCsvRate] = useState(0);
-  
+
 
 
   const toastOptions = {
@@ -38,7 +38,6 @@ const Form2 = ({ onNextForm }) => {
   const isWalletValid = /^[a-zA-Z0-9]{25,}$/;
 
   const handleNext = () => {
-    const cryptoDat = JSON.parse(localStorage.getItem('cryptoData'))
     if (recipients.some((recipient) => !recipient.name || !recipient.organization || recipient.selectedTokens.length === 0)) {
       toast.error('All fields are required for each recipient, and at least one token must be selected.', toastOptions);
       return;
@@ -47,15 +46,15 @@ const Form2 = ({ onNextForm }) => {
     if (recipients.every((recipient) => isNameValid.test(recipient.name) && isWalletValid.test(recipient.wallet))) {
       console.log('Form2 Data:', recipients);
       const formData = {
-        recipients: recipients, 
+        recipients: recipients,
         tokens: initialTokens.map((token) => ({
-          name: token.name, 
-          amount: token.amount, 
-        })), 
+          name: token.name,
+          amount: token.amount,
+        })),
         csvDetails: {
-          currencyName: csvCurrencyName, 
-          amount: csvAmount, 
-          rate: csvRate, 
+          currencyName: csvCurrencyName,
+          amount: csvAmount,
+          rate: csvRate,
         }
       };
       onNextForm(5, formData);
@@ -178,51 +177,117 @@ const Form2 = ({ onNextForm }) => {
     console.log('CSV Details:', formData);
   };
   return (
-    <>
+    <div style={{marginTop: '20px'}}>
       {recipients.map((recipient, index) => (
-        <div key={index} style={{ backgroundColor: '#F2EEE3', border: '1px solid #ccc', padding: '20px', borderRadius: '10px', marginBottom: '20px', color: 'black', width: '400px' }}>
-          <h2 style={{}}>Recipient {index + 1}</h2>
-          <div className="form-group" style={{ textAlign: 'left', }}>
-            <label htmlFor={`name-${recipient.id}`} style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px' }}>Name:</label>
+        <div key={index} style={{ backgroundColor: '#F2EEE3', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', padding: '20px', borderRadius: '10px', marginBottom: '20px', color: 'black', width: '400px' }}>
+          <h2 style={{ transform: 'translateX(32%)' }}>Recipient {index + 1}</h2>
+          <div className="form-group" style={{ textAlign: 'left' }}>
+            <label htmlFor={`name-${recipient.id}`} style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px', fontWeight: 'bold' }}>Name:</label>
             <input
               type="text"
               id={`name-${recipient.id}`}
               name={`name-${recipient.id}`}
               value={recipient.name}
               onChange={(e) => handleRecipientChange(recipient.id, 'name', e.target.value)}
-              style={{ width: 'calc(100% - 20px)', padding: '5px', marginBottom: '10px' }}
+              style={{
+                width: 'calc(100% - 20px)', // Adjusted width
+                padding: '10px',
+                marginBottom: '10px',
+                border: 'none', // Remove default border
+                borderBottom: '1px solid black', // Add bottom border
+                boxSizing: 'border-box',
+                background: 'transparent', // Set transparent background
+                transition: 'border-bottom-color 0.3s, box-shadow 0.3s', // Add transition for smooth color change and box shadow
+                outline: 'none', // Remove default focus outline
+              }}
+              onFocus={(e) => {
+                e.target.style.borderBottomColor = '#6B8065'; // Change bottom border color on focus
+                e.target.style.boxShadow = '0 0 10px 3px #6B8065'; // Add box shadow on focus
+              }}
+              onBlur={(e) => {
+                e.target.style.borderBottomColor = 'black'; // Reset bottom border color on blur
+                e.target.style.boxShadow = 'none'; // Remove box shadow on blur
+              }}
             />
+
           </div>
           <div className="form-group" style={{ textAlign: 'left' }}>
-            <label htmlFor={`organization-${recipient.id}`} style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px' }}>Organization:</label>
+            <label htmlFor={`organization-${recipient.id}`} style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px', fontWeight: 'bold' }}>Organization:</label>
             <input
               type="text"
               id={`organization-${recipient.id}`}
               name={`organization-${recipient.id}`}
               value={recipient.organization}
               onChange={(e) => handleRecipientChange(recipient.id, 'organization', e.target.value)}
-              style={{ width: 'calc(100% - 20px)', padding: '5px', marginBottom: '10px' }}
+              style={{
+                width: 'calc(100% - 20px)', // Adjusted width
+                padding: '10px',
+                marginBottom: '10px',
+                border: 'none', // Remove default border
+                borderBottom: '1px solid black', // Add bottom border with black color
+                boxSizing: 'border-box',
+                background: 'transparent', // Set transparent background
+                transition: 'border-bottom-color 0.3s, box-shadow 0.3s', // Add transition for smooth color change and box shadow
+                outline: 'none', // Remove default focus outline
+              }}
+              onFocus={(e) => {
+                e.target.style.borderBottomColor = '#6B8065'; // Change bottom border color on focus
+                e.target.style.boxShadow = '0 0 10px 3px #6B8065'; // Add box shadow on focus
+              }}
+              onBlur={(e) => {
+                e.target.style.borderBottomColor = 'black'; // Reset bottom border color on blur
+                e.target.style.boxShadow = 'none'; // Remove box shadow on blur
+              }}
             />
+
+
           </div>
           <div className="form-group" style={{ textAlign: 'left' }}>
-            <label htmlFor={`wallet-${recipient.id}`} style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px' }}>Wallet Address:</label>
+            <label htmlFor={`wallet-${recipient.id}`} style={{ marginBottom: '5px', display: 'block', width: '80%', minWidth: '80px', fontWeight: 'bold' }}>Wallet Address:</label>
             <textarea
               id={`wallet-${recipient.id}`}
               name={`wallet-${recipient.id}`}
               value={recipient.wallet}
+              rows="4"
               onChange={(e) => handleRecipientChange(recipient.id, 'wallet', e.target.value)}
-              style={{ width: 'calc(100% - 20px)', padding: '5px', marginBottom: '10px', resize: 'vertical' }}
+              style={{
+                width: 'calc(100% - 20px)', // Adjusted width
+                padding: '5px',
+                marginBottom: '10px',
+                border: '1px solid black', // Add all borders with black color
+                borderRadius: '5px', // Add border radius
+                boxSizing: 'border-box',
+                background: 'transparent', // Set transparent background
+                transition: 'border-color 0.3s, box-shadow 0.3s', // Add transition for smooth color change and box shadow
+                outline: 'none', // Remove default focus outline
+                resize: 'vertical', // Allow vertical resizing
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = '#6B8065'; // Change border color on focus
+                e.target.style.boxShadow = '0 0 10px 3px #6B8065'; // Add box shadow on focus
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = 'black'; // Reset border color on blur
+                e.target.style.boxShadow = 'none'; // Remove box shadow on blur
+              }}
             />
+
+
+
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div className="token-info" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '8px', backgroundColor: '#f0f0f0', width: '8rem', borderRadius: '10px', boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', padding: '2px' }}>
+            <div className="token-info" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '8px', width: '8rem', borderRadius: '10px', padding: '2px' }}>
               <div className="token-count" onClick={() => handleTokenClick(recipient.id)} style={{ padding: '8px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white', borderRadius: '10px', marginRight: '10px', marginLeft: '2px' }}>
                 {recipient.tokenCount}
               </div>
-              <button className="addicon1" type="button" onClick={() => setShowOverlay(true)} style={{ padding: '8px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', transform: 'translateY(12%)' }}>
+              <button className="addicon1" type="button" onClick={() => setShowOverlay(true)} style={{ padding: '8px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', transform: 'translateY(4%)' }}>
                 Add Token
               </button>
             </div>
+            <div className="token-info" style={{ display: 'flex', transform: 'translateX(-60%)', alignItems: 'center', justifyContent: 'flex-start', marginBottom: '8px', width: '6rem', borderRadius: '10px', padding: '2px' }}>
+              <button onClick={() => setShowCSVModal(true)} style={{ padding: '8px', marginLeft: '4px', borderRadius: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', cursor: 'pointer' }}>CSV Details</button>
+            </div>
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px' }}>
               {recipients.length > 1 && (
                 <button onClick={() => removeRecipient(recipient.id)} style={{ border: '1px black', padding: '20px', borderRadius: '20px' }}>
@@ -230,9 +295,6 @@ const Form2 = ({ onNextForm }) => {
                 </button>
               )}
             </div>
-          </div>
-          <div>
-              <button onClick={() => setShowCSVModal(true)} style={{ padding: '8px', backgroundColor: '#28a745', color: 'white', border: 'none', cursor: 'pointer'}}>CSV Details</button>
           </div>
         </div>
       ))}
@@ -275,7 +337,7 @@ const Form2 = ({ onNextForm }) => {
           </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

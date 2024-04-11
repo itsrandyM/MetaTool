@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SERVER_URL } from '../../../constants';
-import Navbar from '../../../src/components/Navbar/Navbar'
 import './DownP.css';
 
 function DownloadPage() {
@@ -102,7 +101,6 @@ function DownloadPage() {
 
   return (
     <div>
-      <Navbar/>
     <div className="Download_container2">
      <h1 className='DownT'>
       Your File is 

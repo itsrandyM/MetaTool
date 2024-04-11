@@ -35,37 +35,109 @@ const CSVDetailsModal = ({ onClose, onSubmit }) => {
         <h2>Local Currency</h2>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ width: '100%', marginBottom: '10px' }}>
-            <label htmlFor="currencyName" style={{ marginBottom: '5px', display: 'block', textAlign: 'left' }}>Currency Name:</label>
+            <label htmlFor="currencyName" style={{ marginBottom: '5px', display: 'block', fontWeight: 'bold', marginLeft: '10px', textAlign: 'left' }}>Currency Name:</label>
             <input
               type="text"
               id="currencyName"
               value={currencyName}
               onChange={handleCurrencyNameChange}
-              style={{ width: '90%', padding: '8px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              style={{
+                width: '95%',
+                padding: '8px',
+                marginBottom: '10px',
+                border: 'none', 
+                borderBottom: '1px solid black',
+                boxSizing: 'border-box',
+                background: 'transparent',
+                outline: 'none',
+                transition: 'border-color 0.3s, box-shadow 0.3s',
+              }}
+              onFocus={(e) => {
+                e.target.style.borderBottomColor = '#6B8065'; 
+                e.target.style.boxShadow = '0 0 10px 3px #6B8065'; 
+              }}
+              onBlur={(e) => {
+                e.target.style.borderBottomColor = 'black'; 
+                e.target.style.boxShadow = 'none'; 
+              }}
             />
           </div>
           <div style={{ width: '100%', marginBottom: '10px' }}>
-            <label htmlFor="amount" style={{ marginBottom: '5px', display: 'block', textAlign: 'left' }}>Amount:</label>
+            <label htmlFor="amount" style={{ marginBottom: '5px', display: 'block', fontWeight: 'bold', marginLeft: '10px', textAlign: 'left' }}>Amount:</label>
             <input
               type="number"
               id="amount"
               value={amount}
               onChange={handleAmountChange}
-              style={{ width: '90%', padding: '8px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              style={{
+                width: '95%',
+                padding: '8px',
+                marginBottom: '10px',
+                border: 'none', 
+                borderBottom: '1px solid black', 
+                boxSizing: 'border-box',
+                background: 'transparent',
+                outline: 'none',
+                transition: 'border-color 0.3s, box-shadow 0.3s',
+              }}
+              onFocus={(e) => {
+                e.target.style.borderBottomColor = '#6B8065'; 
+                e.target.style.boxShadow = '0 0 10px 3px #6B8065'; 
+              }}
+              onBlur={(e) => {
+                e.target.style.borderBottomColor = 'black'; 
+                e.target.style.boxShadow = 'none'; 
+              }}
             />
           </div>
           <div style={{ width: '100%', marginBottom: '10px' }}>
-            <label htmlFor="Rate" style={{ marginBottom: '5px', display: 'block', textAlign: 'left' }}>Rate/USD:</label>
+            <label htmlFor="Rate" style={{ marginBottom: '5px', display: 'block', fontWeight: 'bold', marginLeft: '10px', textAlign: 'left' }}>Rate/USD:</label>
             <input
               type="number"
               id="Rate"
               value={rate}
               onChange={handleRateChange}
-              style={{ width: '90%', padding: '8px', marginBottom: '10px', border: '1px solid #ccc', borderRadius: '5px' }}
+              style={{
+                width: '95%',
+                padding: '8px',
+                marginBottom: '10px',
+                border: 'none', 
+                borderBottom: '1px solid black', 
+                boxSizing: 'border-box',
+                background: 'transparent',
+                outline: 'none',
+                transition: 'border-color 0.3s, box-shadow 0.3s',
+              }}
+              onFocus={(e) => {
+                e.target.style.borderBottomColor = '#6B8065'; 
+                e.target.style.boxShadow = '0 0 10px 3px #6B8065'; 
+              }}
+              onBlur={(e) => {
+                e.target.style.borderBottomColor = 'black'; 
+                e.target.style.boxShadow = 'none'; 
+              }}
             />
           </div>
-          <button type="submit" style={{ backgroundColor: '#6B8065', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}>Submit</button>
-        </form>
+          <button
+              onClick={handleSubmit}
+              style={{
+                backgroundColor: '#6B8065',
+                color: 'white',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease, transform 0.1s ease', // Added transform transition
+                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Added boxShadow for the pop effect
+              }}
+              onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} // Increase scale on hover
+              onMouseOut={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when not hovered
+              onMouseDown={(e) => e.target.style.transform = 'scale(0.95)'} // Decrease scale when clicked
+              onMouseUp={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when click released
+            >
+              Submit
+            </button>
+           </form>
       </div>
     </div>
   );

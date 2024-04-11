@@ -13,6 +13,7 @@ function LoginForm() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [isLoading, setLoading] = useState(false);
   const toastOptions = {
     position: 'bottom-right',
     autoClose: 8000,
@@ -35,6 +36,8 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Set loading state to true when the form is submitted
+
     try {
       const response = await fetch(`${SERVER_URL}/auth/Login`, {
         method: 'POST',
@@ -57,20 +60,22 @@ function LoginForm() {
     } catch (error) {
       console.error('Error during login:', error);
       toast.error('Internal Server Error', toastOptions);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-      <div style={{ backgroundColor: '#D9D9D9', width: '300px', padding: '20px', borderRadius: '10px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '90vh' }}>
+      <div style={{ backgroundColor: '#f2eee3', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', width: '400px', padding: '20px', borderRadius: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '20px' }}>
           <img src="/Logo icon 5.png" alt="DirectEd" className="login-icon" width="42px" height="38px" />
-          <h2 style={{color:'black'}}>DirectEd</h2>
+          <h2 style={{ color: 'black', marginLeft: '10px', transform: 'translateY(10%)' }}>DirectEd</h2>
         </div>
         <h2 style={{ fontSize: '20px', marginBottom: '20px', color: 'black', fontWeight: '600', textAlign: 'left' }}>Login</h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '10px' }}>
-            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px', color: 'black' }}>Email Address:</label>
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px', color: 'black', fontWeight: '500' }}>Email Address:</label>
             <input
               type="email"
               id="email"
@@ -78,12 +83,33 @@ function LoginForm() {
               value={formData.email}
               onChange={handleInputChange}
               required
-              style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' }}
+              style={{
+                width: '100%',
+                padding: '10px',
+                borderBottom: '2px solid black', 
+                borderRadius: '0px',
+                boxSizing: 'border-box',
+                background: 'transparent',
+                transition: 'border-color 0.3s, box-shadow 0.3s', 
+                outline: 'none',
+                borderLeft: 'none', 
+                borderTop: 'none', 
+                borderRight: 'none', 
+              }}
+              onFocus={(e) => {
+                e.target.style.borderBottom = '2px solid #6B8065'; 
+                e.target.style.boxShadow = '0 2px 10px 3px #6B8065';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderBottom = '2px solid black'; 
+                e.target.style.boxShadow = 'none'; 
+              }}
             />
+
           </div>
 
           <div style={{ marginBottom: '10px', display: 'flex', justifyContent: 'space-between' }}>
-            <label htmlFor="password" style={{ display: 'block', color: 'black' }}>Password:</label>
+            <label htmlFor="password" style={{ display: 'block', color: 'black', fontWeight: '500' }}>Password:</label>
           </div>
 
           <div style={{ position: 'relative' }}>
@@ -94,23 +120,45 @@ function LoginForm() {
               value={formData.password}
               onChange={handleInputChange}
               required
-              style={{ width: '100%', padding: '10px', border: '1px solid #ccc', borderRadius: '4px', boxSizing: 'border-box' }}
+              style={{
+                width: '100%',
+                padding: '10px',
+                border: 'none',
+                borderBottom: '2px solid black', 
+                borderRadius: '0px',
+                boxSizing: 'border-box',
+                background: 'transparent', 
+                transition: 'border-bottom-color 0.3s',
+                outline: 'none',
+                boxShadow: 'none',
+              }}
+              onFocus={(e) => {
+                e.target.style.borderBottomColor = '#6B8065'; 
+                e.target.style.boxShadow = '0 0 10px 3px #6B8065';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderBottom = '2px solid black'; 
+                e.target.style.boxShadow = 'none'; // Remove glow effect on blur
+              }}
             />
+
             <span
               onClick={handleTogglePassword}
-              style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', cursor: 'pointer',color: 'black',  }}
+              style={{ position: 'absolute', top: '50%', right: '10px', transform: 'translateY(-50%)', cursor: 'pointer', color: 'black', }}
               title={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
 
-          <div style={{ textAlign: 'right', transform: 'translateY(-25%)'  }}>
-            <a href="#" className="forgot-password-link">Forgot Password?</a>
-          </div>
-
           {error && <p style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>{error}</p>}
-          <button type="submit" style={{ backgroundColor: '#6B8065', color: '#ffff', width: '50%', height: '50px', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '16px', marginLeft: '25%' , transition: 'background-color 0.2s ease-in-out' }}>Login</button>
+          <button type="submit" className="login-button">
+            {isLoading ? (
+              <div className="spinner"></div>
+            ) : (
+              'Login'
+            )}
+          </button>
         </form>
         <ToastContainer />
       </div>

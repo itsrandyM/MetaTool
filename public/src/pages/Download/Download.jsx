@@ -69,8 +69,8 @@ const TransactionDetailsPage = () => {
     // Convert transaction details to CSV format
     const header = 'Recipient address, Amount';
     const rows = data.map((transaction) => {
-      const recipient = transaction.recipients['0']; 
-  
+      const recipient = transaction.recipients['0'];
+
       const amount = transaction.token['0'].tokenName['0'].amount; // Potential source of error
       return `${recipient.wallet},${amount}`;
     });
@@ -84,12 +84,12 @@ const TransactionDetailsPage = () => {
       transactionDetails: transactionDetails,
       jsonData: jsonData
     };
-  
+
     navigate('/form6', { state: { formData } }); // Ensure formData is wrapped inside an object
   };
-  
-  
-  
+
+
+
   const renderProperty = (property) => {
     if (typeof property === 'object') {
       return JSON.stringify(property);
@@ -98,17 +98,26 @@ const TransactionDetailsPage = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '90vh', // Set the height to full viewport height
+      width: '100%', // Set the width to full viewport width
+
+    }}>
       <div
         className="Download_container"
         style={{
           padding: '20px',
-          color:'black',
+          color: 'black',
           borderRadius: '10px',
           backgroundColor: '#f2eee3',
           boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
-          margin: '40px auto',
-          maxWidth: '400px', // Reduced width
+          width: '35%', // Set the width to 80% of the viewport width
+          maxWidth: '800px', // Reduced width
+          textAlign: 'center', // Center the buttons horizontally
+          margin: '0 auto', // Center the container horizontally
         }}
       >
         <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Transaction Details</h2>
@@ -141,31 +150,40 @@ const TransactionDetailsPage = () => {
               onClick={handleDownloadJSON}
               className="download-button"
               style={{
-                backgroundColor: '#007bff',
+                backgroundColor: '#6B8065',
                 color: 'white',
                 border: 'none',
                 padding: '10px 20px',
                 borderRadius: '5px',
-                margin: '10px',
                 cursor: 'pointer',
-                transition: 'background-color 0.3s ease',
+                transition: 'background-color 0.3s ease, transform 0.1s ease', // Added transform transition
+                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Added boxShadow for the pop effect
               }}
+              onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} // Increase scale on hover
+              onMouseOut={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when not hovered
+              onMouseDown={(e) => e.target.style.transform = 'scale(0.95)'} // Decrease scale when clicked
+              onMouseUp={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when click released
             >
-              Download JSON
+              Download
             </button>
             <button
               onClick={handleContinue}
               className="download-button"
               style={{
-                backgroundColor: '#007bff',
+                backgroundColor: '#6B8065',
                 color: 'white',
                 border: 'none',
                 padding: '10px 20px',
                 borderRadius: '5px',
-                margin: '10px',
+                marginLeft: '10px',
                 cursor: 'pointer',
-                transition: 'background-color 0.3s ease',
+                transition: 'background-color 0.3s ease, transform 0.1s ease', // Added transform transition
+                boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', // Added boxShadow for the pop effect
               }}
+              onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'} // Increase scale on hover
+              onMouseOut={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when not hovered
+              onMouseDown={(e) => e.target.style.transform = 'scale(0.95)'} // Decrease scale when clicked
+              onMouseUp={(e) => e.target.style.transform = 'scale(1)'} // Reset scale when click released
             >
               Continue
             </button>

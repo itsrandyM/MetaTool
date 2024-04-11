@@ -17,33 +17,6 @@ const Form5 = ({ onNextForm }) => {
     theme: "light",
   };
 
-  // useEffect(() => {
-  //   const initialRates = {};
-  //   tokens.forEach(token => {
-  //     // Set default values for NCA and Stablecoin
-  //     const nca = false;
-  //     const stablecoin = false;
-  
-  //     // Check if the token exists in cryptoDat
-  //     const cryptoToken = cryptoDat.find(cryptoToken => cryptoToken.Name === token.name);
-  //     if (cryptoToken) {
-  //       // If the token exists in cryptoDat, use its NCA and Stablecoin values
-  //       nca = cryptoToken.NCA;
-  //       stablecoin = cryptoToken.Stablecoin;
-  //     }
-  
-  //     // Set initial rates with token name, NCA, and Stablecoin values
-  //     initialRates[token.name] = [{ base_currency: token.name, quote_currency: 'USD', rate: '', time: '', NCA: nca, Stablecoin: stablecoin }];
-  //   });
-  //   setExchangeRates(initialRates);
-  // }, [tokens, cryptoDat]);
-  // useEffect(() => {
-  //   const initialRates = {};
-  //   tokens.forEach(token => {
-  //     initialRates[token.name] = [{ base_currency: token.name, quote_currency: 'USD', rate: '', time: '',NCA:false,Stablecoin:false }];
-  //   });
-  //   setExchangeRates(initialRates);
-  // }, [tokens]);
   useEffect(() => {
     const initialRates = {};
     tokens.forEach(token => {
@@ -71,19 +44,20 @@ const Form5 = ({ onNextForm }) => {
     if (currentIndex === tokens.length - 1) {
 
       const areFieldsEmpty = tokens[currentIndex].name in exchangeRates &&
-      exchangeRates[tokens[currentIndex].name].some(rate => rate.rate.trim() === '' || rate.time.trim() === '');
+        exchangeRates[tokens[currentIndex].name].some(rate => rate.rate.trim() === '' || rate.time.trim() === '');
 
 
       if (Object.values(exchangeRates).every(rates => rates.length > 0)) {
-        
-        if(!areFieldsEmpty) {
-        const formData = {
-          exchangeRates: exchangeRates
-        };
-        onNextForm(4, formData);
-        toast.success('Exchange rates added succesfully!')
-     } } else {
-        toast.error('Please enter exchange rates for all tokens.',toastOptions);
+
+        if (!areFieldsEmpty) {
+          const formData = {
+            exchangeRates: exchangeRates
+          };
+          onNextForm(4, formData);
+          toast.success('Exchange rates added succesfully!')
+        }
+      } else {
+        toast.error('Please enter exchange rates for all tokens.', toastOptions);
       }
     } else {
       setCurrentIndex(prevIndex => prevIndex + 1);
@@ -105,43 +79,97 @@ const Form5 = ({ onNextForm }) => {
 
   return (
     <>
-      <h2 style={{ textAlign: 'center' }}>EXCHANGE RATES</h2>
+      <h2 style={{ textAlign: 'center', color: 'black' }}>EXCHANGE RATES</h2>
       <div style={{ backgroundColor: '#F2EEE3', padding: '20px', borderRadius: '10px', color: 'black', margin: '2% auto', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', width: '320px' }} className="form5_container">
         <h2 style={{ textAlign: 'center' }}>{tokens[currentIndex].name}</h2>
 
         {exchangeRates[tokens[currentIndex].name] && exchangeRates[tokens[currentIndex].name].map((rate, index) => (
           <div key={index} style={{ marginTop: '10px' }}>
             <div style={{ textAlign: 'left', marginBottom: '10px' }}>
-              <label htmlFor="quote_currency" style={{ marginLeft: '20px' }}>Quote Currency</label>
+              <label htmlFor="quote_currency" style={{ marginBottom: '5px', display: 'block',marginLeft: '15px', fontWeight: 'bold', textAlign: 'left' }}>Quote Currency</label>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <input
                   type="text"
                   value={rate.quote_currency}
                   onChange={(e) => handleRateChange(tokens[currentIndex].name, index, 'quote_currency', e.target.value)}
-                  style={{ width: '80%', padding: '8px', border: '1px solid #ccc', borderRadius: '5px' }}
+                  style={{
+                    width: '90%',
+                    padding: '8px',
+                    border: 'none', // Remove default border
+                    borderBottom: '1px solid black', // Add bottom border
+                    boxSizing: 'border-box',
+                    background: 'transparent',
+                    transition: 'border-color 0.3s, box-shadow 0.3s',
+                    outline: 'none',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderBottomColor = '#6B8065'; // Change bottom border color on focus
+                    e.target.style.boxShadow = '0 0 10px 3px #6B8065'; // Add box shadow on focus
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderBottomColor = 'black'; // Reset bottom border color on blur
+                    e.target.style.boxShadow = 'none'; // Remove box shadow on blur
+                  }}
                 />
+
               </div>
             </div>
             <div style={{ textAlign: 'left', marginBottom: '10px' }}>
-              <label htmlFor="rate" style={{ marginLeft: '20px' }}>Rate</label>
+              <label htmlFor="rate" style={{ marginBottom: '5px', display: 'block',marginLeft: '15px', fontWeight: 'bold', textAlign: 'left' }}>Rate</label>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <input
                   type="text"
                   value={rate.rate}
                   onChange={(e) => handleRateChange(tokens[currentIndex].name, index, 'rate', e.target.value)}
-                  style={{ width: '80%', padding: '8px', border: '1px solid #ccc', borderRadius: '5px' }}
+                  style={{
+                    width: '90%',
+                    padding: '8px',
+                    border: 'none', // Remove default border
+                    borderBottom: '1px solid black', // Add bottom border
+                    boxSizing: 'border-box',
+                    background: 'transparent',
+                    transition: 'border-color 0.3s, box-shadow 0.3s',
+                    outline: 'none',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderBottomColor = '#6B8065'; // Change bottom border color on focus
+                    e.target.style.boxShadow = '0 0 10px 3px #6B8065'; // Add box shadow on focus
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderBottomColor = 'black'; // Reset bottom border color on blur
+                    e.target.style.boxShadow = 'none'; // Remove box shadow on blur
+                  }}
                 />
+
               </div>
             </div>
             <div style={{ textAlign: 'left', marginBottom: '10px' }}>
-              <label htmlFor="time" style={{ marginLeft: '20px' }}>Time</label>
+              <label htmlFor="time" style={{ marginBottom: '5px', display: 'block',marginLeft: '15px', fontWeight: 'bold', textAlign: 'left' }}>Time</label>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <input
                   type="time"
                   value={rate.time}
                   onChange={(e) => handleRateChange(tokens[currentIndex].name, index, 'time', e.target.value)}
-                  style={{ width: '80%', padding: '8px', border: '1px solid #ccc', borderRadius: '5px' }}
+                  style={{
+                    width: '90%',
+                    padding: '8px',
+                    border: 'none', // Remove default border
+                    borderBottom: '1px solid black', // Add bottom border
+                    boxSizing: 'border-box',
+                    background: 'transparent',
+                    transition: 'border-color 0.3s, box-shadow 0.3s',
+                    outline: 'none',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderBottomColor = '#6B8065'; // Change bottom border color on focus
+                    e.target.style.boxShadow = '0 0 10px 3px #6B8065'; // Add box shadow on focus
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderBottomColor = 'black'; // Reset bottom border color on blur
+                    e.target.style.boxShadow = 'none'; // Remove box shadow on blur
+                  }}
                 />
+
               </div>
             </div>
           </div>

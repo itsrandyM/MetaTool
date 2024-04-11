@@ -3,10 +3,17 @@
   align-items: center;
 }
 
+.table-container {
+  height: 75vh; /* Set the height of the table container to 75% of the viewport height */
+  overflow: auto; /* Enable vertical scrolling if content overflows */
+}
+
 table {
   width: 100%;
   table-layout: fixed; /* Ensures all columns have the same width */
+  border-collapse: collapse; /* Collapses borders between table cells */
 }
+
 th {
   background-color: #395241;
   font-weight: 500;
@@ -24,10 +31,6 @@ td {
   white-space: nowrap; /* Prevents text wrapping */
   overflow: hidden; /* Hides overflow content */
   text-overflow: ellipsis; /* Displays ellipsis (...) when content overflows */
-}
-
-tr:hover {
-  background-color: #cce6ff;
 }
 
 .icon1 {
@@ -55,17 +58,28 @@ td:hover {
     width: auto;
     text-align: left;
   }
-  
+
   th {
     height: 0;
     padding-top: 0;
     padding-bottom: 0;
   }
-  
+
   td {
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
     border: none;
+  }
+
+  .title {
+    justify-content: space-between; /* Align items in the title div */
+    padding: 10px; /* Add padding to the title div */
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between; /* Align items in the pagination div */
+    padding: 10px; /* Add padding to the pagination div */
   }
 }

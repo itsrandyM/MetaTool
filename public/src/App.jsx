@@ -7,12 +7,14 @@ import LoginForm from './pages/Authentification/page'
 import Form6 from './pages/Transaction/Form6/Form6'
 import CsvDownload from './pages/Transaction/CsvDownload'
 import './App.css'
+import Navbar from './components/Navbar/Navbar'
 
 
 
 const App = () => {
   return (
     <>
+      <Navbar />
     <Routes>
       <Route path='/' element={<LoginForm/>}></Route>
       <Route path='home' element={<WelcomePage/>}></Route>

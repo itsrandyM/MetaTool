@@ -1,5 +1,51 @@
-#root {
-    justify-content: center; /* Center its children horizontally */
-    align-items: center;
-    width: 100%; /* Ensure full width */
+  .login-button {
+    background-color: #6B8065;
+    color: #fff;
+    width: 50%;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 25%;
+    transition: background-color 0.2s ease-in-out;
+    margin-top: 10px;
+    position: relative;
   }
+  
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #fff;
+    border-right-color: #fff;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+  
+  @keyframes pulsate {
+    0% {
+      text-shadow: 0 0 10px #7FD67B;
+    }
+    50% {
+      text-shadow: 0 0 20px #7FD67B;
+    }
+    100% {
+      text-shadow: 0 0 10px #7FD67B;
+    }
+  }
+  
+  

@@ -8,6 +8,7 @@ import { SERVER_URL } from '../../../constants';
 function Table() {
   const navigate = useNavigate();
   const { transactions, updateTransactions } = useAppContext();
+  const [currentPage, setCurrentPage] = useState(1);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
@@ -16,7 +17,7 @@ function Table() {
       try {
         const token = localStorage.getItem('token');
         const response = await fetch(`${SERVER_URL}/api/getRecipientTransactions`, {
-          method: 'GET', // Specify the HTTP method
+          method: 'GET', 
           headers: new Headers({
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
@@ -47,7 +48,6 @@ function Table() {
     navigate(`/download/${index}`);
   };
 
-  // Function to set full content as title attribute for each cell
   const setFullContentAsTitle = () => {
     const cells = document.querySelectorAll('td');
     cells.forEach((cell) => {
@@ -59,10 +59,15 @@ function Table() {
     setFullContentAsTitle();
   }, [transactions]);
 
+  const transactionsPerPage = 15;
+  const totalPages = Math.ceil(transactions.length / transactionsPerPage);
+
+  const currentTransactions = transactions.slice((currentPage - 1) * transactionsPerPage, currentPage * transactionsPerPage);
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ position: 'relative', width: '100%' }}>
       {dataLoaded && (
-        <table style={{ width: '80%', borderCollapse: 'collapse', marginTop: '1px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '1px' }}>
           <thead>
             <tr>
               <th>Transaction Name</th>
@@ -74,9 +79,8 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {transactions?.map((transaction, index) => (
-              <tr key={index} onClick={() => handleRowClick(index)} className="clickable-row">
-                {/* Adjust these fields based on your actual transaction data */}
+            {currentTransactions?.map((transaction, index) => (
+              <tr key={index} onClick={() => handleRowClick((currentPage - 1) * transactionsPerPage + index)} className="clickable-row" style={{ height: '50px' }}>
                 <td>{transaction?.transactionName || '{...}'}</td>
                 <td>{transaction?.recipientName || '{...}'}</td>
                 <td>{transaction?.token || '{...}'}</td>
@@ -86,6 +90,27 @@ function Table() {
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="6" style={{ textAlign: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                  <span>
+                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+                      <Icon icon="bi:arrow-left" />
+                    </button>
+                    Previous
+                  </span>
+                  <span>
+                    Next   
+                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
+                     <Icon icon="bi:arrow-right" />
+                    </button>
+                  </span>
+                </div>
+                <div>Total Transactions: {transactions.length}</div>
+              </td>
+            </tr>
+          </tfoot>
         </table>
       )}
     </div>

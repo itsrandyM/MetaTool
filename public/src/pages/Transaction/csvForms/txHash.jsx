@@ -51,7 +51,7 @@ const TransactionForm = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#F2EEE3', padding: '20px', borderRadius: '10px', color: 'black', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', maxWidth: '400px', margin: 'auto', marginTop: '[40rem]' }}>
+    <div style={{ padding: '20px', borderRadius: '10px', color: 'black', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', textAlign: 'center', maxWidth: '400px' }}>
       <h2 style={{ marginBottom: '20px' }}>Transaction Details</h2>
       <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
         <div style={{ marginBottom: '15px', width: '100%' }}>
