@@ -58,18 +58,114 @@ const CsvDetails = () => {
       setLoading(false);
     }
   }
-
-  function goToHomepage() {
-    navigate('/home'); // Change '/' to the path of your homepage if it's different
-  }
+  
 
   function processDataForCsv(verifiedData) {
-    // Your processDataForCsv function implementation
-    // This function remains unchanged
-  }
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    });
+
+    const headers = [
+        'Date',
+        'From wallet',
+        'To whom',
+        'Local currency',
+        'Local amount',
+        'Local-USD',
+        'USD to be sent',
+        'Stablecoin',
+        'Stablecoin-USD',
+        'USD-Stablecoin',
+        'NCA',
+        'NCA-USD',
+        'USD-NCA',
+        'Stablecoin sent',
+        'NCA sent',
+        'Tx fee',
+        'Tx fee/tx',
+        'Tx fee/tx(USD)',
+        'Classification',
+        'Tx ID',
+    ];
+
+    let rows = [];
+
+    verifiedData.forEach(item => {
+        const hash = item.Hash ? item.Hash.TXHash || '' : '';
+        const wallet = item.Hash ? item.Hash.Wallet || '' : '';
+        // const recipientName =   item.RecipientData?.recipients?.[0]?.name || ''// Check if RecipientData and name exist
+        const txFee = item.Fees ? item.Fees.TxFee || '' : '';
+        const txFeePerRecipient = item.Fees ? item.Fees.TxPerRecipient || '' : '';
+        const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '' : ''
+        const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '' : '';
+        const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '' : ''
+        const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : ""
+        const stablecoinExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true);
+        const ncaExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.NCA === true);
+        const isNCA = ncaExchangeRate && ncaExchangeRate.NCA;
+        const nca = isNCA ? ncaExchangeRate.base_currency || '' : '';
+        const NcaUsd = isNCA ? ncaExchangeRate.rate || '' : '';
+        const UsdNca = isNCA ? (1 / parseFloat(ncaExchangeRate.rate)).toFixed(4) : '';
+        const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
+        const isStablecoin = stablecoinExchangeRate && stablecoinExchangeRate.stablecoin;
+        const stablecoin = isStablecoin ? stablecoinExchangeRate.base_currency || '' : ''
+        const stablecoinUSD = isStablecoin ? stablecoinExchangeRate.rate || '' : '';
+        const UsdStablecoin = isStablecoin ? (1 / parseFloat(stablecoinExchangeRate.rate)).toFixed(4) : '';
+        const TotalSC = stablecoinUSD * totalUSD
+        const TotalNCA = NcaUsd * totalUSD
+        const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd
+
+       
+    const recipientsData = item.RecipientData && item.RecipientData.recipients;
+    recipientsData.forEach(recipient => {
+      const rowData = [
+        currentDate,
+        wallet,
+        recipient.name || '', // Use recipient's name if available
+        CurrencyName,
+        CurrencyAmount,
+        currencyUsd,
+        totalUSD,
+        stablecoin,
+        stablecoinUSD,
+        UsdStablecoin,
+        nca,
+        NcaUsd,
+        UsdNca,
+        TotalSC,
+        TotalNCA,
+        txFee,
+        txFeePerRecipient,
+        txFeePerRecipientUsd,
+        classification,
+        hash,
+      ];
+
+      rows.push(rowData);
+    });
+  });
+
+  return [headers, ...rows];
+
+}
+
+
+function goToHomepage() {
+  navigate('/home'); 
+}
+  
+
+  const renderProperty = property => {
+    if (typeof property === 'object') {
+      return JSON.stringify(property);
+    }
+    return property;
+  };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '90vh' }}>
+    <div style={{ textAlign: 'center' }}>
       <div
         className="Download_container"
         style={{
@@ -77,8 +173,9 @@ const CsvDetails = () => {
           color: 'black',
           borderRadius: '10px',
           backgroundColor: '#f2eee3',
+          marginTop: '20%',
           boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
-          margin: '40px auto',
+          margin: '20% auto',
           maxWidth: '400px', // Reduced width
         }}
       >
@@ -86,7 +183,7 @@ const CsvDetails = () => {
         {loading ? (
           <Lottie options={defaultOptions} width={50} height={50} />
         ) : (
-          <div>
+          <>
             <button
               onClick={downloadCsv}
               className="download-button"
@@ -129,7 +226,8 @@ const CsvDetails = () => {
             >
               Go to Homepage
             </button>
-          </div>
+
+          </>
         )}
       </div>
     </div>
