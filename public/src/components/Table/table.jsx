@@ -72,7 +72,7 @@ function Table() {
             <tr>
               <th>Transaction Name</th>
               <th>Recipient</th>
-              <th>Token</th>
+              {/* <th>Token</th> */}
               <th>Classification</th>
               <th>Description</th>
               <th>Time</th>
@@ -82,10 +82,10 @@ function Table() {
             {currentTransactions?.map((transaction, index) => (
               <tr key={index} onClick={() => handleRowClick((currentPage - 1) * transactionsPerPage + index)} className="clickable-row" style={{ height: '50px' }}>
                 <td>{transaction?.transactionName || '{...}'}</td>
-                <td>{transaction?.recipientName || '{...}'}</td>
-                <td>{transaction?.token || '{...}'}</td>
-                <td>{transaction?.classification || '{...}'}</td>
-                <td>{transaction?.description || '{...}'}</td>
+                <td>{transaction?.recipients.map((recipient) => recipient.name).join(', ')}</td>
+                {/* <td>{transaction?.token || '{...}'}</td> */}
+                <td>{transaction?.classification.classificationName || '{...}'}</td>
+                <td>{transaction?.description.descriptionName || '{...}'}</td>
                 <td>{transaction?.createdAt ? new Date(transaction.createdAt).toLocaleString() : '{...}'}</td>
               </tr>
             ))}

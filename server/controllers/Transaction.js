@@ -75,7 +75,17 @@ const tokens = await Promise.all(
       const loggedInUser = req.user;
   
       // Fetch recipient data associated with the logged-in user from the database
-      const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id });
+      const userRecipientData = await RecipientsData.find({ 'User': loggedInUser._id })
+      .populate({
+        path: 'recipients',
+        select: 'name'})
+      .populate({
+        path: 'classification',
+        select: 'classificationName'})
+      .populate({
+        path: 'description',
+        select: 'descriptionName'});
+
   
       // Return the data as a JSON response
       res.status(200).json({ success: true, transactions: userRecipientData, downloadLink: `/downloadRecipientData`});
