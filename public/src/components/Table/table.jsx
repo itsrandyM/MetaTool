@@ -59,7 +59,7 @@ function Table() {
     setFullContentAsTitle();
   }, [transactions]);
 
-  const transactionsPerPage = 15;
+  const transactionsPerPage = 14;
   const totalPages = Math.ceil(transactions.length / transactionsPerPage);
 
   const currentTransactions = transactions.slice((currentPage - 1) * transactionsPerPage, currentPage * transactionsPerPage);
@@ -98,7 +98,7 @@ function Table() {
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan="6" style={{ textAlign: 'center' }}>
+              <td colSpan="5" style={{ textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
                   <span>
                     <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
