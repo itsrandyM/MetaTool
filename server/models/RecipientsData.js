@@ -6,6 +6,7 @@ const Classification = require("./Classification")
 const User = require("./User")
 
 const exchangeRateSchema = new mongoose.Schema({
+  
     base_currency: {
       type: String,
     },
