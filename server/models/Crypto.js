@@ -12,7 +12,7 @@ const cryptoSchema = new mongoose.Schema({
     },
     NCA:{
         type:Boolean,
-        defdault:false
+        default:false
     },
     Stablecoin:{
         type:Boolean,
