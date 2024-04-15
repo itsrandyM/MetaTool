@@ -35,6 +35,18 @@ const recipientSchema = new mongoose.Schema({
     amount2:{
         type: String
     },
+    localCurrencyName:{
+        type: String
+    },
+    localCurrencyAmount:{
+        type: Number
+    },
+    localCurrencyUsdRate:{
+        type: Number
+    },
+    localCurrencyUsdAmount:{
+        type: Number
+    },
     
 },
 
