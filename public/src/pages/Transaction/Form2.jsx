@@ -14,15 +14,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Form2 = ({ onNextForm }) => {
   const { tokens: initialTokens, setTokens } = useTokenContext();
   const [recipients, setRecipients] = useState([
-    { id: 1, name: '', organization: '', wallet: '', selectedTokens: [], tokenCount: 0 },
+    { id: 1, name: '', organization: '', wallet: '', selectedTokens: [], tokenCount: 0, csvDetails: { currencyName: '', amount: 0, rate: 0 } },
   ]);
   const [showOverlay, setShowOverlay] = useState(false);
   const [showTokenTable, setShowTokenTable] = useState(false);
   const [selectedRecipientId, setSelectedRecipientId] = useState(0)
   const [showCSVModal, setShowCSVModal] = useState(false);
-  const [csvCurrencyName, setCsvCurrencyName] = useState('');
-  const [csvAmount, setCsvAmount] = useState(0);
-  const [csvRate, setCsvRate] = useState(0);
+ 
 
 
 
@@ -51,11 +49,6 @@ const Form2 = ({ onNextForm }) => {
           name: token.name,
           amount: token.amount,
         })),
-        csvDetails: {
-          currencyName: csvCurrencyName,
-          amount: csvAmount,
-          rate: csvRate,
-        }
       };
       onNextForm(5, formData);
     } else {
@@ -102,7 +95,7 @@ const Form2 = ({ onNextForm }) => {
     const newRecipientId = recipients.length + 1;
     setRecipients((prevRecipients) => [
       ...prevRecipients,
-      { id: newRecipientId, name: '', organization: '', wallet: '', selectedTokens: [], tokenCount: 0 },
+      { id: newRecipientId, name: '', organization: '', wallet: '', selectedTokens: [], tokenCount: 0, csvDetails: { currencyName: '', amount: 0, rate: 0 } },
     ]);
   };
 
@@ -172,10 +165,35 @@ const Form2 = ({ onNextForm }) => {
   };
   console.log('s:', selectedRecipientId)
 
-  const handleCSVSubmit = (formData) => {
-    // Process formData as needed
-    console.log('CSV Details:', formData);
+  const handleCSVSubmit = (formData, selectedRecipientId) => {
+    console.log('the csv modal:',formData , 'id:',selectedRecipientId)
+    const { currencyName, amount, rate} = formData;
+    setRecipients((prevRecipients) =>
+  prevRecipients.map((recipient) =>
+    recipient.id === selectedRecipientId
+      ? {
+          ...recipient,
+          csvDetails: {
+            currencyName,
+            amount,
+            rate,
+          },
+        }
+      : recipient
+  )
+);
   };
+  // const handleUpdateRecipient = (formData, selectedRecipientId) => {
+  //   setRecipients((prevRecipients) =>
+  //     prevRecipients.map((recipient) =>
+  //       recipient.id === selectedRecipientId
+  //         ? { ...recipient, csvDetails: formData } // Update csvDetails for matching recipient
+  //         : recipient
+  //     )
+  //   );
+  // };
+  
+  
   return (
     <div style={{marginTop: '20px'}}>
       {recipients.map((recipient, index) => (
@@ -320,12 +338,8 @@ const Form2 = ({ onNextForm }) => {
           onClose={() => setShowOverlay(false)}
         />
       )}
-      {showCSVModal && <CSVDetailsModal onClose={() => setShowCSVModal(false)} onSubmit={(formData) => {
-        setCsvCurrencyName(formData.currencyName);
-        setCsvAmount(formData.amount);
-        setCsvRate(formData.rate);
-        setShowCSVModal(false);
-      }} />}
+      {showCSVModal && <CSVDetailsModal onClose={() => setShowCSVModal(false)} 
+       selectedRecipientId={selectedRecipientId} handleCSVSubmit={handleCSVSubmit} />}
       <ToastContainer />
       <div>
         <button type="button" onClick={addRecipient} style={{ width: '100%', border: '1px dotted black', padding: '10px', borderRadius: '5px', marginBottom: '10px' }}>
@@ -337,6 +351,8 @@ const Form2 = ({ onNextForm }) => {
           </button>
         </div>
       </div>
+      
+
     </div>
   );
 }

@@ -61,13 +61,14 @@ const CsvDetails = () => {
   }
 
 
+  // 
   function processDataForCsv(verifiedData) {
     const currentDate = new Date().toLocaleDateString('en-US', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
     });
-
+  
     const headers = [
       'Date',
       'From wallet',
@@ -90,37 +91,36 @@ const CsvDetails = () => {
       'Classification',
       'Tx ID',
     ];
-
+  
     let rows = [];
-
+  
     verifiedData.forEach(item => {
       const hash = item.Hash ? item.Hash.TXHash || '' : '';
       const wallet = item.Hash ? item.Hash.Wallet || '' : '';
-      // const recipientName =   item.RecipientData?.recipients?.[0]?.name || ''// Check if RecipientData and name exist
       const txFee = item.Fees ? item.Fees.TxFee || '' : '';
       const txFeePerRecipient = item.Fees ? item.Fees.TxPerRecipient || '' : '';
-      const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '' : ''
+      const CurrencyName = item.Currency ? item.Currency.localCurrencyName || '' : '';
       const CurrencyAmount = item.Currency ? item.Currency.localCurrencyAmount || '' : '';
-      const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '' : ''
-      const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : ""
-      const stablecoinExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true);
-      const ncaExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.NCA === true);
-      const isNCA = ncaExchangeRate && ncaExchangeRate.NCA;
-      const nca = isNCA ? ncaExchangeRate.base_currency || '' : '';
-      const NcaUsd = isNCA ? ncaExchangeRate.rate || '' : '';
-      const UsdNca = isNCA ? (1 / parseFloat(ncaExchangeRate.rate)).toFixed(4) : '';
+      const currencyUsd = item.Currency ? item.Currency.localCurrencyUsdRate || '' : '';
+      const totalUSD = item.Currency ? item.Currency.localCurrencyUsdAmount || '' : '';
       const classification = item.RecipientData ? item.RecipientData.classification.classificationName || '' : '';
-      const isStablecoin = stablecoinExchangeRate && stablecoinExchangeRate.stablecoin;
-      const stablecoin = isStablecoin ? stablecoinExchangeRate.base_currency || '' : ''
-      const stablecoinUSD = isStablecoin ? stablecoinExchangeRate.rate || '' : '';
-      const UsdStablecoin = isStablecoin ? (1 / parseFloat(stablecoinExchangeRate.rate)).toFixed(4) : '';
-      const TotalSC = stablecoinUSD * totalUSD
-      const TotalNCA = NcaUsd * totalUSD
-      const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd
-
-
       const recipientsData = item.RecipientData && item.RecipientData.recipients;
+  
       recipientsData.forEach(recipient => {
+        const stablecoinExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.stablecoin === true &&(rate.base_currency === recipient.token1 || rate.token === recipient.token2));
+        const ncaExchangeRate = item.RecipientData && item.RecipientData.exchangeRates.find(rate => rate.quote_currency === 'USD' && rate.NCA === true && (rate.base_currency === recipient.token1 || rate.token === recipient.token2));
+        const isNCA = ncaExchangeRate && ncaExchangeRate.NCA;
+        const isStablecoin = stablecoinExchangeRate && stablecoinExchangeRate.stablecoin;
+        const nca = isNCA ? ncaExchangeRate.base_currency || '' : '';
+        const NcaUsd = isNCA ? ncaExchangeRate.rate || '' : '';
+        const UsdNca = isNCA ? (1 / parseFloat(ncaExchangeRate.rate)).toFixed(4) : '';
+        const stablecoin = isStablecoin ? stablecoinExchangeRate.base_currency || '' : '';
+        const stablecoinUSD = isStablecoin ? stablecoinExchangeRate.rate || '' : '';
+        const UsdStablecoin = isStablecoin ? (1 / parseFloat(stablecoinExchangeRate.rate)).toFixed(4) : '';
+        const TotalSC = stablecoinUSD * totalUSD;
+        const TotalNCA = NcaUsd * totalUSD;
+        const txFeePerRecipientUsd = txFeePerRecipient * NcaUsd;
+  
         const rowData = [
           currentDate,
           wallet,
@@ -143,14 +143,14 @@ const CsvDetails = () => {
           classification,
           hash,
         ];
-
+  
         rows.push(rowData);
       });
     });
-
+  
     return [headers, ...rows];
-
   }
+  
 
 
   const renderProperty = property => {

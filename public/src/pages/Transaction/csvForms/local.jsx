@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CSVDetailsModal = ({ onClose, onSubmit }) => {
+const CSVDetailsModal = ({ onClose, onSubmit,selectedRecipientId,handleCSVSubmit }) => {
   const [currencyName, setCurrencyName] = useState('');
   const [amount, setAmount] = useState(0);
   const [rate, setRate] = useState(0);
@@ -23,9 +23,17 @@ const CSVDetailsModal = ({ onClose, onSubmit }) => {
     const formData = {
       currencyName: currencyName,
       amount: amount,
-      rate: rate
+      rate: rate,
+      selectedRecipientId,
+      csvDetails: {  // Include csvDetails object
+        currencyName: currencyName,
+        amount: amount,
+        rate: rate
+      }
     };
-    onSubmit(formData); // Pass CSV details to the onSubmit function
+    console.log('DATA:', formData)
+    handleCSVSubmit(formData, selectedRecipientId)
+    // onSubmit(formData, selectedRecipientId); // Pass CSV details to the onSubmit function
     onClose(); // Close the overlay
   };
 
@@ -139,7 +147,7 @@ const CSVDetailsModal = ({ onClose, onSubmit }) => {
             </button>
            </form>
       </div>
-    </div>
+      </div>
   );
 };
 
