@@ -6,6 +6,7 @@ import DownloadPage from './components/Table/DownP'
 import LoginForm from './pages/Authentification/page'
 import Form6 from './pages/Transaction/Form6/Form6'
 import CsvDownload from './pages/Transaction/CsvDownload'
+import SignUp from './pages/signup/page'
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
 
@@ -23,6 +24,7 @@ const App = () => {
       <Route path='/form6' element={<Form6/>}></Route>
       <Route path='/download/:index' element={<DownloadPage/>}></Route>
       <Route path='/downloadcsv' element={<CsvDownload/>}></Route>
+      <Route path='/signup' element={<SignUp/>}></Route>
     </Routes> 
     </>
 
