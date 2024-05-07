@@ -9,34 +9,49 @@ const AddToken = ({ isOpen, onClose, onSubmit }) => {
   useEffect(() => {
     const fetchTokens = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:4000/api/getCryptos', {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
+          params: {
+            ids: 'bitcoin,ethereum,usd-coin,cardano,polkadot,ripple,litecoin,chainlink,stellar,filecoin,tron,tezos,eos,monero,neo,cosmos,vechain,aave,dogecoin,uniswap,theta,fantom,yearn-finance,maker,compound,algorand,ethereum-classic,bitshares,uma,hedera-hashgraph,zcash,elrond,nem,decred,sushiswap,terra-luna,the-graph,pancakeswap,cdai,axie-infinity,loopring,bittorrent-2,trust-wallet-token,huobi-token',
+            vs_currencies: 'usd',
           },
         });
-
+  
         console.log(response.data); // Check the structure of the data
-
-        if (response.data && response.data.data && Array.isArray(response.data.data)) {
-          const options = response.data.data.map(token => ({
-            value: token.Name,
-            label: token.Name,
-            NCA: token.NCA,
-            stablecoin: token.Stablecoin
-          }));
-          setTokenOptions(options);
-          localStorage.setItem('cryptoData', JSON.stringify(response.data.data))
-        } else {
-          console.error('Unexpected data format:', response.data);
-        }
+  
+        // Extract the exchange rates for each token
+        const exchangeRates = response.data;
+  
+        // Fetch additional information about each token, including whether it's a stablecoin or native cryptocurrency
+        const tokenInfoResponse = await axios.get('https://api.coingecko.com/api/v3/coins/list');
+        const tokenInfo = tokenInfoResponse.data.reduce((acc, token) => {
+          acc[token.id] = token;
+          return acc;
+        }, {});
+  
+        // Transform the data into options format
+        const options = Object.keys(exchangeRates).map(tokenId => {
+          const token = tokenInfo[tokenId];
+          const isStablecoin = token && token.categories && token.categories.includes('Stablecoins');
+  
+          return {
+            value: tokenId,
+            label: `${tokenId} - Price: $${exchangeRates[tokenId].usd} - ${isStablecoin ? 'Stablecoin' : 'Native cryptocurrency'}`,
+          };
+        });
+  
+        // Set the token options state
+        setTokenOptions(options);
+  
+        // Optionally, save the exchange rates data to local storage
+        localStorage.setItem('exchangeRates', JSON.stringify(exchangeRates));
       } catch (error) {
-        console.error('Error fetching crypto data:', error);
+        console.error('Error fetching token exchange rates:', error);
       }
     };
-
+  
     fetchTokens();
   }, []);
+  
 
   const handleAddToken = () => {
     if (tokens.length < 5) {
